@@ -29,14 +29,13 @@ namespace CustomerAPI.Model
         ]
         public string PostalCode { get; set; }
 
-        [Range(1, 100)]
+        [Range(0, 150)]
         [Required]
         public byte Age { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 2)]
         public string City { get; set; }
-
         public DateTime CreatedAt { get; set; }
     }
 }
