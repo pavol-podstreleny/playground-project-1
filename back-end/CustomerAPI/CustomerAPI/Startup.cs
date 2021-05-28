@@ -1,3 +1,4 @@
+using CustomerAPI.services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,9 @@ namespace CustomerAPI
         {
 
             services.AddControllers();
+
+            // Add custom services
+            services.AddScoped<ICustomerService, CustomerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
