@@ -1,4 +1,5 @@
-﻿using CustomerAPI.Model;
+﻿using CustomerAPI.DataStores.TableDataStore;
+using CustomerAPI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,41 +10,20 @@ namespace CustomerAPI.services
     public class CustomerService : ICustomerService
     {
 
-        private readonly ICustomerRepository customerRepository;
+        private readonly ICustomerRepository _customerRepository;
 
-        public CustomerService(ICustomerRepository CustomerRepository)
+        public CustomerService(ICustomerRepository repository)
         {
-            this._customerRepository = CustomerRepository;
+            this._customerRepository = repository;
+        }
+        public void CreateCustomer(ICustomer customer)
+        {
+            this._customerRepository.CreateCustomer(customer);
         }
 
-        public int CreateCustomer(Customer customer)
+        public async Task<ICustomer> GetCustomer(TableKey key)
         {
-            throw new NotImplementedException();
-        }
-
-        public int DeleteCustomer(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Customer> GetAllCustomers()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Customer GetCustomer(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Customer> GetCustomersAfter(string id, int limit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Customer UpdateCustomer(string id, Customer customer)
-        {
-            throw new NotImplementedException();
+            return await this._customerRepository.GetCustomerByID(key);
         }
     }
 }
