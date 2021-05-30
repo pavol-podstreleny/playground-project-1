@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace CustomerAPI.Model
 {
-    public class Customer
+    public class Customer : ICustomer
     {
+
+        public string ID { get; set; }
+
+        public string PartialID { get; set; }
 
         [StringLength(20, MinimumLength = 2)]
         [Required]
@@ -17,7 +21,6 @@ namespace CustomerAPI.Model
         [StringLength(20, MinimumLength = 2)]
         public string LastName { get; set; }
 
-        [Required]
         [EmailAddress]
         [StringLength(5,MinimumLength =3 )]
         public string Email { get; set; }
@@ -36,6 +39,6 @@ namespace CustomerAPI.Model
         [Required]
         [StringLength(50, MinimumLength = 2)]
         public string City { get; set; }
-        public DateTime CreatedAt { get; set; }
+  
     }
 }
