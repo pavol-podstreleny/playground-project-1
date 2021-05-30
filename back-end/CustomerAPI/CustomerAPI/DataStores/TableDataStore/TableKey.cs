@@ -7,7 +7,6 @@ namespace CustomerAPI.DataStores.TableDataStore
 {
     public class TableKey
     {
-
         public string RowKey { get; set; }
         public string PartitionKey { get; set; }
 

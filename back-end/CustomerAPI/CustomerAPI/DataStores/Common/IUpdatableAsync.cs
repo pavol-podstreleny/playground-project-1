@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace CustomerAPI.DataStores.Common
 {
-    public interface IUpdatableAsync<ENTITY,KEY>
+    public interface IUpdatableAsync<ENTITY,ID>
     {
-        public Task<ENTITY> Update(ENTITY entity, KEY key);
+        public Task<ENTITY> Update(ENTITY entity, ID id);
     }
 }

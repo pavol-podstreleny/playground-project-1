@@ -7,6 +7,6 @@ namespace CustomerAPI.DataStores.Common
 {
     public interface IDeletable<ID> 
     {
-        public int Delete(ID id);
+        public void Delete(ID id);
     }
 }

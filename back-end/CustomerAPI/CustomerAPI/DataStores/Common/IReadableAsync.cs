@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace CustomerAPI.DataStores.Common
 {
-    public interface IReadableAsync<ENTITY,ROW_KEY>
+    public interface IReadableAsync<ENTITY,ID>
     {
         public Task<IEnumerable<ENTITY>> ReadAll();
-        public Task<ENTITY> Read(ROW_KEY key);
+        public Task<ENTITY> Read(ID id);
     }
 }

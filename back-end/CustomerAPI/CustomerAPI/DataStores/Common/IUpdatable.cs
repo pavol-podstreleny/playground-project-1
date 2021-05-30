@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace CustomerAPI.DataStores.Common
 {
-    public interface IUpdatable<ENTITY,KEY>
+    public interface IUpdatable<ENTITY,ID>
     {
-        public ENTITY Update(ENTITY entity, KEY key);
+        public ENTITY Update(ENTITY entity, ID id);
     }
 }
