@@ -14,9 +14,9 @@ namespace CustomerAPI.repositories
             this._customerTableDataStore = tableDataStore;
         }
 
-        public Task<ICustomer> CreateCustomer(ICustomer customer)
+        public void CreateCustomer(ICustomer customer)
         {
-            return _customerTableDataStore.Create(customer);
+            this._customerTableDataStore.Create(customer);
         }
         public Task<ICustomer> GetCustomerByID(TableKey key)
         {
