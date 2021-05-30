@@ -1,16 +1,16 @@
+using CustomerAPI.DataStores.Common;
+using CustomerAPI.DataStores.TableDataStore;
+using CustomerAPI.Model;
+using CustomerAPI.repositories;
 using CustomerAPI.services;
+using CustomerAPI.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace CustomerAPI
 {
@@ -30,7 +30,17 @@ namespace CustomerAPI
             services.AddControllers();
 
             // Add custom services
+            services.AddScoped<CloudTableClient>(provider =>
+            {
+                return CloudTableClientProvider.CreateTableClient(
+                    $"{Configuration.GetSection("StorageTableConnection:DefaultEndpointsProtocol")};{Configuration.GetSection("StorageTableConnection:AccountKey")};{Configuration.GetSection("StorageTableConnection:TableEndpoint")};");
+            });
+            services.AddSingleton<CustomerMapper>();
+            services.AddScoped<CustomerTableDataStore>();
+            services.AddScoped<ICRUDDataStoreAsync<ICustomer, TableKey>, CustomerTableDataStore>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
