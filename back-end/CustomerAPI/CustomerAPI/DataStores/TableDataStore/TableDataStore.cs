@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace CustomerAPI.DataStores.TableDataStore
 {
-    public class TableDataStore<ENTITY, TABLE_ENTITY> : ICRUDDataStoreAsync<ENTITY, TableKey> where TABLE_ENTITY : TableEntity  
+    public abstract class TableDataStore<ENTITY, TABLE_ENTITY> : ICRUDDataStoreAsync<ENTITY, TableKey> where TABLE_ENTITY : TableEntity
     {
         private readonly CloudTable _table;
         private readonly Mapper<ENTITY, TABLE_ENTITY> _mapper;
 
-        public TableDataStore(CloudTableClient Tableclient, Mapper<ENTITY,TABLE_ENTITY> Mapper, String TableName)
+        public TableDataStore(CloudTableClient Tableclient, Mapper<ENTITY, TABLE_ENTITY> Mapper, String TableName)
         {
             CloudTable table = Tableclient.GetTableReference(TableName);
             table.CreateIfNotExistsAsync();
@@ -23,7 +23,7 @@ namespace CustomerAPI.DataStores.TableDataStore
         public async Task<ENTITY> Create(ENTITY entity)
         {
             IsEntityNullable(entity);
-            return await ExecuteAsyncQueryAndMapResult(entity,TableOperation.Insert);
+            return await ExecuteAsyncQueryAndMapResult(entity, TableOperation.Insert);
         }
 
         public async Task<ENTITY> Read(TableKey id)
@@ -59,7 +59,7 @@ namespace CustomerAPI.DataStores.TableDataStore
             }
         }
 
-        private async Task<ENTITY> ExecuteAsyncQueryAndMapResult(TableKey id, Func<string, string, List<string>,TableOperation> operation, List<string> attributes = null)
+        private async Task<ENTITY> ExecuteAsyncQueryAndMapResult(TableKey id, Func<string, string, List<string>, TableOperation> operation, List<string> attributes = null)
         {
             try
             {

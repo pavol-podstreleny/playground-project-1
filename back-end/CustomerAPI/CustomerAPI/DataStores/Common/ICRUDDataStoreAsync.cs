@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace CustomerAPI.DataStores.Common
 {
-    interface ICRUDDataStoreAsync<ENTITY,ID>: 
-        ICreatableAsync<ENTITY>, 
-        IUpdatableAsync<ENTITY, ID>, 
-        IReadableAsync<ENTITY, ID>, 
+    public interface ICRUDDataStoreAsync<ENTITY, ID> :
+        ICreatableAsync<ENTITY>,
+        IUpdatableAsync<ENTITY, ID>,
+        IReadableAsync<ENTITY, ID>,
         IDeletableAsync<ID>
     {
 

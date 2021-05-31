@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CustomerAPI.DataStores.TableDataStore
 {
-    public class CustomerTableDataStore : TableDataStore<ICustomer,CustomerEntity>
+    public class CustomerTableDataStore : TableDataStore<ICustomer, CustomerEntity>
     {
         public CustomerTableDataStore(CloudTableClient TableClient, CustomerMapper Mapper, string TableName = "customer_table") : base(TableClient, Mapper, TableName) { }
     }
