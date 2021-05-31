@@ -4,6 +4,6 @@ using CustomerAPI.Model;
 
 public interface ICustomerRepository
 {
-    void CreateCustomer(ICustomer customer);
+    Task CreateCustomer(ICustomer customer);
     Task<ICustomer> GetCustomerByID(TableKey key);
 }

@@ -1,15 +1,12 @@
-﻿using CustomerAPI.Model;
+﻿using System.Threading.Tasks;
+using CustomerAPI.Model;
 using CustomerAPI.services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace CustomerAPI.Controllers
 {
 
     [ApiController]
+    [Route("api/v1/customers")]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
@@ -20,11 +17,11 @@ namespace CustomerAPI.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult<Customer> GetAllCustomers()
+        [HttpPost]
+        public async Task<ActionResult<ICustomer>> CreateCustomer([FromBody] Customer customer)
         {
-            IEnumerable<Customer> customers = _customerService.GetAllCustomers();
-            return Ok(customers);
+            await this._customerService.CreateCustomer(customer);
+            return Ok();
         }
 
     }
