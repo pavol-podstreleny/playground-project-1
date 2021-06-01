@@ -2,5 +2,4 @@
 FROM node
 RUN npm install -g azurite@2
 WORKDIR /storage
-VOLUME ["/storage"]
 CMD ["azurite-table","-l","/storage"] 
