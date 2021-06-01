@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CustomerAPI.Model;
 using CustomerAPI.services;
+using CustomerAPI.DataStores.TableDataStore;
 using Microsoft.AspNetCore.Mvc;
 namespace CustomerAPI.Controllers
 {
@@ -27,6 +28,12 @@ namespace CustomerAPI.Controllers
 
             ICustomer createdCustomer = await this._customerService.CreateCustomer(customer);
             return Ok(createdCustomer);
+        }
+
+        [HttpGet("{rowKey}/{partitionKey}")]
+        public async Task<ActionResult<ICustomer>> GetCustomer(string rowKey, string partitionKey){
+            ICustomer customer = await this._customerService.GetCustomer(new TableKey(){ PartitionKey = partitionKey, RowKey = rowKey});
+            return Ok(customer);
         }
 
     }

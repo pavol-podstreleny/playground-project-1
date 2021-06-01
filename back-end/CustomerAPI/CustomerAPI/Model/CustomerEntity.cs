@@ -9,6 +9,10 @@ namespace CustomerAPI.Model
 {
     public class CustomerEntity : TableEntity, ICustomer
     {
+
+        public CustomerEntity() {
+            
+        }
         public CustomerEntity(
             string PostalCode,
             string GUID
