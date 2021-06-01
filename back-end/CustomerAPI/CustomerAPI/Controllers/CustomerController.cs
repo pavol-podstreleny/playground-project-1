@@ -33,8 +33,14 @@ namespace CustomerAPI.Controllers
         [HttpGet("{rowKey}/{partitionKey}")]
         public async Task<ActionResult<ICustomer>> GetCustomer(string rowKey, string partitionKey){
             ICustomer customer = await this._customerService.GetCustomer(new TableKey(){ PartitionKey = partitionKey, RowKey = rowKey});
+            if (customer == null)
+                return NotFound();
             return Ok(customer);
         }
+
+        
+
+        
 
     }
 }
