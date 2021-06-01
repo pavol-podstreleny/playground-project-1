@@ -20,7 +20,7 @@ namespace CustomerAPI.Model
         {
             RowKey = GUID;
             PartitionKey = PostalCode;
-
+            ETag = "*";
             this.PostalCode = PostalCode;
             this.PartialID = PostalCode;
             this.ID = GUID;
@@ -31,7 +31,7 @@ namespace CustomerAPI.Model
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public byte Age { get; set; }
+        public Byte? Age { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
     }

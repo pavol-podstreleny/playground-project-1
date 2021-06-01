@@ -8,5 +8,7 @@ namespace CustomerAPI.services
     {
         Task<ICustomer> GetCustomer(TableKey key);
         Task<ICustomer> CreateCustomer(ICustomer customer);
+
+        Task<ICustomer> UpdateCustomer(ICustomer customer, TableKey key);
     }
 }

@@ -14,7 +14,7 @@ namespace CustomerAPI.Model
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PostalCode { get; set; }
-        public byte Age { get; set; }
+        public Byte? Age { get; set; }
         public string City { get; set; }
     }
 }

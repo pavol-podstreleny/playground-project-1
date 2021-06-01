@@ -18,9 +18,13 @@ namespace CustomerAPI.services
             return this._customerRepository.CreateCustomer(customer);
         }
 
-        public async Task<ICustomer> GetCustomer(TableKey key)
+        public Task<ICustomer> GetCustomer(TableKey key)
         {
-            return await this._customerRepository.GetCustomerByID(key);
+            return this._customerRepository.GetCustomerByID(key);
+        }
+        public Task<ICustomer> UpdateCustomer(ICustomer customer, TableKey key)
+        {
+            return  this._customerRepository.UpdateCustomer(customer,key);
         }
     }
 }

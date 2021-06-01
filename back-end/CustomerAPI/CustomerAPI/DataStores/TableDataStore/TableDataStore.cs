@@ -42,7 +42,7 @@ namespace CustomerAPI.DataStores.TableDataStore
         public async Task<ENTITY> Update(ENTITY entity, TableKey key)
         {
             IsEntityNullable(entity);
-            return await ExecuteAsyncQueryAndMapResult(entity, TableOperation.Merge);
+            return await ExecuteAsyncQueryAndMapResult(entity,TableOperation.Merge,key);
         }
 
         public Task<IEnumerable<ENTITY>> ReadAll()
@@ -73,11 +73,15 @@ namespace CustomerAPI.DataStores.TableDataStore
                 throw e;
             }
         }
-        private async Task<ENTITY> ExecuteAsyncQueryAndMapResult(ENTITY entity, Func<ITableEntity, TableOperation> operation)
+        private async Task<ENTITY> ExecuteAsyncQueryAndMapResult(ENTITY entity, Func<ITableEntity, TableOperation> operation, TableKey key=null)
         {
             try
             {
                 TABLE_ENTITY mappedEntity = _mapper.Map(entity);
+                if(key != null){
+                    mappedEntity.RowKey = key.RowKey;
+                    mappedEntity.PartitionKey = key.PartitionKey;
+                }
                 TableOperation tableOperation = operation(mappedEntity);
                 TableResult tableResult = await _table.ExecuteAsync(tableOperation);
                 TABLE_ENTITY resultEntity = tableResult.Result as TABLE_ENTITY;

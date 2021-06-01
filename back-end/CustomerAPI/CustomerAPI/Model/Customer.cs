@@ -34,7 +34,7 @@ namespace CustomerAPI.Model
 
         [Range(0, 150)]
         [Required]
-        public byte Age { get; set; }
+        public Byte? Age { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 2)]
