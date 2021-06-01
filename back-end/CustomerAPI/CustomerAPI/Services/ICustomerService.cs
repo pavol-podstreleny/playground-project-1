@@ -7,6 +7,6 @@ namespace CustomerAPI.services
     public interface ICustomerService
     {
         Task<ICustomer> GetCustomer(TableKey key);
-        Task CreateCustomer(ICustomer customer);
+        Task<ICustomer> CreateCustomer(ICustomer customer);
     }
 }

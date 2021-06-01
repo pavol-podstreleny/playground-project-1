@@ -1,8 +1,5 @@
 ﻿using CustomerAPI.DataStores.TableDataStore;
 using CustomerAPI.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CustomerAPI.services
@@ -16,7 +13,7 @@ namespace CustomerAPI.services
         {
             this._customerRepository = repository;
         }
-        public Task CreateCustomer(ICustomer customer)
+        public Task<ICustomer> CreateCustomer(ICustomer customer)
         {
             return this._customerRepository.CreateCustomer(customer);
         }

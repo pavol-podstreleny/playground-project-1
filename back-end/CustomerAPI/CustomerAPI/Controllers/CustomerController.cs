@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CustomerAPI.Model;
 using CustomerAPI.services;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +25,8 @@ namespace CustomerAPI.Controllers
             // Create unique customer ID
             customer.ID = System.Guid.NewGuid().ToString();
 
-            await this._customerService.CreateCustomer(customer);
-            return Ok();
+            ICustomer createdCustomer = await this._customerService.CreateCustomer(customer);
+            return Ok(createdCustomer);
         }
 
     }
