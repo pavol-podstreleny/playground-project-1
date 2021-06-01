@@ -11,12 +11,10 @@ namespace CustomerAPI
     public class CloudTableClientProvider
     {
 
-        public static CloudTableClient CreateTableClient(string key)
+        public static CloudTableClient CreateTableClient(StorageTableConnectionConfig key)
         {
-
             // Retrieve storage account information from connection string.
-            CloudStorageAccount storageAccount = CreateStorageAccountFromConnectionString(key);
-
+            CloudStorageAccount storageAccount = CreateStorageAccountFromConnectionString(key.GetConnectionString());
             // Create a table client for interacting with the table service
             return storageAccount.CreateCloudTableClient(new TableClientConfiguration());
         }

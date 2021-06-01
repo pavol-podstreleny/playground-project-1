@@ -10,6 +10,6 @@ namespace CustomerAPI.DataStores.TableDataStore
 {
     public class CustomerTableDataStore : TableDataStore<ICustomer, CustomerEntity>
     {
-        public CustomerTableDataStore(CloudTableClient TableClient, CustomerMapper Mapper, string TableName = "customer_table") : base(TableClient, Mapper, TableName) { }
+        public CustomerTableDataStore(CloudTableClient TableClient, CustomerMapper Mapper, string TableName = "customer") : base(TableClient, Mapper, TableName) { }
     }
 }

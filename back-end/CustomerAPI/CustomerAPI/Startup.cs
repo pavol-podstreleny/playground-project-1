@@ -1,3 +1,4 @@
+using System;
 using CustomerAPI.DataStores.Common;
 using CustomerAPI.DataStores.TableDataStore;
 using CustomerAPI.Model;
@@ -29,11 +30,14 @@ namespace CustomerAPI
 
             services.AddControllers();
 
-            // Add custom services
             services.AddScoped<CloudTableClient>(provider =>
             {
-                return CloudTableClientProvider.CreateTableClient(
-                    $"{Configuration.GetSection("StorageTableConnection:DefaultEndpointsProtocol")};{Configuration.GetSection("StorageTableConnection:AccountKey")};{Configuration.GetSection("StorageTableConnection:TableEndpoint")};");
+                return CloudTableClientProvider.CreateTableClient(new StorageTableConnectionConfig()
+                {
+                    DefaultEndpointsProtocol = Configuration.GetSection("StorageTableConnection")["DefaultEndpointsProtocol"],
+                    AccountKey = Configuration.GetSection("StorageTableConnection")["AccountKey"],
+                    TableEndpoint = Configuration.GetSection("StorageTableConnection")["TableEndpoint"]
+                });
             });
             services.AddSingleton<CustomerMapper>();
             services.AddScoped<CustomerTableDataStore>();

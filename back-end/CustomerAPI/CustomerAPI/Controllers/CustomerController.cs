@@ -20,6 +20,10 @@ namespace CustomerAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ICustomer>> CreateCustomer([FromBody] Customer customer)
         {
+
+            // Create unique customer ID
+            customer.ID = System.Guid.NewGuid().ToString();
+
             await this._customerService.CreateCustomer(customer);
             return Ok();
         }
