@@ -1,0 +1,32 @@
+version: "3.17"
+
+services:
+  storage-table:
+    image: palopodstreleny/storage-table-emulator:latest
+    ports:
+      - "10002:10002"
+    networks:
+      - customer-network
+    volumes:
+      - table-storage-volume:/storage
+
+  customer-api:
+    image: palopodstreleny/customer-api:latest
+    ports:
+      - "8080:80"
+    networks:
+      - customer-network
+    secrets:
+      - source: table-storage-secret
+        target: /app/secrets.json
+
+secrets:
+  table-storage-secret:
+    file: ./secrets-dev-only/storage-table/secrets.json
+
+volumes:
+  table-storage-volume:
+
+networks:
+  customer-network:
+    name: customer-net

@@ -1,5 +1,6 @@
 # AZURE TABLE EMULATOR 
 FROM node
 RUN npm install -g azurite@2
+VOLUME  /storage
 WORKDIR /storage
 CMD ["azurite-table","-l","/storage"] 
