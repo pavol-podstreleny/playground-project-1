@@ -1,5 +1,6 @@
 ﻿using CustomerAPI.DataStores.TableDataStore;
 using CustomerAPI.Model;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,13 +10,19 @@ namespace CustomerAPI.services
     {
 
         private readonly ICustomerRepository _customerRepository;
+        private readonly ILogger<CustomerService> _logger;
 
-        public CustomerService(ICustomerRepository repository)
+        public CustomerService(ICustomerRepository repository, ILogger<CustomerService> logger)
         {
+            this._logger = logger;
             this._customerRepository = repository;
         }
         public Task<CustomerEntity> CreateCustomer(CustomerEntity customer)
         {
+            customer.RowKey = System.Guid.NewGuid().ToString();
+            customer.PartitionKey = customer.PostalCode;
+            _logger.LogInformation("Generated RowKey: {0} AND PartitionKey: {1} for new customer", customer.RowKey, customer.PartitionKey);
+
             return this._customerRepository.CreateCustomer(customer);
         }
 
