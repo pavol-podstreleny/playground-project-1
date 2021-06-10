@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CustomerAPI.DataStores.TableDataStore;
 using CustomerAPI.Model;
 
@@ -8,7 +9,8 @@ namespace CustomerAPI.services
     {
         Task<ICustomer> GetCustomer(TableKey key);
         Task<ICustomer> CreateCustomer(ICustomer customer);
-
         Task<ICustomer> UpdateCustomer(ICustomer customer, TableKey key);
+        Task DeleteCustomer(TableKey key);
+        Task<IEnumerable<ICustomer>> GetCustomers();
     }
 }

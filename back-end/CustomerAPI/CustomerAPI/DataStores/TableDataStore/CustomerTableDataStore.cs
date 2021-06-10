@@ -1,15 +1,16 @@
 ﻿using CustomerAPI.Model;
 using CustomerAPI.Utils;
 using Microsoft.Azure.Cosmos.Table;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using CustomerAPI.DataStores.TableDataStore.Mapper;
 
 namespace CustomerAPI.DataStores.TableDataStore
 {
     public class CustomerTableDataStore : TableDataStore<ICustomer, CustomerEntity>
     {
-        public CustomerTableDataStore(CloudTableClient TableClient, CustomerMapper Mapper, string TableName = "customer") : base(TableClient, Mapper, TableName) { }
+        public CustomerTableDataStore(
+            CloudTableClient TableClient, 
+            CustomerMapper Mapper, 
+            ITableEntityMapper<ICustomer> tableEntityMapper,
+            string TableName = "customer") : base(TableClient, Mapper, TableName, tableEntityMapper) { }
     }
 }

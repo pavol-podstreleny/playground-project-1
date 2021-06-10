@@ -5,6 +5,8 @@ using CustomerAPI.services;
 using CustomerAPI.DataStores.TableDataStore;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace CustomerAPI.Controllers
 {
@@ -14,10 +16,21 @@ namespace CustomerAPI.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
+        private readonly ILogger<CustomerController> _logger;
 
-        public CustomerController(ICustomerService CustomerService)
+        public CustomerController(ICustomerService customerService, ILogger<CustomerController> logger)
         {
-            this._customerService = CustomerService;
+            this._customerService = customerService;
+            this._logger = logger;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ICustomer>>> GetAllCustomers() {
+            IEnumerable<ICustomer> customers = await this._customerService.GetCustomers();
+            if(customers == null){
+                return NotFound();
+            }
+            return Ok(customers);
         }
 
         [HttpPost]
@@ -61,6 +74,11 @@ namespace CustomerAPI.Controllers
             return Ok(updatedCustomer);
         }
 
+        [HttpDelete("{rowKey}/{partitionKey}")]
+        public async Task<IActionResult> DeleteCustomer(string rowKey, string partitionKey){
+            await this._customerService.DeleteCustomer(new TableKey(){RowKey= rowKey,PartitionKey = partitionKey});
+            return Ok();
+        }
 
         public class CustomerForm {
             
@@ -89,7 +107,6 @@ namespace CustomerAPI.Controllers
             public bool isNullable(){
                 return this.LastName == null && this.FirstName == null && this.Email == null && this.PostalCode == null && this.Age == null && this.City == null;
             }
-
         }
 
     }

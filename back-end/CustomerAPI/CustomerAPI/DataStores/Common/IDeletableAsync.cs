@@ -7,6 +7,6 @@ namespace CustomerAPI.DataStores.Common
 {
     public interface IDeletableAsync<ID>
     {
-        public void Delete(ID id);
+        public Task Delete(ID id);
     }
 }

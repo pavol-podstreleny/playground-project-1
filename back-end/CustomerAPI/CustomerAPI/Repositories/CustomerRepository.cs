@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CustomerAPI.DataStores.Common;
 using CustomerAPI.DataStores.TableDataStore;
 using CustomerAPI.Model;
+using Microsoft.Azure.Cosmos.Table;
 
 namespace CustomerAPI.repositories
 {
@@ -19,10 +21,27 @@ namespace CustomerAPI.repositories
         {
             return this._customerTableDataStore.Create(customer);
         }
+
+        public Task DeleteCustomer(TableKey key)
+        {
+            return _customerTableDataStore.Delete(key);
+        }
+
         public Task<ICustomer> GetCustomerByID(TableKey key)
         {
             return _customerTableDataStore.Read(key);
         }
+
+        public async Task<IEnumerable<ICustomer>> GetCustomers()
+        {
+            var customers = await _customerTableDataStore.ReadAll();
+            if(customers == null) {
+                // TODO handle null customer
+                return await Task.FromResult<IEnumerable<ICustomer>>(null);
+            }
+            return customers;
+        }
+
         public async Task<ICustomer> UpdateCustomer(ICustomer customer, TableKey key)
         {
             // Fetch customer with specifi key

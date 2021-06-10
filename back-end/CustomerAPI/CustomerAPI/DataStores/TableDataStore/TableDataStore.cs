@@ -1,23 +1,27 @@
 ﻿using CustomerAPI.DataStores.Common;
+using CustomerAPI.DataStores.TableDataStore.Mapper;
 using CustomerAPI.Utils;
 using Microsoft.Azure.Cosmos.Table;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace CustomerAPI.DataStores.TableDataStore
 {
-    public abstract class TableDataStore<ENTITY, TABLE_ENTITY> : ICRUDDataStoreAsync<ENTITY, TableKey> where TABLE_ENTITY : TableEntity
+    public abstract class TableDataStore<ENTITY, TABLE_ENTITY> :ICRUDDataStoreAsync<ENTITY, TableKey> where TABLE_ENTITY : TableEntity
     {
         private readonly CloudTable _table;
         private readonly Mapper<ENTITY, TABLE_ENTITY> _mapper;
+        private readonly ITableEntityMapper<ENTITY> _tableEntityMapper;
 
-        public TableDataStore(CloudTableClient Tableclient, Mapper<ENTITY, TABLE_ENTITY> Mapper, String TableName)
+        public TableDataStore(CloudTableClient Tableclient, Mapper<ENTITY, TABLE_ENTITY> Mapper, String TableName, ITableEntityMapper<ENTITY> tableEntityMapper)
         {
             CloudTable table = Tableclient.GetTableReference(TableName);
             table.CreateIfNotExistsAsync();
             _table = table;
             _mapper = Mapper;
+            _tableEntityMapper = tableEntityMapper;
         }
 
         public async Task<ENTITY> Create(ENTITY entity)
@@ -32,7 +36,7 @@ namespace CustomerAPI.DataStores.TableDataStore
             return await ExecuteAsyncQueryAndMapResult(id, TableOperation.Retrieve<TABLE_ENTITY>);
         }
 
-        public async void Delete(TableKey id)
+        public async Task Delete(TableKey id)
         {
             ENTITY entity = await Read(id);
             IsEntityNullable(entity);
@@ -45,9 +49,15 @@ namespace CustomerAPI.DataStores.TableDataStore
             return await ExecuteAsyncQueryAndMapResult(entity,TableOperation.Merge,key);
         }
 
-        public Task<IEnumerable<ENTITY>> ReadAll()
+        public async Task<IEnumerable<ENTITY>> ReadAll()
         {
-            throw new NotImplementedException();
+            TableQuery query = new TableQuery();
+            query.TakeCount = 1000;
+            
+            
+            var continuationToken = new TableContinuationToken();
+            var tableQuerySegment =  await _table.ExecuteQuerySegmentedAsync<ENTITY>(query, new EntityResolver<ENTITY>(_tableEntityMapper.Map),continuationToken);
+            return tableQuerySegment.Results;
         }
 
         private void IsEntityNullable(ENTITY entity)
