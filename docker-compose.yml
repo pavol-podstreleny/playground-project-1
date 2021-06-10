@@ -20,9 +20,16 @@ services:
       - source: table-storage-secret
         target: /app/secrets.json
 
+  prometheus:
+    image: palopodstreleny/prometheus:latest
+    ports:
+      - "9090:9090"
+    networks:
+      - customer-network
+
 secrets:
   table-storage-secret:
-    file: ./secrets-dev-only/storage-table/secrets.json
+    file: ./secrets-dev-only/secrets.json
 
 volumes:
   table-storage-volume:

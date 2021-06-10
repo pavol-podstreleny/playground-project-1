@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using CustomerAPI.DataStores.Common;
 using CustomerAPI.DataStores.TableDataStore;
+using CustomerAPI.DataStores.TableDataStore.Mapper;
 using CustomerAPI.Model;
 using CustomerAPI.repositories;
 using CustomerAPI.services;
@@ -11,7 +13,8 @@ using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Prometheus;
+using static CustomerAPI.Controllers.CustomerController;
 
 namespace CustomerAPI
 {
@@ -40,6 +43,7 @@ namespace CustomerAPI
                 });
             });
             services.AddSingleton<CustomerMapper>();
+            services.AddScoped<ITableEntityMapper<ICustomer>,CustomerTableEntityMapper>();
             services.AddScoped<CustomerTableDataStore>();
             services.AddScoped<ICRUDDataStoreAsync<ICustomer, TableKey>, CustomerTableDataStore>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -58,12 +62,14 @@ namespace CustomerAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseHttpMetrics();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapMetrics();
             });
         }
     }
