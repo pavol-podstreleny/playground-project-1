@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
+using CustomerApi.Model;
+using CustomerApi.Utils;
 using CustomerAPI.DataStores.Common;
 using CustomerAPI.DataStores.TableDataStore;
-using CustomerAPI.DataStores.TableDataStore.Mapper;
 using CustomerAPI.Model;
 using CustomerAPI.repositories;
 using CustomerAPI.services;
@@ -14,7 +13,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
-using static CustomerAPI.Controllers.CustomerController;
 
 namespace CustomerAPI
 {
@@ -42,10 +40,10 @@ namespace CustomerAPI
                     TableEndpoint = Configuration.GetSection("StorageTableConnection")["TableEndpoint"]
                 });
             });
-            services.AddSingleton<CustomerMapper>();
-            services.AddScoped<ITableEntityMapper<ICustomer>,CustomerTableEntityMapper>();
-            services.AddScoped<CustomerTableDataStore>();
-            services.AddScoped<ICRUDDataStoreAsync<ICustomer, TableKey>, CustomerTableDataStore>();
+
+            services.AddScoped<IMapper<CustomerDTO, CustomerEntity>, CustomerDTOtoEntityMapper>();
+            services.AddScoped<IOneWayMapper<CustomerForm, CustomerEntity>, CustomerFormToEntityMapper>();
+            services.AddScoped<ICRUDDataStoreAsync<CustomerEntity, TableKey>, CustomerTableDataStore>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
 

@@ -7,10 +7,10 @@ namespace CustomerAPI.services
 {
     public interface ICustomerService
     {
-        Task<ICustomer> GetCustomer(TableKey key);
-        Task<ICustomer> CreateCustomer(ICustomer customer);
-        Task<ICustomer> UpdateCustomer(ICustomer customer, TableKey key);
+        Task<CustomerEntity> GetCustomer(TableKey key);
+        Task<CustomerEntity> CreateCustomer(CustomerEntity customer);
+        Task<CustomerEntity> UpdateCustomer(CustomerEntity customer, TableKey key);
         Task DeleteCustomer(TableKey key);
-        Task<IEnumerable<ICustomer>> GetCustomers();
+        Task<IEnumerable<CustomerEntity>> GetCustomers();
     }
 }

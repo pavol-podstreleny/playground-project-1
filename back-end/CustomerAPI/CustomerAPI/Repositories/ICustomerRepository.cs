@@ -5,10 +5,10 @@ using CustomerAPI.Model;
 
 public interface ICustomerRepository
 {
-    Task<IEnumerable<ICustomer>> GetCustomers();
-    Task<ICustomer> GetCustomerByID(TableKey key);
-    Task<ICustomer> CreateCustomer(ICustomer customer);
+    Task<IEnumerable<CustomerEntity>> GetCustomers();
+    Task<CustomerEntity> GetCustomerByID(TableKey key);
+    Task<CustomerEntity> CreateCustomer(CustomerEntity customer);
     Task DeleteCustomer(TableKey key);
-    Task<ICustomer> UpdateCustomer(ICustomer customer, TableKey key);
+    Task<CustomerEntity> UpdateCustomer(CustomerEntity customer, TableKey key);
 
 }

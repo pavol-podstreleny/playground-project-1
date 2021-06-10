@@ -1,6 +1,4 @@
 ﻿using CustomerAPI.DataStores.Common;
-using CustomerAPI.DataStores.TableDataStore.Mapper;
-using CustomerAPI.Utils;
 using Microsoft.Azure.Cosmos.Table;
 using System;
 using System.Collections.Generic;
@@ -9,58 +7,50 @@ using System.Threading.Tasks;
 
 namespace CustomerAPI.DataStores.TableDataStore
 {
-    public abstract class TableDataStore<ENTITY, TABLE_ENTITY> :ICRUDDataStoreAsync<ENTITY, TableKey> where TABLE_ENTITY : TableEntity
+    public abstract class TableDataStore<TABLE_ENTITY> : ICRUDDataStoreAsync<TABLE_ENTITY, TableKey> where TABLE_ENTITY : TableEntity, new()
     {
         private readonly CloudTable _table;
-        private readonly Mapper<ENTITY, TABLE_ENTITY> _mapper;
-        private readonly ITableEntityMapper<ENTITY> _tableEntityMapper;
 
-        public TableDataStore(CloudTableClient Tableclient, Mapper<ENTITY, TABLE_ENTITY> Mapper, String TableName, ITableEntityMapper<ENTITY> tableEntityMapper)
+        public TableDataStore(CloudTableClient Tableclient, String TableName)
         {
             CloudTable table = Tableclient.GetTableReference(TableName);
             table.CreateIfNotExistsAsync();
             _table = table;
-            _mapper = Mapper;
-            _tableEntityMapper = tableEntityMapper;
         }
 
-        public async Task<ENTITY> Create(ENTITY entity)
+        public async Task<TABLE_ENTITY> Create(TABLE_ENTITY entity)
         {
             IsEntityNullable(entity);
             return await ExecuteAsyncQueryAndMapResult(entity, TableOperation.Insert);
         }
 
-        public async Task<ENTITY> Read(TableKey id)
+        public async Task<TABLE_ENTITY> Read(TableKey id)
         {
-
             return await ExecuteAsyncQueryAndMapResult(id, TableOperation.Retrieve<TABLE_ENTITY>);
         }
 
         public async Task Delete(TableKey id)
         {
-            ENTITY entity = await Read(id);
+            TABLE_ENTITY entity = await Read(id);
             IsEntityNullable(entity);
             await ExecuteAsyncQueryAndMapResult(entity, TableOperation.Delete);
         }
 
-        public async Task<ENTITY> Update(ENTITY entity, TableKey key)
+        public async Task<TABLE_ENTITY> Update(TABLE_ENTITY entity, TableKey key)
         {
             IsEntityNullable(entity);
-            return await ExecuteAsyncQueryAndMapResult(entity,TableOperation.Merge,key);
+            return await ExecuteAsyncQueryAndMapResult(entity, TableOperation.Merge, key);
         }
 
-        public async Task<IEnumerable<ENTITY>> ReadAll()
+        public async Task<IEnumerable<TABLE_ENTITY>> ReadAll()
         {
-            TableQuery query = new TableQuery();
-            query.TakeCount = 1000;
-            
-            
+            TableQuery<TABLE_ENTITY> query = new TableQuery<TABLE_ENTITY>();
             var continuationToken = new TableContinuationToken();
-            var tableQuerySegment =  await _table.ExecuteQuerySegmentedAsync<ENTITY>(query, new EntityResolver<ENTITY>(_tableEntityMapper.Map),continuationToken);
+            var tableQuerySegment = await _table.ExecuteQuerySegmentedAsync<TABLE_ENTITY>(query, continuationToken);
             return tableQuerySegment.Results;
         }
 
-        private void IsEntityNullable(ENTITY entity)
+        private void IsEntityNullable(TABLE_ENTITY entity)
         {
             if (entity == null)
             {
@@ -69,33 +59,34 @@ namespace CustomerAPI.DataStores.TableDataStore
             }
         }
 
-        private async Task<ENTITY> ExecuteAsyncQueryAndMapResult(TableKey id, Func<string, string, List<string>, TableOperation> operation, List<string> attributes = null)
+        private async Task<TABLE_ENTITY> ExecuteAsyncQueryAndMapResult(TableKey id, Func<string, string, List<string>, TableOperation> operation, List<string> attributes = null)
         {
             try
             {
                 TableOperation tableOperation = operation(id.PartitionKey, id.RowKey, attributes);
                 TableResult tableResult = await _table.ExecuteAsync(tableOperation);
                 TABLE_ENTITY resultEntity = tableResult.Result as TABLE_ENTITY;
-                return _mapper.Map(resultEntity);
+                return resultEntity;
             }
             catch (StorageException e)
             {
                 throw e;
             }
         }
-        private async Task<ENTITY> ExecuteAsyncQueryAndMapResult(ENTITY entity, Func<ITableEntity, TableOperation> operation, TableKey key=null)
+        private async Task<TABLE_ENTITY> ExecuteAsyncQueryAndMapResult(TABLE_ENTITY entity, Func<ITableEntity, TableOperation> operation, TableKey key = null)
         {
             try
             {
-                TABLE_ENTITY mappedEntity = _mapper.Map(entity);
-                if(key != null){
-                    mappedEntity.RowKey = key.RowKey;
-                    mappedEntity.PartitionKey = key.PartitionKey;
+
+                if (key != null && key.isValid())
+                {
+                    entity.RowKey = key.RowKey;
+                    entity.PartitionKey = key.PartitionKey;
                 }
-                TableOperation tableOperation = operation(mappedEntity);
+                TableOperation tableOperation = operation(entity);
                 TableResult tableResult = await _table.ExecuteAsync(tableOperation);
                 TABLE_ENTITY resultEntity = tableResult.Result as TABLE_ENTITY;
-                return _mapper.Map(resultEntity);
+                return resultEntity;
             }
             catch (StorageException e)
             {

@@ -14,7 +14,7 @@ namespace CustomerAPI.services
         {
             this._customerRepository = repository;
         }
-        public Task<ICustomer> CreateCustomer(ICustomer customer)
+        public Task<CustomerEntity> CreateCustomer(CustomerEntity customer)
         {
             return this._customerRepository.CreateCustomer(customer);
         }
@@ -24,20 +24,20 @@ namespace CustomerAPI.services
             return this._customerRepository.DeleteCustomer(key);
         }
 
-        public Task<ICustomer> GetCustomer(TableKey key)
+        public Task<CustomerEntity> GetCustomer(TableKey key)
         {
             return this._customerRepository.GetCustomerByID(key);
         }
 
-        public Task<IEnumerable<ICustomer>> GetCustomers()
+        public Task<IEnumerable<CustomerEntity>> GetCustomers()
         {
             return this._customerRepository.GetCustomers();
         }
 
-        public Task<ICustomer> UpdateCustomer(ICustomer customer, TableKey key)
+        public Task<CustomerEntity> UpdateCustomer(CustomerEntity customer, TableKey key)
         {
-            return  this._customerRepository.UpdateCustomer(customer,key);
+            return this._customerRepository.UpdateCustomer(customer, key);
         }
-        
+
     }
 }

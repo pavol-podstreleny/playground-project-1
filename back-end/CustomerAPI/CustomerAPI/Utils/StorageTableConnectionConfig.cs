@@ -13,7 +13,6 @@ namespace CustomerAPI.Utils
 
         public string GetConnectionString()
         {
-            Console.WriteLine($"{DefaultEndpointsProtocol};{AccountKey};{TableEndpoint};");
             return $"{DefaultEndpointsProtocol};{AccountKey};{TableEndpoint};";
         }
 

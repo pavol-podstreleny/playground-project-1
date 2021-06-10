@@ -1,31 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace CustomerAPI.Model
+namespace CustomerApi.Model
 {
-    public class Customer : ICustomer
+    public class CustomerForm
     {
 
-        public string ID { get; set; }
-
-        public string PartialID { get; set; }
-
         [StringLength(20, MinimumLength = 2)]
-        [Required]
         public string FirstName { get; set; }
 
-        [Required]
         [StringLength(20, MinimumLength = 2)]
         public string LastName { get; set; }
 
         [EmailAddress]
-        [StringLength(5,MinimumLength =3 )]
+        [StringLength(5, MinimumLength = 3)]
         public string Email { get; set; }
 
-        [Required]
         [RegularExpression(
             @"^[0-9]{5}(?:-[0-9]{4})?$",
             ErrorMessage = "Please Provide Postal Code in correct format")
@@ -33,12 +23,15 @@ namespace CustomerAPI.Model
         public string PostalCode { get; set; }
 
         [Range(0, 150)]
-        [Required]
-        public Byte? Age { get; set; }
+        public int? Age { get; set; }
 
-        [Required]
         [StringLength(50, MinimumLength = 2)]
         public string City { get; set; }
-  
+
+        public bool isNullable()
+        {
+            return this.LastName == null && this.FirstName == null && this.Email == null && this.PostalCode == null && this.Age == null && this.City == null;
+        }
+
     }
 }
