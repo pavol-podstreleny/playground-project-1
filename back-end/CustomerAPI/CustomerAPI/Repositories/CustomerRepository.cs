@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CustomerAPI.DataStores.Common;
 using CustomerAPI.DataStores.TableDataStore;
+using CustomerAPI.Exceptions;
 using CustomerAPI.Model;
+using Microsoft.Extensions.Logging;
 
 namespace CustomerAPI.repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
+        private TableDataStore<CustomerEntity> _customerTableDataStore;
+        private ILogger<CustomerRepository> _logger;
 
-        private ICRUDDataStoreAsync<CustomerEntity, TableKey> _customerTableDataStore;
-        public CustomerRepository(ICRUDDataStoreAsync<CustomerEntity, TableKey> tableDataStore)
+        public CustomerRepository(
+            TableDataStore<CustomerEntity> tableDataStore,
+            ILogger<CustomerRepository> logger)
         {
+            this._logger = logger;
             this._customerTableDataStore = tableDataStore;
         }
 
@@ -36,7 +42,7 @@ namespace CustomerAPI.repositories
             IEnumerable<CustomerEntity> customers = await _customerTableDataStore.ReadAll();
             if (customers == null)
             {
-                // TODO handle null customer
+                _logger.LogWarning("Customer table datastore returned no customers");
                 return await Task.FromResult<IEnumerable<CustomerEntity>>(null);
             }
             return customers;
@@ -48,8 +54,7 @@ namespace CustomerAPI.repositories
             CustomerEntity potentialCustomer = await GetCustomerByID(key);
             if (potentialCustomer == null)
             {
-                // Customer does not exists in the tabl
-                throw new ArgumentException($"Could not find customer with rowKey: {key.RowKey} | partitionKey: {key.PartitionKey}");
+                throw new CustomerNotExistsException($"Could not find customer with rowKey: {key.RowKey} | partitionKey: {key.PartitionKey}");
             }
 
             return await this._customerTableDataStore.Update(customer, key);

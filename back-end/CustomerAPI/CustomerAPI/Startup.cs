@@ -2,6 +2,7 @@ using CustomerApi.Model;
 using CustomerApi.Utils;
 using CustomerAPI.DataStores.Common;
 using CustomerAPI.DataStores.TableDataStore;
+using CustomerAPI.Exceptions.Filters;
 using CustomerAPI.Model;
 using CustomerAPI.repositories;
 using CustomerAPI.services;
@@ -40,10 +41,12 @@ namespace CustomerAPI
                     TableEndpoint = Configuration.GetSection("StorageTableConnection")["TableEndpoint"]
                 });
             });
+            services.AddTransient<TableStorageExceptionFilter>();
+            services.AddTransient<CustomerExceptionFilter>();
 
             services.AddScoped<IMapper<CustomerDTO, CustomerEntity>, CustomerDTOtoEntityMapper>();
             services.AddScoped<IOneWayMapper<CustomerForm, CustomerEntity>, CustomerFormToEntityMapper>();
-            services.AddScoped<ICRUDDataStoreAsync<CustomerEntity, TableKey>, CustomerTableDataStore>();
+            services.AddScoped<TableDataStore<CustomerEntity>, CustomerTableDataStore>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
 

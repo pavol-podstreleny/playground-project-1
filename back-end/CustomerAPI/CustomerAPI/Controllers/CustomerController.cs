@@ -9,12 +9,14 @@ using Microsoft.Extensions.Logging;
 using CustomerAPI.Utils;
 using CustomerApi.Model;
 using CustomerApi.Utils;
+using CustomerAPI.Exceptions.Filters;
 
 namespace CustomerAPI.Controllers
 {
 
     [ApiController]
     [Route("api/v1/customers")]
+    [TableStorageExceptionHandler]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
@@ -72,6 +74,8 @@ namespace CustomerAPI.Controllers
             return Ok(_mapperDtoToEntity.Map(customer));
         }
 
+
+        [HandleCustomerException]
         [HttpPatch("{rowKey}/{partitionKey}")]
         public async Task<ActionResult<CustomerEntity>> UpdateCustomer(string rowKey, string partitionKey, [FromBody] CustomerForm customerForm)
         {

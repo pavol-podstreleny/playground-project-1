@@ -61,38 +61,22 @@ namespace CustomerAPI.DataStores.TableDataStore
 
         private async Task<TABLE_ENTITY> ExecuteAsyncQueryAndMapResult(TableKey id, Func<string, string, List<string>, TableOperation> operation, List<string> attributes = null)
         {
-            try
-            {
-                TableOperation tableOperation = operation(id.PartitionKey, id.RowKey, attributes);
-                TableResult tableResult = await _table.ExecuteAsync(tableOperation);
-                TABLE_ENTITY resultEntity = tableResult.Result as TABLE_ENTITY;
-                return resultEntity;
-            }
-            catch (StorageException e)
-            {
-                throw e;
-            }
+            TableOperation tableOperation = operation(id.PartitionKey, id.RowKey, attributes);
+            TableResult tableResult = await _table.ExecuteAsync(tableOperation);
+            TABLE_ENTITY resultEntity = tableResult.Result as TABLE_ENTITY;
+            return resultEntity;
         }
         private async Task<TABLE_ENTITY> ExecuteAsyncQueryAndMapResult(TABLE_ENTITY entity, Func<ITableEntity, TableOperation> operation, TableKey key = null)
         {
-            try
+            if (key != null && key.isValid())
             {
-
-                if (key != null && key.isValid())
-                {
-                    entity.RowKey = key.RowKey;
-                    entity.PartitionKey = key.PartitionKey;
-                }
-                TableOperation tableOperation = operation(entity);
-                TableResult tableResult = await _table.ExecuteAsync(tableOperation);
-                TABLE_ENTITY resultEntity = tableResult.Result as TABLE_ENTITY;
-                return resultEntity;
+                entity.RowKey = key.RowKey;
+                entity.PartitionKey = key.PartitionKey;
             }
-            catch (StorageException e)
-            {
-                // TODO implement logging
-                throw e;
-            }
+            TableOperation tableOperation = operation(entity);
+            TableResult tableResult = await _table.ExecuteAsync(tableOperation);
+            TABLE_ENTITY resultEntity = tableResult.Result as TABLE_ENTITY;
+            return resultEntity;
         }
 
     }
