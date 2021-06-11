@@ -22,6 +22,11 @@ services:
 
   prometheus:
     image: palopodstreleny/prometheus:latest
+    volumes:
+      - type: bind
+        source: ./monitoring/Prometheus/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+        read_only: true
     ports:
       - "9090:9090"
     networks:
