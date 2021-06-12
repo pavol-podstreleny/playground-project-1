@@ -2,7 +2,8 @@ version: "3.17"
 
 services:
   storage-table:
-    image: palopodstreleny/storage-table-emulator:latest
+    build:
+      context: ./back-end/StorageTable
     ports:
       - "10002:10002"
     networks:
@@ -11,7 +12,8 @@ services:
       - table-storage-volume:/storage
 
   customer-api:
-    image: palopodstreleny/customer-api:latest
+    build:
+      context: ./back-end/CustomerAPI/CustomerAPI
     ports:
       - "8080:80"
     networks:
@@ -21,7 +23,8 @@ services:
         target: /app/secrets.json
 
   prometheus:
-    image: palopodstreleny/prometheus:latest
+    build:
+      context: monitoring/Prometheus
     volumes:
       - type: bind
         source: ./monitoring/Prometheus/prometheus.yml
@@ -29,6 +32,14 @@ services:
         read_only: true
     ports:
       - "9090:9090"
+    networks:
+      - customer-network
+
+  grafana:
+    build:
+      context: monitoring/Grafana
+    ports:
+      - "3000:3000"
     networks:
       - customer-network
 
