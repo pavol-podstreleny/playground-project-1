@@ -1,0 +1,47 @@
+version: "3.17"
+
+services:
+  storage-table:
+    ports:
+      - "10002:10002"
+    volumes:
+      - table-storage-volume:/storage
+    networks:
+      - customer-network
+
+  customer-api:
+    ports:
+      - "8080:80"
+    secrets:
+      - source: table-storage-secret
+        target: /app/secrets.json
+    networks:
+      - customer-network
+
+  prometheus:
+    volumes:
+      - type: bind
+        source: ./monitoring/Prometheus/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+        read_only: true
+    ports:
+      - "9090:9090"
+    networks:
+      - customer-network
+
+  grafana:
+    ports:
+      - "3000:3000"
+    networks:
+      - customer-network
+
+secrets:
+  table-storage-secret:
+    file: ./secrets-dev-only/secrets.json
+
+volumes:
+  table-storage-volume:
+
+networks:
+  customer-network:
+    name: customer-dev-net

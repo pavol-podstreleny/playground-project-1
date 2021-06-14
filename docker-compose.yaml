@@ -1,0 +1,18 @@
+version: "3.17"
+
+services:
+  storage-table:
+    build:
+      context: ./back-end/StorageTable
+
+  customer-api:
+    build:
+      context: ./back-end/CustomerAPI/CustomerAPI
+
+  prometheus:
+    build:
+      context: monitoring/Prometheus
+
+  grafana:
+    build:
+      context: monitoring/Grafana
