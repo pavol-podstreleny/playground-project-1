@@ -2,17 +2,13 @@ version: "3.17"
 
 services:
   storage-table:
-    build:
-      context: ./back-end/StorageTable
+    image: palopodstreleny/storage-table-emulator:latest
 
   customer-api:
-    build:
-      context: ./back-end/CustomerAPI/CustomerAPI
+    image: palopodstreleny/customer-api:latest
 
   prometheus:
-    build:
-      context: monitoring/Prometheus
+    image: palopodstreleny/prometheus:latest
 
   grafana:
-    build:
-      context: monitoring/Grafana
+    image: palopodstreleny/grafana:latest
