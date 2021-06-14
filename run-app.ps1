@@ -6,6 +6,6 @@ docker image build -t palopodstreleny/customer-api:latest ./back-end/CustomerApi
 docker image build -t palopodstreleny/storage-table-emulator:latest ./back-end/StorageTable/;
 docker image build -t palopodstreleny/prometheus:latest ./monitoring/Prometheus/;
 docker image build -t palopodstreleny/grafana:latest ./monitoring/Grafana/;
-
+docker image build -t palopodstreleny/customer-ui:latest ./front-end/;
 # Run application
 docker-compose -f docker-compose.yaml -f docker-compose-dev.yaml up;

@@ -1,6 +1,9 @@
 version: "3.17"
 
 services:
+  customer-ui:
+    image: palopodstreleny/customer-ui:latest
+
   storage-table:
     image: palopodstreleny/storage-table-emulator:latest
 
