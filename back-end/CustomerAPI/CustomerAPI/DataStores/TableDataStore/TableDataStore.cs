@@ -29,16 +29,15 @@ namespace CustomerAPI.DataStores.TableDataStore
             return await ExecuteAsyncQueryAndMapResult(id, TableOperation.Retrieve<TABLE_ENTITY>);
         }
 
-        public async Task Delete(TableKey id)
+        public async Task Delete(TableKey key)
         {
-            TABLE_ENTITY entity = await Read(id);
-            IsEntityNullable(entity);
+            TABLE_ENTITY entity = await Read(key);
             await ExecuteAsyncQueryAndMapResult(entity, TableOperation.Delete);
         }
 
         public async Task<TABLE_ENTITY> Update(TABLE_ENTITY entity, TableKey key)
         {
-            IsEntityNullable(entity);
+            IsEntityNullable(entity, key);
             return await ExecuteAsyncQueryAndMapResult(entity, TableOperation.Merge, key);
         }
 
@@ -50,12 +49,14 @@ namespace CustomerAPI.DataStores.TableDataStore
             return tableQuerySegment.Results;
         }
 
-        private void IsEntityNullable(TABLE_ENTITY entity)
+        protected abstract void HandleNullableEntity(TableKey key);
+
+        private void IsEntityNullable(TABLE_ENTITY entity, TableKey key = null)
         {
             if (entity == null)
             {
                 // TOOD provide loging
-                throw new ArgumentNullException($"{nameof(entity)} cannot be null");
+                HandleNullableEntity(key);
             }
         }
 
@@ -64,8 +65,10 @@ namespace CustomerAPI.DataStores.TableDataStore
             TableOperation tableOperation = operation(id.PartitionKey, id.RowKey, attributes);
             TableResult tableResult = await _table.ExecuteAsync(tableOperation);
             TABLE_ENTITY resultEntity = tableResult.Result as TABLE_ENTITY;
+            IsEntityNullable(resultEntity, id);
             return resultEntity;
         }
+
         private async Task<TABLE_ENTITY> ExecuteAsyncQueryAndMapResult(TABLE_ENTITY entity, Func<ITableEntity, TableOperation> operation, TableKey key = null)
         {
             if (key != null && key.isValid())
@@ -76,6 +79,7 @@ namespace CustomerAPI.DataStores.TableDataStore
             TableOperation tableOperation = operation(entity);
             TableResult tableResult = await _table.ExecuteAsync(tableOperation);
             TABLE_ENTITY resultEntity = tableResult.Result as TABLE_ENTITY;
+            IsEntityNullable(resultEntity, key);
             return resultEntity;
         }
 
