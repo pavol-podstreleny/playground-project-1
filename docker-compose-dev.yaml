@@ -37,7 +37,7 @@ services:
 
 secrets:
   table-storage-secret:
-    file: ./secrets-dev-only/secrets.json
+    file: ./back-end/StorageTable/secrets.json
 
 volumes:
   table-storage-volume:
