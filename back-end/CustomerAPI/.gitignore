@@ -448,3 +448,4 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 CustomerAPI/secrets.json
+coveragereport/
