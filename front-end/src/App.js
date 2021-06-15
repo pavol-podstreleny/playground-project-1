@@ -1,5 +1,11 @@
+import CustomerTable from "./components/customerTable";
+
 function App() {
-  return <h1>Hello world</h1>;
+  return (
+    <div>
+      <CustomerTable />
+    </div>
+  );
 }
 
 export default App;
