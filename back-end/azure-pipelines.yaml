@@ -21,7 +21,7 @@ stages:
         displayName: Build Customer API Test Container
         steps:
           - bash: docker image build -t ${{variables.customerApiTestImageName}} .
-            workingDirectory: back-end/CustomerAPI/CustomerAPI.Test
+            workingDirectory: back-end/CustomerAPI
 
       - job: "Run_Container_Test"
         displayName: Runs Customer API Test Container
@@ -34,5 +34,5 @@ stages:
         displayName: Build Customer API Container
         steps:
           - bash: docker image build -t ${{variables.customerApiImageName}}
-            workingDirectory: back-end/CustomerAPI/CustomerAPI.Test
+            workingDirectory: back-end/CustomerAPI/CustomerAPI/
         dependsOn: "Run_Container_Test"
