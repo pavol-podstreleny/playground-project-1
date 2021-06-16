@@ -29,7 +29,7 @@ stages:
       - job: "Build_Container_Customer_API"
         displayName: Build Customer API Container
         steps:
-          - bash: docker image build -t ${{variables.customerApiImageName}} .
+          - bash: docker image build -t palopodstreleny/${{variables.customerApiImageName}} .
             workingDirectory: back-end/CustomerAPI/CustomerAPI/
 
       - job: "Build_Container_Table_Storage"
@@ -62,7 +62,7 @@ stages:
             displayName: Pushing To Dockerhub
             inputs:
               command: push
-              repository: ${{variables.customerApiImageName}}
+              repository: palopodstreleny/${{variables.customerApiImageName}}
               tags: |
                 latest
           - task: Docker@2
