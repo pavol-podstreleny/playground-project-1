@@ -1,0 +1,10 @@
+name: Customer-App-BackEnd-$(Date:yyyyMMdd)
+trigger:
+  - backend
+stages:
+  - stage: Testing Customer API
+    displayName: Testing Customer API
+    script: echo Testin Customer API
+  - stage: Publishing Customer API Dockerfile
+    displayName: Publishing Customer API Dockerfile to Registry
+    script: echo Publishing to DockerFile registry
