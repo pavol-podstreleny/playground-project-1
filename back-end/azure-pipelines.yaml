@@ -4,13 +4,13 @@ trigger:
 
 variables:
   - name: customerApiTestImageName
-    value: palopodstreleny/customer-api-test:latest
+    value: customer-api-test
     readonly: true
   - name: customerApiImageName
-    value: palopodstreleny/customer-api:latest
+    value: customer-api
     readonly: true
   - name: tableStorageImageName
-    value: palopodstreleny/table-storage-emulator:latest
+    value: table-storage-emulator
     readonly: true
 
 pool:
@@ -67,5 +67,7 @@ stages:
             inputs:
               command: logout
               containerRegistry: dockerhub
+              tags: |
+                latest
 
     dependsOn: Test
