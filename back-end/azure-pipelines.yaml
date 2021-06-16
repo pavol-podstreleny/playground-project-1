@@ -29,13 +29,13 @@ stages:
       - job: "Build_Container_Customer_API"
         displayName: Build Customer API Container
         steps:
-          - bash: docker image build -t ${{variables.customerApiImageName}}
+          - bash: docker image build -t ${{variables.customerApiImageName}} .
             workingDirectory: back-end/CustomerAPI/CustomerAPI/
 
       - job: "Build_Container_Table_Storage"
         displayName: Build Table Storage Container
         steps:
-          - bash: docker image build -t ${{variables.tableStorageImageName}}
+          - bash: docker image build -t ${{variables.tableStorageImageName}} .
             workingDirectory: back-end/StorageTable/
 
   - stage: Test
