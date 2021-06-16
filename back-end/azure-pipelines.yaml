@@ -4,13 +4,13 @@ trigger:
 
 variables:
   - name: customerApiTestImageName
-    value: customer-api-test
+    value: palopodstreleny/customer-api-test
     readonly: true
   - name: customerApiImageName
-    value: customer-api
+    value: palopodstreleny/customer-api
     readonly: true
   - name: tableStorageImageName
-    value: table-storage-emulator
+    value: palopodstreleny/table-storage-emulator
     readonly: true
 
 pool:
@@ -29,7 +29,7 @@ stages:
       - job: "Build_Container_Customer_API"
         displayName: Build Customer API Container
         steps:
-          - bash: docker image build -t palopodstreleny/${{variables.customerApiImageName}} .
+          - bash: docker image build -t ${{variables.customerApiImageName}} .
             workingDirectory: back-end/CustomerAPI/CustomerAPI/
 
       - job: "Build_Container_Table_Storage"
@@ -50,7 +50,7 @@ stages:
   - stage: Publish
     displayName: Publish Containers To DockerHub
     jobs:
-      - job: Publish_Container_Customer_API
+      - job: Publish_Containers_To_DockerHub
         displayName: Publish Container Customer API To Docker
         steps:
           - task: Docker@2
@@ -59,12 +59,21 @@ stages:
               command: login
               containerRegistry: dockerhub
           - task: Docker@2
-            displayName: Pushing To Dockerhub
+            displayName: Pushing Customer API To Dockerhub
             inputs:
               command: push
-              repository: palopodstreleny/${{variables.customerApiImageName}}
+              repository: ${{variables.customerApiImageName}}
               tags: |
                 latest
+
+          - task: Docker@2
+            displayName: Pushing Storage Table To Dockerhub
+            inputs:
+              command: push
+              repository: ${{variables.tableStorageImageName}}
+              tags: |
+                latest
+
           - task: Docker@2
             inputs:
               command: logout
