@@ -17,8 +17,8 @@ stages:
       - job: "Build_Container"
         displayName: Build Customer API container
         steps:
-          - bash: echo ls
-            workingDirectory: back-end/CustomerAPI/CustoemrAPI.Test
+          - bash: docker image build -t ${{variables.customerApiImageName}} .
+            workingDirectory: back-end/CustomerAPI/CustomerAPI.Test
 
       - job: "Test_Container"
         displayName: Testing Customer API inside container
