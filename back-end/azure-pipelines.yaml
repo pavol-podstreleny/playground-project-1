@@ -63,11 +63,11 @@ stages:
             inputs:
               command: push
               repository: ${{variables.customerApiImageName}}
+              tags: |
+                latest
           - task: Docker@2
             inputs:
               command: logout
               containerRegistry: dockerhub
-              tags: |
-                latest
 
     dependsOn: Test
