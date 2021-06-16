@@ -7,14 +7,14 @@ variables:
     value: palopodstrleleny/customer-api:latest
 
 stages:
-  - stage: Testing Customer API
+  - stage: Testing_Customer_API
     displayName: Testing Customer API
     jobs:
-      - job: "Build-Container"
+      - job: "Build_Container"
         displayName: Build Customer API container
         steps:
           - bash: docker container build -t "${{ variables.customerApiImageName}}"
-      - job: "Test-Container"
+      - job: "Test_Container"
         displayName: Testing Customer API inside container
         steps:
           - bash: docker container run ${{ variables.customerApiImageName}}
