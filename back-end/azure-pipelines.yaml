@@ -18,10 +18,9 @@ stages:
         displayName: Build Customer API container
         steps:
           - bash: echo pwd
-            workingDirectory: $(Build.Repository.LocalPath)/backend/CustomerAPI/CustomerAPI.Test/
-          # - bash: docker image build -t "${{ variables.customerApiImageName}}" .
+            workingDirectory: $(Build.Repository.LocalPath)/back-end/CustomerAPI/CustoemrAPI.Test/
+
       - job: "Test_Container"
         displayName: Testing Customer API inside container
         steps:
-          - bash: echo $(Build.Repository.LocalPath)
-          # - bash: docker container run ${{ variables.customerApiImageName}}
+          - bash: docker container run ${{ variables.customerApiImageName}}
