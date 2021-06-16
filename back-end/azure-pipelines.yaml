@@ -3,8 +3,11 @@ trigger:
   - backend
 
 variables:
-  - name: customerApiImageName
+  - name: customerApiTestImageName
     value: palopodstreleny/customer-api-test:latest
+    readonly: true
+  - name: customerApiImageName
+    value: palopodstreleny/customer-api:latest
     readonly: true
 
 pool:
@@ -14,15 +17,22 @@ stages:
   - stage: Testing_Customer_API
     displayName: Testing Customer API
     jobs:
-      - job: "Build_Container"
-        displayName: Build Customer API container
+      - job: "Build_Container_Test"
+        displayName: Build Customer API Test Container
         steps:
-          - bash: docker image build -t ${{variables.customerApiImageName}} .
+          - bash: docker image build -t ${{variables.customerApiTestImageName}} .
             workingDirectory: back-end/CustomerAPI/CustomerAPI.Test
 
-      - job: "Test_Container"
-        displayName: Testing Customer API inside container
+      - job: "Run_Container_Test"
+        displayName: Runs Customer API Test Container
         steps:
-          - bash: ls
-          - bash: docker container run ${{ variables.customerApiImageName}}
-        dependsOn: "Build_Container"
+          - bash: docker container run ${{variables.customerApiTestImageName}}
+          - bash: docker container logs ${{variables.customerApiTestImageName}}
+        dependsOn: "Build_Container_Test"
+
+      - job: "Build_Container"
+        displayName: Build Customer API Container
+        steps:
+          - bash: docker image build -t ${{variables.customerApiImageName}}
+            workingDirectory: back-end/CustomerAPI/CustomerAPI.Test
+        dependsOn: "Run_Container_Test"
