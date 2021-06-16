@@ -62,7 +62,7 @@ stages:
             displayName: Pushing To Dockerhub
             inputs:
               command: push
-              container: ${{variables.customerApiImageName}}
+              repository: ${{variables.customerApiImageName}}
           - task: Docker@2
             inputs:
               command: logout
