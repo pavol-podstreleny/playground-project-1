@@ -1,10 +1,20 @@
-name: Customer-App-BackEnd-$(Date:yyyyMMdd)
+name: Customer-App-Backend-$(Date:yyyyMMdd)
 trigger:
   - backend
+
+variables:
+  - name: customer-api-image-name
+    value: palopodstrleleny/customer-api:latest
+
 stages:
   - stage: Testing Customer API
     displayName: Testing Customer API
-    script: echo Testin Customer API
-  - stage: Publishing Customer API Dockerfile
-    displayName: Publishing Customer API Dockerfile to Registry
-    script: echo Publishing to DockerFile registry
+    jobs:
+      - job: "Build-Container"
+        displayName: Build Customer API container
+        steps:
+          - bash: docker container build -t "${{ variables.customer-api-image-name}}"
+      - job: "Test-Container"
+        displayName: Testing Customer API inside container
+        steps:
+          - bash: docker container run ${{ variables.customer-api-image-name}}
