@@ -3,7 +3,7 @@ trigger:
   - backend
 
 variables:
-  - name: customer-api-image-name
+  - name: customerApiImageName
     value: palopodstrleleny/customer-api:latest
 
 stages:
@@ -13,8 +13,8 @@ stages:
       - job: "Build-Container"
         displayName: Build Customer API container
         steps:
-          - bash: docker container build -t "${{ variables.customer-api-image-name}}"
+          - bash: docker container build -t "${{ variables.customerApiImageName}}"
       - job: "Test-Container"
         displayName: Testing Customer API inside container
         steps:
-          - bash: docker container run ${{ variables.customer-api-image-name}}
+          - bash: docker container run ${{ variables.customerApiImageName}}
