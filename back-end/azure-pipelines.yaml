@@ -9,30 +9,63 @@ variables:
   - name: customerApiImageName
     value: palopodstreleny/customer-api:latest
     readonly: true
+  - name: tableStorageImageName
+    value: palopodstreleny/table-storage-emulator:latest
+    readonly: true
 
 pool:
   name: CoustomerProject
 
 stages:
-  - stage: Testing_Customer_API
-    displayName: Testing Customer API
+  - stage: Build
+    displayName: Build Containers For Backend
     jobs:
-      - job: "Build_Container_Test"
+      - job: "Build_Container_Customer_API_Test"
         displayName: Build Customer API Test Container
         steps:
           - bash: docker image build -t ${{variables.customerApiTestImageName}} .
             workingDirectory: back-end/CustomerAPI
 
-      - job: "Run_Container_Test"
-        displayName: Runs Customer API Test Container
-        steps:
-          - bash: docker container run ${{variables.customerApiTestImageName}}
-          - bash: docker container logs ${{variables.customerApiTestImageName}}
-        dependsOn: "Build_Container_Test"
-
-      - job: "Build_Container"
+      - job: "Build_Container_Customer_API"
         displayName: Build Customer API Container
         steps:
           - bash: docker image build -t ${{variables.customerApiImageName}}
             workingDirectory: back-end/CustomerAPI/CustomerAPI/
-        dependsOn: "Run_Container_Test"
+
+      - job: "Build_Container_Table_Storage"
+        displayName: Build Table Storage Container
+        steps:
+          - bash: docker image build -t ${{variables.tableStorageImageName}}
+            workingDirectory: back-end/StorageTable/
+
+  - stage: Test
+    displayName: Test Containers For Backend
+    jobs:
+      - job: "Test_Container_Customer_API"
+        displayName: Test Customer API Container
+        steps:
+          - bash: docker container run ${{variables.customerApiTestImageName}}
+    dependsOn: Build
+
+  - stage: Publish
+    displayName: Publish Containers To DockerHub
+    jobs:
+      - job: Publish_Container_Customer_API
+        displayName: Publish Container Customer API To Docker
+        steps:
+          - task: Docker@2
+            displayName: Login To DockerHub
+            inputs:
+              command: login
+              containerRegistry: dockerhub
+          - task: Docker@2
+            displayName: Pushing To Dockerhub
+            inputs:
+              command: push
+              container: ${{variables.customerApiImageName}}
+          - task: Docker@2
+            inputs:
+              command: logout
+              containerRegistry: dockerhub
+
+    dependsOn: Test
