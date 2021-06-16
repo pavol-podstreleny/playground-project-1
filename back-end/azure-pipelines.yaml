@@ -17,7 +17,7 @@ stages:
       - job: "Build_Container"
         displayName: Build Customer API container
         steps:
-          - bash: docker image build -t "${{ variables.customerApiImageName}}"
+          - bash: docker image build -t "${{ variables.customerApiImageName}}" .
       - job: "Test_Container"
         displayName: Testing Customer API inside container
         steps:
