@@ -5,6 +5,11 @@ trigger:
 variables:
   - name: customerApiImageName
     value: palopodstrleleny/customer-api:latest
+  - name: poolName
+    value: CoustomerProject
+
+pool:
+  name: ${{variables.poolName}}
 
 stages:
   - stage: Testing_Customer_API
