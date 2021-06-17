@@ -1,11 +1,7 @@
-import CustomerTable from "./components/customerTable";
+import { CustomerListSection } from "./customerListSection";
 
 function App() {
-  return (
-    <div>
-      <CustomerTable />
-    </div>
-  );
+  return <CustomerListSection />;
 }
 
 export default App;
