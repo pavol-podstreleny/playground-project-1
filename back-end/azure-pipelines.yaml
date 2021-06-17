@@ -1,6 +1,7 @@
 name: Customer-App-Backend-$(Date:yyyyMMdd)
 trigger:
   - backend
+  - cicd
 
 variables:
   - name: customerApiTestImageName
@@ -12,6 +13,9 @@ variables:
   - name: tableStorageImageName
     value: palopodstreleny/table-storage-emulator
     readonly: true
+  - name: backendDir
+    value: back-end/
+    readonly: true
 
 pool:
   name: CoustomerProject
@@ -20,6 +24,12 @@ stages:
   - stage: Build
     displayName: Build Containers For Backend
     jobs:
+      - job: "Build_BackEnd_Containers"
+        displayName: "Build Backend Containers"
+        steps:
+          - bash: sh run-backend-build.sh
+            workingDirectory: ${{variables.backendDir}}
+
       - job: "Build_Container_Customer_API_Test"
         displayName: Build Customer API Test Container
         steps:
