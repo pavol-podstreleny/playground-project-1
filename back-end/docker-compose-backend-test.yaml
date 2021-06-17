@@ -1,0 +1,5 @@
+version: "3.7"
+
+services:
+  customer-api-test:
+    image: palopodstreleny/customer-api-test:latest
