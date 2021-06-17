@@ -4,3 +4,9 @@ services:
   storage-table:
     build:
       context: ./StorageTable
+  customer-api:
+    build:
+      context: ./CustomerAPI/CustomerAPI
+  customer-api-test:
+    build:
+      context: ./CustomerAPI
