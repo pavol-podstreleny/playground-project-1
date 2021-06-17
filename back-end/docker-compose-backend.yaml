@@ -2,6 +2,6 @@ version: "3.7"
 
 services:
   storage-table:
-    image: palopodstreleny/storage-table-emulator:${Build.BuildId:-local}
+    image: palopodstreleny/storage-table-emulator:latest
     build:
       context: ./StorageTable
