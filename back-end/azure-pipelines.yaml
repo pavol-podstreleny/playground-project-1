@@ -16,28 +16,37 @@ variables:
   - name: backendDir
     value: back-end/
     readonly: true
+  - name: backendCI
+    value: back-end/ci/
+    readonly: true
 
 pool:
   name: CoustomerProject
 
 stages:
+  - stage: Verify
+    displayName: Verify Docker and Docker-Compose dependencies
+    jobs:
+      - job:
+        steps:
+          - bash: sh verify.sh
+            workingDirectory: ${{variables.backendCI}}
+
   - stage: Build
     displayName: Build Containers For Backend
     jobs:
-      - job: Build_BackEnd_Containers
-        displayName: Build Backend Containers
+      - job:
         steps:
-          - bash: sh run-backend-build.sh
-            workingDirectory: ${{variables.backendDir}}
+          - bash: sh build.sh
+            workingDirectory: ${{variables.backendCI}}
 
   - stage: Test
     displayName: Test Containers For Backend
     jobs:
-      - job: Test_Backend_Containers
-        displayName: Test Backend Containers
+      - job:
         steps:
-          - bash: sh run-backend-test.sh
-            workingDirectory: ${{variables.backendDir}}
+          - bash: sh test.sh
+            workingDirectory: ${{variables.backendCI}}
     dependsOn: Build
 
   - stage: Publish

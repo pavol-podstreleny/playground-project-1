@@ -1,0 +1,30 @@
+version: "3.17"
+
+services:
+  storage-table:
+    ports:
+      - "10002:10002"
+    volumes:
+      - table-storage-volume:/storage
+    networks:
+      - customer-network
+
+  customer-api:
+    ports:
+      - "8080:80"
+    secrets:
+      - source: table-storage-secret
+        target: /app/secrets.json
+    networks:
+      - customer-network
+
+secrets:
+  table-storage-secret:
+    file: ./StorageTable/secrets.json
+
+volumes:
+  table-storage-volume:
+
+networks:
+  customer-network:
+    name: customer-dev-net
