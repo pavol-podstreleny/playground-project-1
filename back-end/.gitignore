@@ -447,5 +447,5 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-CustomerAPI/secrets.json
-coveragereport/
+src/CustomerAPI/secrets.json
+src/CustoemrAPI.Test/coveragereport/
