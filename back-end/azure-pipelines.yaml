@@ -54,7 +54,7 @@ stages:
     jobs:
       - job:
         steps:
-          - bash: sh verify.sh
+          - bash: sh publish.sh
             workingDirectory: ${{variables.backendCI}}
 
   - stage: Publish
