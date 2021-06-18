@@ -13,9 +13,6 @@ variables:
   - name: tableStorageImageName
     value: palopodstreleny/table-storage-emulator
     readonly: true
-  - name: backendDir
-    value: back-end/
-    readonly: true
   - name: backendCI
     value: back-end/ci/
     readonly: true
