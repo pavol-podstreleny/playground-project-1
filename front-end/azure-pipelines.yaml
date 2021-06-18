@@ -1,0 +1,59 @@
+name: Customer-App-Frontend-$(Date:yyyyMMdd)
+trigger:
+  - frontend
+  - cicd
+
+variables:
+  - name: frontendCI
+    value: front-end/ci/
+    readonly: true
+  - name: ci
+    value: ci/
+    readonly: true
+
+pool:
+  name: CoustomerProject
+
+stages:
+  - stage: Verify
+    displayName: Verify Docker and Docker-Compose dependencies
+    jobs:
+      - job:
+        displayName: Verify docker and docker-compose
+        steps:
+          - bash: sh verify.sh
+            workingDirectory: ${{variables.ci}}
+
+  - stage: Build
+    displayName: Build Containers For Frontend
+    jobs:
+      - job:
+        displayName: Build Containers
+        steps:
+          - bash: sh build.sh
+            workingDirectory: ${{variables.frontendCI}}
+
+  - stage: Test
+    displayName: Test Containers For Frontend
+    jobs:
+      - job:
+        displayName: Test Containers
+        steps:
+          - bash: sh test.sh
+            workingDirectory: ${{variables.frontendCI}}
+    dependsOn: Build
+
+  - stage: Push
+    displayName: Publish Containers To DockerHub
+    jobs:
+      - job:
+        displayName: Publish Containers
+        steps:
+          - bash: sh login.sh
+            env:
+              DOCKERLOGIN: $(DockerLogin)
+              DOCKERCREDENTIALS: $(DockerCredentials)
+            workingDirectory: ${{variables.ci}}
+          - bash: sh publish.sh
+            workingDirectory: ${{variables.frontendCI}}
+    dependsOn: Test
