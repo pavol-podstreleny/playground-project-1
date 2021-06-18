@@ -3,10 +3,10 @@ version: "3.7"
 services:
   storage-table:
     build:
-      context: ./StorageTable
+      context: ./src/StorageTable
   customer-api:
     build:
-      context: ./CustomerAPI/CustomerAPI
+      context: ./src/CustomerAPI/
   customer-api-test:
     build:
-      context: ./CustomerAPI
+      context: ./src/CustomerAPI.Test
