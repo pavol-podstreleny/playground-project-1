@@ -49,6 +49,14 @@ stages:
             workingDirectory: ${{variables.backendCI}}
     dependsOn: Build
 
+  - stage: PublishCustom
+    displayName: Publish Containers To DockerHub
+    jobs:
+      - job:
+        steps:
+          - bash: sh verify.sh
+            workingDirectory: ${{variables.backendCI}}
+
   - stage: Publish
     displayName: Publish Containers To DockerHub
     jobs:
