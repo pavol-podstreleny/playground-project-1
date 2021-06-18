@@ -16,6 +16,7 @@ stages:
     displayName: Verify Docker and Docker-Compose dependencies
     jobs:
       - job:
+        displayName: Verify docker and docker-compose
         steps:
           - bash: sh verify.sh
             workingDirectory: ${{variables.backendCI}}
@@ -24,6 +25,7 @@ stages:
     displayName: Build Containers For Backend
     jobs:
       - job:
+        displayName: Build Containers
         steps:
           - bash: sh build.sh
             workingDirectory: ${{variables.backendCI}}
@@ -32,6 +34,7 @@ stages:
     displayName: Test Containers For Backend
     jobs:
       - job:
+        displayName: Test Containers
         steps:
           - bash: sh test.sh
             workingDirectory: ${{variables.backendCI}}
@@ -41,6 +44,7 @@ stages:
     displayName: Publish Containers To DockerHub
     jobs:
       - job:
+        displayName: Publish Containers
         steps:
           - bash: sh publish.sh
             env:
