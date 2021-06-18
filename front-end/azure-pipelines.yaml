@@ -1,7 +1,6 @@
 name: Customer-App-Frontend-$(Date:yyyyMMdd)
 trigger:
   - frontend
-  - cicd
 
 variables:
   - name: frontendCI
@@ -19,7 +18,7 @@ stages:
     displayName: Verify Docker and Docker-Compose dependencies
     jobs:
       - job:
-        timeoutInMinutes: 2
+        timeoutInMinutes: 8
         displayName: Verify docker and docker-compose
         steps:
           - bash: sh verify.sh
@@ -29,7 +28,7 @@ stages:
     displayName: Build Containers For Frontend
     jobs:
       - job:
-        timeoutInMinutes: 2
+        timeoutInMinutes: 8
         displayName: Build Containers
         steps:
           - bash: sh build.sh
@@ -39,7 +38,7 @@ stages:
     displayName: Test Containers For Frontend
     jobs:
       - job:
-        timeoutInMinutes: 2
+        timeoutInMinutes: 8
         displayName: Test Containers
         steps:
           - bash: sh test.sh
@@ -50,7 +49,7 @@ stages:
     displayName: Publish Containers To DockerHub
     jobs:
       - job:
-        timeoutInMinutes: 2
+        timeoutInMinutes: 8
         displayName: Publish Containers
         steps:
           - bash: sh login.sh
