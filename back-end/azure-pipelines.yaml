@@ -4,15 +4,6 @@ trigger:
   - cicd
 
 variables:
-  - name: customerApiTestImageName
-    value: palopodstreleny/customer-api-test
-    readonly: true
-  - name: customerApiImageName
-    value: palopodstreleny/customer-api
-    readonly: true
-  - name: tableStorageImageName
-    value: palopodstreleny/table-storage-emulator
-    readonly: true
   - name: backendCI
     value: back-end/ci/
     readonly: true
@@ -46,7 +37,7 @@ stages:
             workingDirectory: ${{variables.backendCI}}
     dependsOn: Build
 
-  - stage: PublishCustom
+  - stage: Push
     displayName: Publish Containers To DockerHub
     jobs:
       - job:
@@ -56,37 +47,4 @@ stages:
               DOCKERLOGIN: $(DockerLogin)
               DOCKERCREDENTIALS: $(DockerCredentials)
             workingDirectory: ${{variables.backendCI}}
-
-  - stage: Publish
-    displayName: Publish Containers To DockerHub
-    jobs:
-      - job: Publish_Containers_To_DockerHub
-        displayName: Publish Container Customer API To Docker
-        steps:
-          - task: Docker@2
-            displayName: Login To DockerHub
-            inputs:
-              command: login
-              containerRegistry: dockerhub
-          - task: Docker@2
-            displayName: Pushing Customer API To Dockerhub
-            inputs:
-              command: push
-              repository: ${{variables.customerApiImageName}}
-              tags: |
-                latest
-
-          - task: Docker@2
-            displayName: Pushing Storage Table To Dockerhub
-            inputs:
-              command: push
-              repository: ${{variables.tableStorageImageName}}
-              tags: |
-                latest
-
-          - task: Docker@2
-            inputs:
-              command: logout
-              containerRegistry: dockerhub
-
     dependsOn: Test
