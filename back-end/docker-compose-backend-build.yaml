@@ -6,7 +6,8 @@ services:
       context: ./src/StorageTable
   customer-api:
     build:
-      context: ./src/CustomerAPI/
+      context: ./src/CustomerAPI
   customer-api-test:
     build:
-      context: ./src/CustomerAPI.Test
+      context: ./
+      dockerfile: ./test/CustomerApi.Test
