@@ -1,0 +1,9 @@
+version: "3.7"
+
+services:
+  storage-table:
+    image: palopodstreleny/storage-table-emulator:latest
+  customer-api:
+    image: palopodstreleny/customer-api:latest
+  customer-api-test:
+    image: palopodstreleny/customer-api-test:latest

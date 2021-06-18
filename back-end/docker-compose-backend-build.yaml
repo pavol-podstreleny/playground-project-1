@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  storage-table:
+    build:
+      context: ./src/StorageTable
+  customer-api:
+    build:
+      context: ./src/CustomerAPI
+  customer-api-test:
+    build:
+      context: ./
+      dockerfile: ./test/CustomerAPI.Test/Dockerfile

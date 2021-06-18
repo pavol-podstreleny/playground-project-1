@@ -1,0 +1,54 @@
+name: Customer-App-Backend-$(Date:yyyyMMdd)
+trigger:
+  - backend
+  - cicd
+
+variables:
+  - name: backendCI
+    value: back-end/ci/
+    readonly: true
+
+pool:
+  name: CoustomerProject
+
+stages:
+  - stage: Verify
+    displayName: Verify Docker and Docker-Compose dependencies
+    jobs:
+      - job:
+        displayName: Verify docker and docker-compose
+        steps:
+          - bash: sh verify.sh
+            workingDirectory: ${{variables.backendCI}}
+
+  - stage: Build
+    displayName: Build Containers For Backend
+    jobs:
+      - job:
+        displayName: Build Containers
+        steps:
+          - bash: sh build.sh
+            workingDirectory: ${{variables.backendCI}}
+
+  - stage: Test
+    displayName: Test Containers For Backend
+    jobs:
+      - job:
+        displayName: Test Containers
+        steps:
+          - bash: sh test.sh
+            workingDirectory: ${{variables.backendCI}}
+    dependsOn: Build
+
+  - stage: Push
+    displayName: Publish Containers To DockerHub
+    jobs:
+      - job:
+        displayName: Publish Containers
+        steps:
+          - bash: sh publish.sh
+            env:
+              DOCKERLOGIN: $(DockerLogin)
+              DOCKERCREDENTIALS: $(DockerCredentials)
+            workingDirectory: ${{variables.backendCI}}
+    dependsOn: Test
