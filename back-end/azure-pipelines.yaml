@@ -7,6 +7,9 @@ variables:
   - name: backendCI
     value: back-end/ci/
     readonly: true
+  - name: ci
+    value: ci/
+    readonly: true
 
 pool:
   name: CoustomerProject
@@ -19,7 +22,7 @@ stages:
         displayName: Verify docker and docker-compose
         steps:
           - bash: sh verify.sh
-            workingDirectory: ${{variables.backendCI}}
+            workingDirectory: ${{variables.ci}}
 
   - stage: Build
     displayName: Build Containers For Backend
@@ -46,9 +49,11 @@ stages:
       - job:
         displayName: Publish Containers
         steps:
-          - bash: sh publish.sh
+          - bash: sh login.sh
             env:
               DOCKERLOGIN: $(DockerLogin)
               DOCKERCREDENTIALS: $(DockerCredentials)
+            workingDirectory: ${{variables.ci}}
+          - bash: sh publish.sh
             workingDirectory: ${{variables.backendCI}}
     dependsOn: Test
