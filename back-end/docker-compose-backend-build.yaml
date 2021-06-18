@@ -10,4 +10,4 @@ services:
   customer-api-test:
     build:
       context: ./
-      dockerfile: ./test/CustomerApi.Test/Dockerfile
+      dockerfile: ./test/CustomerAPI.Test/Dockerfile
