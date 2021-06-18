@@ -52,6 +52,9 @@ stages:
       - job:
         steps:
           - bash: sh publish.sh
+            env:
+              DOCKERLOGIN: $(DockerLogin)
+              DOCKERPASS: $(DockerCredentials)
             workingDirectory: ${{variables.backendCI}}
 
   - stage: Publish
