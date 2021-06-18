@@ -1,0 +1,7 @@
+version: "3.7"
+
+services:
+  customer-client:
+    build:
+      context: ./
+      dockerfile: ./src/server/Dockerfile

@@ -1,0 +1,3 @@
+services:
+  customer-client:
+    image: palopodstreleny/customer-client:latest
