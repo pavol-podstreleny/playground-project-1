@@ -9,4 +9,4 @@ services:
 
 networks:
   customer-network:
-    name: customer-dev-net
+    name: customer-dev-client-net
