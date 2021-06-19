@@ -22,6 +22,7 @@
 **/secrets.dev.yaml
 **/values.dev.yaml
 **/azure-pipelines.yaml
+**/TestResult
 LICENSE
 README.md
 ci/

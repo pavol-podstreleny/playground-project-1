@@ -20,7 +20,7 @@ services:
 
 secrets:
   table-storage-secret:
-    file: ./StorageTable/secrets.json
+    file: ./src/StorageTable/secrets.json
 
 volumes:
   table-storage-volume:
