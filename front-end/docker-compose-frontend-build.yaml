@@ -1,7 +1,13 @@
 version: "3.7"
 
+x-args: &args
+  args:
+    BUILD_NUMBER: ${BUILD_NUMBER:-0}
+    BUILD_TAG: ${BUILD_TAG:-local}
+
 services:
   customer-client:
     build:
       context: ./
       dockerfile: ./src/server/Dockerfile
+      <<: *args
