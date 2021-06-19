@@ -44,6 +44,11 @@ stages:
         steps:
           - bash: sh test.sh
             workingDirectory: ${{variables.backendCI}}
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: "xUnit"
+              testResultsFiles: "**/TestResults/**/*.xml"
+              failTaskOnFailedTests: true
     dependsOn: Build
 
   - stage: Push
