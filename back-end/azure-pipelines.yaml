@@ -49,6 +49,7 @@ stages:
               testResultsFormat: "xUnit"
               testResultsFiles: "**/*.trx"
               failTaskOnFailedTests: true
+              testRunTitle: Testing Customer API
     dependsOn: Build
 
   - stage: Push
