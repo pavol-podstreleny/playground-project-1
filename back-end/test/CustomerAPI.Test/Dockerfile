@@ -16,5 +16,5 @@ LABEL version="1.0"
 LABEL build_number=${BUILD_NUMBER}
 LABEL build_tag=${BUILD_TAG}
 
-CMD dotnet test "test/CustomerAPI.Test/CustomerAPI.Test.csproj" --collect:"XPlat Code Coverage"
+CMD dotnet test "test/CustomerAPI.Test/CustomerAPI.Test.csproj" --logger trx
 

@@ -47,7 +47,7 @@ stages:
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: "xUnit"
-              testResultsFiles: "**/TestResults/**/*.xml"
+              testResultsFiles: "**/*.trx"
               failTaskOnFailedTests: true
     dependsOn: Build
 
