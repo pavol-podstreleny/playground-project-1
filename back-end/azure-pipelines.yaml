@@ -1,4 +1,4 @@
-name: Customer-App-Backend-$(Date:yyyyMMdd)
+name: Backend-Build-$(Build.BuildId)-$(Date:yyyyMMdd)
 trigger:
   - backend
   - cicd

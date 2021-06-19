@@ -1,4 +1,4 @@
-name: Customer-App-Frontend-$(Date:yyyyMMdd)
+name: Frontend-Build-$(Build.BuildId)-$(Date:yyyy-MM-dd)
 trigger:
   - frontend
   - cicd
