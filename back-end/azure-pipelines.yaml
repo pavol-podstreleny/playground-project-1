@@ -55,8 +55,8 @@ stages:
         steps:
           - bash: sh login.sh
             env:
-              DOCKERLOGIN: $(DockerLogin)
-              DOCKERCREDENTIALS: $(DockerCredentials)
+              DOCKER_LOGIN: $(Docker.login)
+              DOCKER_CREDENTIALS: $(Docker.credentials)
             workingDirectory: ${{variables.ci}}
           - bash: sh publish.sh
             workingDirectory: ${{variables.backendCI}}
