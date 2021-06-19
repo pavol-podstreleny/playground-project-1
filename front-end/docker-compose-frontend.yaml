@@ -1,3 +1,3 @@
 services:
   customer-client:
-    image: ${DOCKER_REGISTRY:-docker.io}/palopodstreleny/customer-client:v1-build-${BUILD_TAG:-local}
+    image: ${DOCKER_REGISTRY:-docker.io}/palopodstreleny/customer-client:v1-build-${BUILD_NUMBER:-local}
