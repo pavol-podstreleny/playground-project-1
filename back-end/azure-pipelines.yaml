@@ -46,7 +46,7 @@ stages:
             workingDirectory: ${{variables.backendCI}}
           - task: PublishTestResults@2
             inputs:
-              testResultsFormat: "xUnit"
+              testResultsFormat: "VSTest"
               testResultsFiles: "**/*.trx"
               failTaskOnFailedTests: true
               testRunTitle: Testing Customer API
