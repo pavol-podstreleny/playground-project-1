@@ -1,6 +1,16 @@
 # AZURE TABLE EMULATOR 
 FROM node
+
 RUN npm install -g azurite@2
+
+ARG BUILD_NUMBER=0
+ARG BUILD_TAG=local
+
+LABEL version="1.0"
+LABEL build_number=${BUILD_NUMBER}
+LABEL build_tag=${BUILD_TAG}
+
 VOLUME  /storage
 WORKDIR /storage
+
 CMD ["azurite-table","-l","/storage"] 

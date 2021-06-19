@@ -4,6 +4,7 @@ trigger:
   - cicd
 
 variables:
+  - group: customer-app
   - name: backendCI
     value: back-end/ci/
     readonly: true

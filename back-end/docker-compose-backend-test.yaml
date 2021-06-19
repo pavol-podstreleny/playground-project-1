@@ -2,4 +2,4 @@ version: "3.7"
 
 services:
   customer-api-test:
-    image: palopodstreleny/customer-api-test:latest
+    image: ${DOCKER_REGISTRY:-docker.io}/palopodstreleny/customer-api-test:v1-build-${BUILD_NUMBER:-local}

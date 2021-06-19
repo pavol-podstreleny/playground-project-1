@@ -2,8 +2,8 @@ version: "3.7"
 
 services:
   storage-table:
-    image: palopodstreleny/storage-table-emulator:latest
+    image: ${DOCKER_REGISTRY:-docker.io}/palopodstreleny/storage-table-emulator:v1-build-${BUILD_NUMBER:-local}
   customer-api:
-    image: palopodstreleny/customer-api:latest
+    image: ${DOCKER_REGISTRY:-docker.io}/palopodstreleny/customer-api:v1-build-${BUILD_NUMBER:-local}
   customer-api-test:
-    image: palopodstreleny/customer-api-test:latest
+    image: ${DOCKER_REGISTRY:-docker.io}/palopodstreleny/customer-api-test:v1-build-${BUILD_NUMBER:-local}

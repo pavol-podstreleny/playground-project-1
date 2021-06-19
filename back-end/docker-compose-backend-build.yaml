@@ -1,13 +1,21 @@
 version: "3.7"
 
+x-args: &args:
+  args:
+    BUILDNUMBER: ${BUILD_NUMBER:-0}
+    BUILDTAG: ${BUILD_TAG:-local}
+
 services:
   storage-table:
     build:
       context: ./src/StorageTable
+      <<: &args
   customer-api:
     build:
       context: ./src/CustomerAPI
+      <<: &args
   customer-api-test:
     build:
       context: ./
       dockerfile: ./test/CustomerAPI.Test/Dockerfile
+      <<: &args
