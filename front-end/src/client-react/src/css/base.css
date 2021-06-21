@@ -18,6 +18,10 @@ table {
   width: 100%;
 }
 
+.visible {
+  display: block;
+}
+
 .button {
   display: block;
   padding: 1rem 1.4rem;
@@ -35,6 +39,12 @@ table {
 
 .button-primary:hover {
   background: rgb(12, 109, 184);
+}
+
+.ul-general {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
 }
 
 h1 {

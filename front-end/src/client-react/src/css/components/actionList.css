@@ -1,0 +1,29 @@
+.action-list {
+  position: absolute;
+  z-index: 99;
+  background: #fff;
+  top: 4.3rem;
+  right: 1.6rem;
+  width: 200px;
+  display: none;
+}
+
+.action-list .card {
+  padding: 1rem 0px;
+  box-shadow: 0 10px 10x rgba(0, 0, 0, 0.8);
+}
+
+.action-list li {
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-family: "Open Sans", sans-serif;
+  padding: 1rem;
+}
+
+.action-list li:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+tr:hover .action-list {
+  background: #fff;
+}

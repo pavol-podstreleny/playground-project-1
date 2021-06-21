@@ -48,6 +48,8 @@ export const CustomerTable = () => {
               data={customer}
               columns={finalColumns}
               key={customer.RowKey + customer.PartitionKey}
+              actionHandlers={[]}
+              actionItems={["Update", "Delete"]}
             ></TableRowAction>
           );
         })}
