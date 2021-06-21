@@ -5,12 +5,6 @@ trigger:
 
 variables:
   - group: customer-app
-  - name: backendCI
-    value: back-end/ci/
-    readonly: true
-  - name: ci
-    value: ci/
-    readonly: true
 
 pool:
   name: CoustomerProject
@@ -23,7 +17,7 @@ stages:
         displayName: Verify docker and docker-compose
         steps:
           - bash: sh verify.sh
-            workingDirectory: ${{variables.ci}}
+            workingDirectory: $(Path.ci)
 
   - stage: Build
     displayName: Build Containers For Backend
@@ -33,7 +27,7 @@ stages:
         displayName: Build Containers
         steps:
           - bash: sh build.sh
-            workingDirectory: ${{variables.backendCI}}
+            workingDirectory: $(Path.backendci)
 
   - stage: Test
     displayName: Test Containers For Backend
@@ -43,7 +37,7 @@ stages:
         displayName: Test Containers
         steps:
           - bash: sh test.sh
-            workingDirectory: ${{variables.backendCI}}
+            workingDirectory: $(Path.backendci)
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: "VSTest"
@@ -63,7 +57,7 @@ stages:
             env:
               DOCKER_LOGIN: $(Docker.login)
               DOCKER_CREDENTIALS: $(Docker.credentials)
-            workingDirectory: ${{variables.ci}}
+            workingDirectory: $(Path.ci)
           - bash: sh publish.sh
-            workingDirectory: ${{variables.backendCI}}
+            workingDirectory: $(Path.backendci)
     dependsOn: Test
