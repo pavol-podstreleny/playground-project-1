@@ -1,0 +1,57 @@
+name: Monitor-Build-$(Build.BuildId)-$(Date:yyyy-MM-dd)
+trigger:
+  - cicd
+
+variables:
+  - group: customer-app
+
+pool:
+  name: CoustomerProject
+
+stages:
+  - stage: Verify
+    displayName: Verify Docker and Docker-Compose dependencies
+    jobs:
+      - job:
+        timeoutInMinutes: 8
+        displayName: Verify docker and docker-compose
+        steps:
+          - bash: sh verify.sh
+            workingDirectory: $(Path.ci)
+
+  - stage: Build
+    displayName: Build Containers For Monitoring
+    jobs:
+      - job:
+        timeoutInMinutes: 8
+        displayName: Build Containers
+        steps:
+          - bash: sh build.sh
+            workingDirectory: $(Path.monitorci)
+
+  - stage: Test
+    displayName: Test Containers For Monitoring
+    jobs:
+      - job:
+        timeoutInMinutes: 8
+        displayName: Test Containers
+        steps:
+          - bash: sh test.sh
+            workingDirectory: $(Path.monitorci)
+    dependsOn: Build
+
+  - stage: Push
+    displayName: Publish Containers To DockerHub
+    jobs:
+      - job:
+        timeoutInMinutes: 8
+        displayName: Publish Containers
+        steps:
+          - bash: sh login.sh
+            env:
+              DOCKER_LOGIN: $(Docker.login)
+              DOCKER_CREDENTIALS: $(Docker.credentials)
+            workingDirectory: $(Path.ci)
+          - bash: sh publish.sh
+            workingDirectory: $(Path.frontendci)
+    dependsOn: Test

@@ -1,0 +1,7 @@
+version: "3.7"
+
+services:
+  grafana:
+    image: ${DOCKER_REGISTRY:-docker.io}/palopodstreleny/grafana:v1-build-${BUILD_NUMBER:-local}
+  prometheus:
+    image: ${DOCKER_REGISTRY:-docker.io}/palopodstreleny/prometheus:v1-build-${BUILD_NUMBER:-local}
