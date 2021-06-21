@@ -1,0 +1,49 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+table {
+  box-sizing: border-box;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.center {
+  width: 100%;
+}
+
+.button {
+  display: block;
+  padding: 1rem 1.4rem;
+  color: rgba(255, 255, 255, 1);
+  background: transparent;
+  border: none;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.button-primary {
+  background: rgba(0, 120, 212, 1);
+}
+
+.button-primary:hover {
+  background: rgb(12, 109, 184);
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+@media screen and (min-width: 960px) {
+  .center {
+    margin: 0 auto;
+    width: 960px;
+  }
+}
