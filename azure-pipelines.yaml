@@ -1,0 +1,61 @@
+name: ApplicationDev-Build-$(Build.BuildId)-$(Date:yyyyMMdd)
+trigger:
+  - main
+
+variables:
+  - group: customer-app
+
+pool:
+  name: CoustomerProject
+
+stages:
+  - stage: Verify
+    displayName: Verify Docker and Docker-Compose dependencies
+    jobs:
+      - job:
+        displayName: Verify docker and docker-compose
+        steps:
+          - bash: sh verify.sh
+            workingDirectory: $(Path.ci)
+
+  - stage: Build
+    displayName: Build Containers For Backend
+    jobs:
+      - job:
+        timeoutInMinutes: 8
+        displayName: Build Containers
+        steps:
+          - bash: sh build.sh
+            workingDirectory: $(Path.ci)
+
+  - stage: Test
+    displayName: Test Containers
+    jobs:
+      - job:
+        timeoutInMinutes: 8
+        displayName: Test Containers
+        steps:
+          - bash: sh test.sh
+            workingDirectory: $(Path.ci)
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: "VSTest"
+              testResultsFiles: "**/*.trx"
+              failTaskOnFailedTests: true
+    dependsOn: Build
+
+  - stage: Push
+    displayName: Publish Containers To DockerHub
+    jobs:
+      - job:
+        timeoutInMinutes: 8
+        displayName: Publish Containers
+        steps:
+          - bash: sh login.sh
+            env:
+              DOCKER_LOGIN: $(Docker.login)
+              DOCKER_CREDENTIALS: $(Docker.credentials)
+            workingDirectory: $(Path.ci)
+          - bash: sh publish.sh
+            workingDirectory: $(Path.ci)
+    dependsOn: Test
