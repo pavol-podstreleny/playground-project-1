@@ -5,4 +5,4 @@ if [ $# -eq 0 ]
     path="${1}"
 fi
 
-docker-compose -f ${path}docker-compose-backend.yaml -f ${path}docker-compose-backend-build.yaml push
+docker-compose -f ${path}docker-compose-backend.yaml
