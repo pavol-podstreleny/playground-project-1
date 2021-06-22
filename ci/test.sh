@@ -1,1 +1,1 @@
-sh ../backend/ci/test.sh ../backend
+sh ../backend/ci/test.sh ../backend/
