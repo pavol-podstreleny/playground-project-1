@@ -2,15 +2,6 @@ import React, { useEffect, useState } from "react";
 import getFakeCustomers from "./services/fakeCustomerApi";
 import { TableRowAction } from "./components/tableRowAction";
 import { TableColumnAction } from "./components/tableColumnAction";
-import styled from "styled-components";
-import { Card } from "./components/card";
-
-const StyledTable = styled.table`
-  box-sizing: border-box;
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-`;
 
 export const CustomerTable = () => {
   const [customers, setCustomers] = useState([]);
@@ -46,7 +37,7 @@ export const CustomerTable = () => {
     });
 
   return (
-    <StyledTable>
+    <table>
       <thead>
         <TableColumnAction columns={displayColumns} />
       </thead>
@@ -57,10 +48,12 @@ export const CustomerTable = () => {
               data={customer}
               columns={finalColumns}
               key={customer.RowKey + customer.PartitionKey}
+              actionHandlers={[]}
+              actionItems={["Update", "Delete"]}
             ></TableRowAction>
           );
         })}
       </tbody>
-    </StyledTable>
+    </table>
   );
 };

@@ -1,0 +1,7 @@
+.table-columns th {
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-family: "Open Sans", sans-serif;
+  padding: 0.8rem 1.8rem;
+}

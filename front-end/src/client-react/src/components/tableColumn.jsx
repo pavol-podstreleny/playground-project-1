@@ -1,18 +1,11 @@
-import styled from "styled-components";
-
-export const StyledTableHeader = styled.th`
-  color: rgba(0, 0, 0, 0.55);
-  font-size: 0.75rem;
-  font-weight: 600;
-  font-family: "Open Sans", sans-serif;
-  padding: 8px 18px;
-`;
+import React from "react";
+import "../css/components/tableColumn.css";
 
 export const TableColumn = ({ columns, children }) => {
   return (
-    <tr>
+    <tr className="table-columns">
       {columns.map((item, itemIdx) => {
-        return <StyledTableHeader key={itemIdx}>{item}</StyledTableHeader>;
+        return <th key={itemIdx}>{item}</th>;
       })}
       {children}
     </tr>

@@ -1,9 +1,9 @@
-import { TableColumn, StyledTableHeader } from "./tableColumn";
+import { TableColumn } from "./tableColumn";
 
 export const TableColumnAction = ({ columns }) => {
   return (
     <TableColumn columns={columns}>
-      <StyledTableHeader></StyledTableHeader>
+      <th></th>
     </TableColumn>
   );
 };

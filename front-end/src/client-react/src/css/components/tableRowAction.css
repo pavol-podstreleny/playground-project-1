@@ -1,0 +1,21 @@
+td.table-action-column {
+  padding: 0px;
+}
+
+.table-action-dots {
+  /* width: 28px;
+  height: 28px; */
+  padding: 0.1rem 0.25rem;
+  display: block;
+  width: 28px;
+  text-align: center;
+  visibility: hidden;
+  font-size: 2.5rem;
+}
+.table-action-dots:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+tr:hover .table-action-dots {
+  visibility: visible;
+}

@@ -1,0 +1,15 @@
+.table-data {
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.table-data:hover {
+  background: rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+}
+
+.table-data td {
+  padding: 1.6rem 1.8rem;
+  font-size: 1.4rem;
+  font-family: "Montserrat", sans-serif;
+}
