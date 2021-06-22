@@ -449,3 +449,8 @@ $RECYCLE.BIN/
 
 src/CustomerAPI/secrets.json
 src/CustoemrAPI.Test/coveragereport/
+
+**/.vs/
+**/bin/
+**/obj/
+**/secrets.json
