@@ -1,16 +1,16 @@
 version: "3.17"
 
-services:    
-    prometheus:
-        volumes:
-        - type: bind
-          source: ./Prometheus/prometheus.yml
-          target: /etc/prometheus/prometheus.yml
-          read_only: true
-        ports:
-        - "9090:9090"
-        networks:
-        - customer-network
+services:
+  prometheus:
+    volumes:
+      - type: bind
+        source: ./Prometheus/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+        read_only: true
+    ports:
+      - "9090:9090"
+    networks:
+      - customer-network
 
   grafana:
     ports:
@@ -19,7 +19,5 @@ services:
       - customer-network
 
 networks:
-    customer-network:
-        name: customer-network-monitor-dev
-
-
+  customer-network:
+    name: customer-network-monitor-dev
