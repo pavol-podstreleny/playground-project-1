@@ -1,1 +1,8 @@
-docker-compose -f ../docker-compose-frontend.yaml -f ../docker-compose-frontend-build.yaml build --pull
+if [ $# -eq 0 ]
+  then
+    path="../"
+  else
+    path="${1}"
+fi
+
+docker-compose -f ${path}docker-compose-frontend.yaml -f ${path}docker-compose-frontend-build.yaml build --pull
