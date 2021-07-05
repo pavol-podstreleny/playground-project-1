@@ -20,9 +20,9 @@ export const TableBody = <T extends object, K extends keyof T>({
 
   return (
     <tbody>
-      {items.map((item) => {
+      {items.map((item, index) => {
         return (
-          <tr className="table-data">
+          <tr className="table-data" key={index}>
             {columns.map((column, index) => {
               if (column.render) {
                 return (
@@ -32,6 +32,7 @@ export const TableBody = <T extends object, K extends keyof T>({
                   </td>
                 );
               }
+              return null;
             })}
           </tr>
         );

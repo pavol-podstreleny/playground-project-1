@@ -7,7 +7,7 @@ ul.pagination li {
   padding: 0px;
   margin: 0px;
 }
-.page-item a {
+.page-item button {
   display: block;
   padding: 0.5rem 0.8rem;
   color: black;
@@ -22,7 +22,7 @@ ul.pagination li {
   background: blue;
 }
 
-.page-item a:hover {
+.page-item button:hover {
   cursor: pointer;
   background: blue;
   color: white;

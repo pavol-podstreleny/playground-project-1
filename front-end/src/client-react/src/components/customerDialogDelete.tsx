@@ -19,7 +19,7 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = ({
   visible,
 }) => {
   const cardDialogRef = createRef<HTMLDivElement>();
-  const [_, setClickOutside] = useDetectOutsideClickWithCallback(
+  const [, setClickOutside] = useDetectOutsideClickWithCallback(
     cardDialogRef,
     true,
     () => {

@@ -25,7 +25,7 @@ const CustomerDialogForm: React.FC<CustomerDialogFormProps> = ({
   buttonName,
 }) => {
   const cardDialogRef = createRef<HTMLDivElement>();
-  const [_, setClickOutside] = useDetectOutsideClickWithCallback(
+  const [, setClickOutside] = useDetectOutsideClickWithCallback(
     cardDialogRef,
     true,
     () => {

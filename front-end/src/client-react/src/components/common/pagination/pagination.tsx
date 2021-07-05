@@ -34,7 +34,7 @@ const Pagination: React.FC<PaginationProps> = ({
               id={currentPage === page ? "active-page" : undefined}
               key={page}
             >
-              <a onClick={() => onPageChange(page)}>{page}</a>
+              <button onClick={() => onPageChange(page)}>{page}</button>
             </li>
           );
         })}

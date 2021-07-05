@@ -1844,14 +1844,16 @@ export function getPostalCodeEURegexp(): RegExp {
     .map((postalCode) => {
       if (
         postalCode.ISO in euCountriesISO &&
-        postalCode.Regex.trim().length != 0
+        postalCode.Regex.trim().length !== 0
       )
         return "(" + postalCode.Regex + ")";
+      return null;
     })
     .filter((postalCode) => {
       if (postalCode) {
         return postalCode;
       }
+      return false;
     });
   return RegExp(regs.join("|"));
 }

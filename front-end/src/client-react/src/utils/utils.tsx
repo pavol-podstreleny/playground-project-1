@@ -1,4 +1,4 @@
-import Joi, { string } from "joi";
+import Joi from "joi";
 
 export interface ValidKey {
   [state: string]: string | number | undefined;

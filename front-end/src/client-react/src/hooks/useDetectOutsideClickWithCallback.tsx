@@ -1,5 +1,4 @@
-import React, { useState, useEffect, RefObject, EventHandler } from "react";
-import { useCallback } from "react";
+import React, { useState, useEffect, RefObject } from "react";
 
 export const useDetectOutsideClickWithCallback = (
   elementRef: RefObject<HTMLElement>,
@@ -25,6 +24,6 @@ export const useDetectOutsideClickWithCallback = (
     return () => {
       window.removeEventListener("click", onClick);
     };
-  }, [isActive, elementRef]);
+  }, [isActive, elementRef, callBack]);
   return [isActive, setIsActive];
 };

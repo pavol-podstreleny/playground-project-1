@@ -28,6 +28,7 @@ const TableHeader = <T extends object>({
             ) : (
               <th key={column.name}>{column.name}</th>
             );
+          return null;
         })}
       </tr>
     </thead>
