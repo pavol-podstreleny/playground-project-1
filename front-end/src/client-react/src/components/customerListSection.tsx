@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Customer from "../model/customer";
 import { getFakeCustomers } from "../services/fakeCustomerApi";
+import { paginate } from "../utils/paginate";
 import Card from "./common/cards/card";
+import PageSizeSelector from "./common/pagination/pageSizeSelector";
+import Pagination from "./common/pagination/pagination";
 import CustomerDialogAdd from "./customerDialogAdd";
 import CustomerDialogDelete from "./customerDialogDelete";
 import CustomerDialogEdit from "./customerDialogEdit";
@@ -22,10 +25,21 @@ export const CustomerListSection = () => {
       deleteDialog: false,
     });
   const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
 
   useEffect(() => {
     setCustomers(getFakeCustomers());
   }, []);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handlePageSizeChange = (pageSize: number) => {
+    setCurrentPage(1);
+    setPageSize(pageSize);
+  };
 
   const handleDeleteMenuItemClick = (customer: Customer) => {
     setCustomerDialogsVisibility({
@@ -76,6 +90,7 @@ export const CustomerListSection = () => {
     setCustomerDialogsVisibility({ ...customerDialogs });
   };
 
+  const paginatedCustomers = paginate(customers, currentPage, pageSize);
   return (
     <React.Fragment>
       <section className="customer-list">
@@ -89,12 +104,23 @@ export const CustomerListSection = () => {
           <Card>
             <h1>Customers</h1>
             <CustomerTable
-              customers={customers}
+              customers={paginatedCustomers}
               onDeleteMenuItemClick={handleDeleteMenuItemClick}
               onUpdateMenuItemClick={handleEditMenuItemClick}
             />
           </Card>
         </div>
+        <Pagination
+          itemsCount={customers.length}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+        <PageSizeSelector
+          actualPageSize={pageSize}
+          onPageSizeChange={handlePageSizeChange}
+          pageOptions={[1, 2, 5, 10, 25, 50, 100]}
+        />
       </section>
       {selectedCustomer && (
         <CustomerDialogDelete

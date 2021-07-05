@@ -1853,6 +1853,5 @@ export function getPostalCodeEURegexp(): RegExp {
         return postalCode;
       }
     });
-  console.log(regs);
   return RegExp(regs.join("|"));
 }

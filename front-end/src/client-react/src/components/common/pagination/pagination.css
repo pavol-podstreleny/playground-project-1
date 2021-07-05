@@ -1,0 +1,29 @@
+ul.pagination {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+ul.pagination li {
+  padding: 0px;
+  margin: 0px;
+}
+.page-item a {
+  display: block;
+  padding: 0.5rem 0.8rem;
+  color: black;
+  border: 2px solid blue;
+  margin: 0.5rem;
+  border-radius: 2px;
+  background: #fff;
+}
+
+#active-page {
+  color: white;
+  background: blue;
+}
+
+.page-item a:hover {
+  cursor: pointer;
+  background: blue;
+  color: white;
+}
