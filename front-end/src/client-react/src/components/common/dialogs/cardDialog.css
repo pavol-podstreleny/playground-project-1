@@ -1,0 +1,15 @@
+.card-dialog {
+  padding: 2rem;
+}
+.card-dialog h3 {
+  font-size: 1.5rem;
+}
+
+.card-dialog p {
+  font-size: 1.3rem;
+}
+
+.card-dialog button {
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
