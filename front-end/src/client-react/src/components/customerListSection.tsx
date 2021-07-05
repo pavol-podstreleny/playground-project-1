@@ -2,55 +2,90 @@ import React, { useEffect, useState } from "react";
 import Customer from "../model/customer";
 import { getFakeCustomers } from "../services/fakeCustomerApi";
 import Card from "./common/cards/card";
+import CustomerDialogAdd from "./customerDialogAdd";
 import CustomerDialogDelete from "./customerDialogDelete";
 import CustomerDialogEdit from "./customerDialogEdit";
 import CustomerTable from "./customerTable";
 
+interface CustomerDialogs {
+  addDialog: boolean;
+  editDialog: boolean;
+  deleteDialog: boolean;
+}
+
 export const CustomerListSection = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
+  const [customerDialogs, setCustomerDialogsVisibility] =
+    useState<CustomerDialogs>({
+      addDialog: false,
+      editDialog: false,
+      deleteDialog: false,
+    });
   const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
-  const [isDialogEditVisible, setDialogEditVisible] = useState<boolean>(false);
-  const [isDialogDeleteVisible, setDialogDeleteVisibible] =
-    useState<boolean>(false);
 
   useEffect(() => {
     setCustomers(getFakeCustomers());
   }, []);
 
   const handleDeleteMenuItemClick = (customer: Customer) => {
-    setDialogDeleteVisibible(true);
-    setDialogEditVisible(false);
+    setCustomerDialogsVisibility({
+      deleteDialog: true,
+      editDialog: false,
+      addDialog: false,
+    });
     setSelectedCustomer(customer);
   };
 
   const handleEditMenuItemClick = (customer: Customer) => {
-    setDialogEditVisible(true);
-    setDialogDeleteVisibible(false);
+    setCustomerDialogsVisibility({
+      deleteDialog: false,
+      editDialog: true,
+      addDialog: false,
+    });
     setSelectedCustomer({ ...customer });
   };
 
+  const handleAddCustomerButtonClick = () => {
+    setCustomerDialogsVisibility({
+      deleteDialog: false,
+      editDialog: false,
+      addDialog: true,
+    });
+  };
+
   const handleDialogCancel = () => {
-    setDialogEditVisible(false);
-    setDialogDeleteVisibible(false);
+    setCustomerDialogsVisibility({
+      deleteDialog: false,
+      editDialog: false,
+      addDialog: false,
+    });
   };
 
   const handleDeleteCustomer = (customer: Customer): void => {
-    setDialogDeleteVisibible(false);
+    customerDialogs.deleteDialog = false;
+    setCustomerDialogsVisibility({ ...customerDialogs });
   };
 
   const handleEditCustomer = (customer: Customer): void => {
-    setDialogEditVisible(false);
+    customerDialogs.editDialog = false;
+    setCustomerDialogsVisibility({ ...customerDialogs });
   };
 
-  const handleSort = (key: string): void => {
-    console.log(key);
+  const handleAddCustomer = (customer: Customer): void => {
+    customerDialogs.addDialog = false;
+    setCustomerDialogsVisibility({ ...customerDialogs });
   };
 
   return (
     <React.Fragment>
       <section className="customer-list">
         <div className="center">
-          <button className="button button-primary">Add Customer</button>
+          <button
+            className="button button-primary"
+            onClick={handleAddCustomerButtonClick}
+          >
+            Add Customer
+          </button>
           <Card>
             <h1>Customers</h1>
             <CustomerTable
@@ -66,7 +101,7 @@ export const CustomerListSection = () => {
           onDialogCancel={handleDialogCancel}
           onDialogDelete={handleDeleteCustomer}
           customer={selectedCustomer}
-          visible={isDialogDeleteVisible}
+          visible={customerDialogs.deleteDialog}
         />
       )}
       {selectedCustomer && (
@@ -74,9 +109,14 @@ export const CustomerListSection = () => {
           customer={selectedCustomer}
           onDialogSubmit={handleEditCustomer}
           onDialogCancel={handleDialogCancel}
-          visible={isDialogEditVisible}
+          visible={customerDialogs.editDialog}
         />
       )}
+      <CustomerDialogAdd
+        onDialogCancel={handleDialogCancel}
+        onDialogSubmit={handleAddCustomer}
+        visible={customerDialogs.addDialog}
+      />
     </React.Fragment>
   );
 };

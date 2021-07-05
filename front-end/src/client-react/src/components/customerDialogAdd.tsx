@@ -2,23 +2,31 @@ import React from "react";
 import Customer from "../model/customer";
 import CustomerDialogForm from "./customerDialogForm";
 
-export interface CustomerDialogEditProps {
+export interface CustomerDialogAddProps {
   onDialogSubmit: (customer: Customer) => void;
   onDialogCancel: () => void;
   visible: boolean;
-  customer: Customer;
 }
 
-const CustomerDialogEdit: React.FC<CustomerDialogEditProps> = ({
+const CustomerDialogAdd: React.FC<CustomerDialogAddProps> = ({
   onDialogSubmit,
   onDialogCancel,
   visible,
-  customer,
 }) => {
+  const customer: Customer = {
+    age: 0,
+    city: "",
+    firstName: "",
+    lastName: "",
+    partitionKey: "",
+    rowKey: "",
+    postalCode: "",
+    email: null,
+  };
   return (
     <CustomerDialogForm
-      title="Edit Customer"
-      buttonName="Edit"
+      title="Add Customer"
+      buttonName="Add"
       customer={customer}
       onDialogCancel={onDialogCancel}
       onDialogSubmit={onDialogSubmit}
@@ -27,4 +35,4 @@ const CustomerDialogEdit: React.FC<CustomerDialogEditProps> = ({
   );
 };
 
-export default CustomerDialogEdit;
+export default CustomerDialogAdd;
