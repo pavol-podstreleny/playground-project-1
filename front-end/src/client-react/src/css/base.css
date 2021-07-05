@@ -2,6 +2,10 @@ html {
   font-size: 10px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Open Sans", sans-serif;
   color: rgba(0, 0, 0, 0.9);
@@ -22,25 +26,6 @@ table {
   display: block;
 }
 
-.button {
-  display: block;
-  padding: 1rem 1.4rem;
-  color: rgba(255, 255, 255, 1);
-  background: transparent;
-  border: none;
-  border-radius: 0.2rem;
-  cursor: pointer;
-  text-align: center;
-}
-
-.button-primary {
-  background: rgba(0, 120, 212, 1);
-}
-
-.button-primary:hover {
-  background: rgb(12, 109, 184);
-}
-
 .ul-general {
   list-style: none;
   margin: 0px;
@@ -49,6 +34,24 @@ table {
 
 h1 {
   font-size: 2.5rem;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.grid-two {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.grid-gap-small {
+  column-gap: 2rem;
 }
 
 @media screen and (min-width: 960px) {

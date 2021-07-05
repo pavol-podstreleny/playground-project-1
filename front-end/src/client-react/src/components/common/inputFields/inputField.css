@@ -1,0 +1,28 @@
+.input-section {
+  margin: 1.5rem 0;
+}
+
+.input-label {
+  font-size: 1.2rem;
+  display: block;
+  padding-bottom: 0.6rem;
+  font-weight: 600;
+}
+.label-required::after {
+  content: "*";
+  color: brown;
+}
+
+.input-content {
+  width: 100%;
+  padding: 1.1rem;
+  border: 1px solid black;
+  border-radius: 0.4rem;
+  font-size: 1.3rem;
+}
+
+.input-error {
+  font-size: 0.8rem;
+  color: brown;
+  margin: 0.5rem 0rem;
+}

@@ -1,0 +1,33 @@
+.button {
+  display: block;
+  padding: 1rem 1.4rem;
+  color: rgba(255, 255, 255, 1);
+  background: transparent;
+  border: none;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.button-primary,
+.button-cancel {
+  background: rgba(0, 120, 212, 1);
+}
+
+.button-primary:hover,
+.button-cancel:hover {
+  background: rgb(12, 109, 184);
+}
+
+.button-delete {
+  background: #c62828;
+}
+.button-delete:hover {
+  background: #b71c1c;
+}
+.button-success {
+  background: #2e7d32;
+}
+.button-success:hover {
+  background: #1b5e20;
+}
