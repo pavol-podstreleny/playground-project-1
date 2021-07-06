@@ -1,34 +1,92 @@
+import { on } from "events";
 import "./tableHeader.css";
 
 export interface Column<T> {
   name: string;
   propName: string;
   render: boolean;
+  sortable: boolean;
   element?: (data: T) => React.ReactElement;
+}
+
+export interface SortColumn {
+  columnName: string;
+  order: "asc" | "desc";
 }
 
 export interface TableHeaderProps<T> {
   columns: Column<T>[];
-  onSort?: (propName: string) => void;
+  sortColumn?: SortColumn;
+  onSort?: (sortedColumn: SortColumn, sortedColumnIndex: number) => void;
 }
 
 const TableHeader = <T extends object>({
   columns,
   onSort,
+  sortColumn,
 }: TableHeaderProps<T>) => {
+  const raiseSort = (sortKey: string, columnIndex: number) => {
+    if (sortColumn) {
+      if (sortColumn.columnName === sortKey) {
+        sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+      } else {
+        if (sortKey) sortColumn.columnName = sortKey;
+        sortColumn.order = "asc";
+      }
+      if (onSort) onSort(sortColumn, columnIndex);
+    }
+  };
+
+  const renderSortIcon = (column: Column<T>) => {
+    if (!sortColumn) return null;
+    if (sortColumn.columnName !== column.propName) return null;
+    if (
+      sortColumn.columnName === column.propName &&
+      sortColumn.order === "asc"
+    ) {
+      return <span>&#8593;</span>;
+    }
+    return <span>&#8595;</span>;
+  };
+
+  const renderTableColumn = (
+    onSort: boolean,
+    column: Column<T>,
+    sortColumn: SortColumn | undefined,
+    index: number
+  ) => {
+    if (onSort && column.sortable && sortColumn) {
+      return (
+        <th
+          className={
+            sortColumn.columnName === column.propName
+              ? "hoverable selected-column"
+              : "hoverable"
+          }
+          key={column.name}
+          onClick={() => raiseSort(column.propName, index)}
+        >
+          {column.name}
+          {renderSortIcon(column)}
+        </th>
+      );
+    } else {
+      return <th key={column.name}>{column.name}</th>;
+    }
+  };
+
   return (
     <thead>
       <tr className="table-columns">
-        {columns.map((column) => {
-          if (column.render)
-            return onSort ? (
-              <th key={column.name} onClick={() => onSort(column.propName)}>
-                {column.name}
-              </th>
-            ) : (
-              <th key={column.name}>{column.name}</th>
+        {columns.map((column, index) => {
+          if (column.render) {
+            return renderTableColumn(
+              onSort !== undefined,
+              column,
+              sortColumn,
+              index
             );
-          return null;
+          }
         })}
       </tr>
     </thead>

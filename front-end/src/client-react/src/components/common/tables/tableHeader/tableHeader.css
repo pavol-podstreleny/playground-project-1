@@ -10,3 +10,7 @@ td.table-action-column {
   z-index: 0;
   padding: 0px;
 }
+
+.selected-column {
+  color: rgba(0, 0, 0, 0.8);
+}

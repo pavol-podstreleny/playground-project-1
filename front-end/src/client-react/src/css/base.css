@@ -54,6 +54,10 @@ h1 {
   column-gap: 2rem;
 }
 
+.hoverable {
+  cursor: pointer;
+}
+
 @media screen and (min-width: 960px) {
   .center {
     margin: 0 auto;

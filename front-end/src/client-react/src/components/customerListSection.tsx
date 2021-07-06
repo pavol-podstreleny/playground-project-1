@@ -90,7 +90,6 @@ export const CustomerListSection = () => {
     setCustomerDialogsVisibility({ ...customerDialogs });
   };
 
-  const paginatedCustomers = paginate(customers, currentPage, pageSize);
   return (
     <React.Fragment>
       <section className="customer-list">
@@ -104,9 +103,13 @@ export const CustomerListSection = () => {
           <Card>
             <h1>Customers</h1>
             <CustomerTable
-              customers={paginatedCustomers}
+              customers={customers}
               onDeleteMenuItemClick={handleDeleteMenuItemClick}
               onUpdateMenuItemClick={handleEditMenuItemClick}
+              pagination={{
+                pageNumber: currentPage,
+                pageSize: pageSize,
+              }}
             />
           </Card>
         </div>
