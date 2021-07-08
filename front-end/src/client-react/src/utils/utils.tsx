@@ -4,13 +4,13 @@ export interface ValidKey {
   [state: string]: string | number | undefined;
 }
 
-export function validateInput<T extends ValidKey, K extends keyof T>(
+export function validateProperty<T extends ValidKey, K extends keyof T>(
   schema: Joi.ObjectSchema<any>,
   key: K,
   value: any,
   errorObject: T
 ): T {
-  const validationResult = schema.validate(
+  const { error } = schema.validate(
     {
       [key]: value,
     },
@@ -20,8 +20,8 @@ export function validateInput<T extends ValidKey, K extends keyof T>(
   );
 
   let containsError = false;
-  if (validationResult.error) {
-    for (let detail of validationResult.error.details) {
+  if (error) {
+    for (let detail of error.details) {
       errorObject[key] = detail.message as T[K];
       containsError = true;
     }

@@ -2,7 +2,7 @@ import Joi from "joi";
 import React, { MouseEvent, useState } from "react";
 import Customer from "../model/customer";
 import { getPostalCodeEURegexp } from "../utils/postalCode";
-import { containsKey, validateInput, ValidKey } from "../utils/utils";
+import { containsKey, validateProperty, ValidKey } from "../utils/utils";
 import InputField, { InputType } from "./common/inputFields/inputField";
 
 export interface CustomerFormProps {
@@ -64,7 +64,7 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
       containsKey(customerCopy, key) &&
       containsKey(customerSchemaProps, key)
     ) {
-      const errors = validateInput<CustomerError, string>(
+      const errors = validateProperty<CustomerError, string>(
         Joi.object({
           [e.target.name]: (customerSchemaProps as any)[key],
         }),
