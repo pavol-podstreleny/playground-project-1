@@ -9,6 +9,9 @@ import CustomerDialogAdd from "./customerDialogAdd";
 import CustomerDialogDelete from "./customerDialogDelete";
 import CustomerDialogEdit from "./customerDialogEdit";
 import CustomerTable from "./customerTable";
+import { http } from "../services/httpService/httpService";
+import config from "../config.json";
+import axios from "axios";
 
 interface CustomerDialogs {
   addDialog: boolean;
@@ -29,7 +32,20 @@ export const CustomerListSection = () => {
   const [pageSize, setPageSize] = useState(5);
 
   useEffect(() => {
-    setCustomers(getFakeCustomers());
+    // try {
+    axios
+      .get(`${config.apiEndpoint}customers/`, {
+        headers: { "Access-Control-Allow-Origin": "*" },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error.request);
+        console.log(error.response);
+        console.log(error);
+        console.log("Palino error");
+      });
   }, []);
 
   const handlePageChange = (pageNumber: number) => {
