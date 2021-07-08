@@ -19,6 +19,9 @@ namespace CustomerAPI
 {
     public class Startup
     {
+
+        readonly string localLostOrigin = "_localOrigin";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,7 +32,13 @@ namespace CustomerAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors(options =>
+                {
+                    options.AddPolicy(name: localLostOrigin, builder =>
+                    {
+                        builder.WithOrigins(new string[1] { "http://localhost:3000" });
+                    });
+                });
             services.AddControllers();
 
             services.AddScoped<CloudTableClient>(provider =>
@@ -63,6 +72,7 @@ namespace CustomerAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(localLostOrigin);
             app.UseHttpMetrics();
 
             app.UseAuthorization();
