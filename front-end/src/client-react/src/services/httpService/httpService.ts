@@ -1,13 +1,18 @@
 import { getAxios } from "./axiosService";
 
 export interface Result<T> {
-  containsError: boolean;
   statusCode: number;
   data?: T;
 }
 
-export interface HttpMethods<T> {
-  get(url: string): Promise<Result<T>>;
+export interface Error {
+  type: "request" | "response" | "unexpected";
+  statusCode?: number;
+  jsonError?: object;
 }
 
-export const http = <T>(): HttpMethods<T> => getAxios<T>();
+export interface HttpMethods {
+  get<T>(url: string): Promise<Result<T>>;
+}
+
+export const http = getAxios;
