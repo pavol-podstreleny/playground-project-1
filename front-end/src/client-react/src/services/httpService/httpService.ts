@@ -6,13 +6,13 @@ export interface Result<T> {
 }
 
 export interface Error {
+  error: any;
   type: "request" | "response" | "unexpected";
-  statusCode?: number;
-  jsonError?: object;
 }
 
 export interface HttpMethods {
   get<T>(url: string): Promise<Result<T>>;
+  post<T>(url: string, data: T): Promise<Result<T>>;
 }
 
 export const http = getAxios;
