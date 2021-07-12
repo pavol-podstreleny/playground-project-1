@@ -8,7 +8,9 @@
 .card-dialog p {
   font-size: 1.3rem;
 }
-
+.card-dialog p.error {
+  color: brown;
+}
 .card-dialog button {
   margin-top: 1rem;
   margin-left: 1rem;

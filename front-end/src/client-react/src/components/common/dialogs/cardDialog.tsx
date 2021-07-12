@@ -2,8 +2,13 @@ import React from "react";
 import Card, { CardSize } from "../cards/card";
 import "./cardDialog.css";
 
+export interface MessageType {
+  isError: boolean;
+  message: string;
+}
+
 export interface CardDialogProps {
-  message?: string;
+  message?: MessageType;
   title: string;
   children: React.ReactNode;
   size?: CardSize;
@@ -16,7 +21,11 @@ const CardDialog = React.forwardRef<HTMLDivElement, CardDialogProps>(
         <Card size={size}>
           <section className="card-dialog">
             <h3>{title}</h3>
-            {message && <p>{message}</p>}
+            {message && (
+              <p className={message.isError ? "error" : ""}>
+                {message.message}
+              </p>
+            )}
             {children}
           </section>
         </Card>
