@@ -41,7 +41,10 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = ({
       <CardDialog
         title="Customer Deletion"
         size={CardSize.REGULAR}
-        message={`Are you sure you want to delete customer ${customer.firstName} ${customer.lastName}?`}
+        message={{
+          message: `Are you sure you want to delete customer ${customer.firstName} ${customer.lastName}?`,
+          isError: false,
+        }}
         ref={cardDialogRef}
       >
         <div className="flex-row flex-end">

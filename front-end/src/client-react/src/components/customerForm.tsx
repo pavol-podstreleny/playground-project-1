@@ -35,8 +35,8 @@ const customerSchemaProps = {
     .pattern(getPostalCodeEURegexp())
     .message("Please provde correct Postal Code")
     .required(),
-  age: Joi.number().min(2).max(200).required().label("Age"),
-  city: Joi.string().min(2).max(30).required().label("City"),
+  age: Joi.number().min(0).max(120).required().label("Age"),
+  city: Joi.string().min(2).max(50).required().label("City"),
 };
 
 const CustomerForm: React.FC<CustomerFormProps> = ({
