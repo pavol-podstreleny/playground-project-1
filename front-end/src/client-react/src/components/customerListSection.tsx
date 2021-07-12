@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Customer from "../model/customer";
-import { getFakeCustomers } from "../services/fakeCustomerApi";
-import { paginate } from "../utils/paginate";
 import Card from "./common/cards/card";
 import PageSizeSelector from "./common/pagination/pageSizeSelector";
 import Pagination from "./common/pagination/pagination";
@@ -11,7 +9,10 @@ import CustomerDialogEdit from "./customerDialogEdit";
 import CustomerTable from "./customerTable";
 import { http } from "../services/httpService/httpService";
 import config from "../config.json";
-import axios from "axios";
+import { useFetchData } from "../hooks/useFetchData";
+import Loader from "./common/loading/loader";
+import TryAgain from "./common/errors/tryAgain";
+import { MessageType } from "./common/dialogs/cardDialog";
 
 interface CustomerDialogs {
   addDialog: boolean;
@@ -20,7 +21,13 @@ interface CustomerDialogs {
 }
 
 export const CustomerListSection = () => {
-  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [
+    customers,
+    setCustomers,
+    isLoading,
+    initialRequestError,
+    reFetchCustomer,
+  ] = useFetchData<Customer[]>("customers");
   const [customerDialogs, setCustomerDialogsVisibility] =
     useState<CustomerDialogs>({
       addDialog: false,
@@ -30,23 +37,8 @@ export const CustomerListSection = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-
-  useEffect(() => {
-    // try {
-    axios
-      .get(`${config.apiEndpoint}customers/`, {
-        headers: { "Access-Control-Allow-Origin": "*" },
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error.request);
-        console.log(error.response);
-        console.log(error);
-        console.log("Palino error");
-      });
-  }, []);
+  const [customerAddErrorMessage, setCustomerAddErrorMessage] =
+    useState<MessageType>();
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -89,6 +81,7 @@ export const CustomerListSection = () => {
       editDialog: false,
       addDialog: false,
     });
+    setCustomerAddErrorMessage(undefined);
   };
 
   const handleDeleteCustomer = (customer: Customer): void => {
@@ -102,9 +95,41 @@ export const CustomerListSection = () => {
   };
 
   const handleAddCustomer = (customer: Customer): void => {
-    customerDialogs.addDialog = false;
-    setCustomerDialogsVisibility({ ...customerDialogs });
+    const copyCustomers = customers ? [...customers] : [];
+    customers?.push(customer);
+    setCustomers(customers);
+    http
+      .post(`${config.apiEndpoint}customers`, customer)
+      .then(() => {
+        customerDialogs.addDialog = false;
+        setCustomerDialogsVisibility({ ...customerDialogs });
+        setCustomerAddErrorMessage(undefined);
+      })
+      .catch(() => {
+        setCustomers(copyCustomers);
+        setCustomerAddErrorMessage({
+          isError: true,
+          message:
+            "Error occured while adding new customer. Try it again please",
+        });
+      });
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (initialRequestError) {
+    return (
+      <div className="force-center">
+        <TryAgain onClick={reFetchCustomer} />
+      </div>
+    );
+  }
+
+  if (!customers) {
+    return null;
+  }
 
   return (
     <React.Fragment>
@@ -161,6 +186,7 @@ export const CustomerListSection = () => {
         onDialogCancel={handleDialogCancel}
         onDialogSubmit={handleAddCustomer}
         visible={customerDialogs.addDialog}
+        errorMessage={customerAddErrorMessage}
       />
     </React.Fragment>
   );
