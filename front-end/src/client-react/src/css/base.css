@@ -35,12 +35,10 @@ table {
 h1 {
   font-size: 2.5rem;
 }
-
 .force-center {
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
+  margin-top: 2.4rem;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -49,6 +47,11 @@ h1 {
 .flex-row {
   display: flex;
   flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }
 
 .flex-end {
