@@ -1,0 +1,26 @@
+header {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#main-nav {
+  background: #fff;
+}
+#main-nav ul {
+  margin: 0px;
+  list-style-type: none;
+}
+#main-nav ul li {
+  margin-right: 2rem;
+}
+
+#main-nav ul li a {
+  text-decoration: none;
+  font-size: 1.4rem;
+  display: block;
+  padding: 2rem 1.4rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+#main-nav ul li a.active,
+#main-nav ul li a:hover {
+  color: rgba(0, 0, 0, 0.85);
+}
