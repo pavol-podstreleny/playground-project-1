@@ -10,7 +10,7 @@ namespace CustomerAPI.Model
         {
             return new CustomerEntity()
             {
-                Age = entity.Age,
+                Age = entity?.Age,
                 City = entity.City,
                 Email = entity.Email,
                 ETag = "*",
