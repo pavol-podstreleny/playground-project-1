@@ -12,21 +12,41 @@ axios.interceptors.response.use(
   }
 );
 
+function extractErrorMessages(
+  error: any,
+  type: "response" | "request"
+): string | undefined {
+  const errors = error?.error?.response?.data?.errors;
+  const errorMessages = [];
+  if (errors) {
+    for (let key in errors) {
+      errorMessages.push(errors[key]);
+    }
+  }
+  console.log(errorMessages);
+  if (errorMessages) return errorMessages.join(" ");
+  return undefined;
+}
+
 function handleError<T>(error: any): Promise<Result<T>> {
+  console.log("error lol");
   if (error.request) {
     return new Promise<Result<T>>((executor, reject) => {
       reject({
         error: error,
-        type: "response",
+        type: "request",
+        errorMessages: extractErrorMessages(error, "request"),
       });
     });
   }
 
   if (error.response) {
     return new Promise<Result<T>>((executor, reject) => {
+      console.log("error response");
       reject({
         error: error,
         type: "response",
+        errorMessages: extractErrorMessages(error, "response"),
       });
     });
   }

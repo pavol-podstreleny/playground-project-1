@@ -105,12 +105,11 @@ export const CustomerListSection = () => {
         setCustomerDialogsVisibility({ ...customerDialogs });
         setCustomerAddErrorMessage(undefined);
       })
-      .catch(() => {
+      .catch((error) => {
         setCustomers(copyCustomers);
         setCustomerAddErrorMessage({
           isError: true,
-          message:
-            "Error occured while adding new customer. Try it again please",
+          message: error?.errorMessage || "lol",
         });
       });
   };
