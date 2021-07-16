@@ -20,7 +20,7 @@ namespace CustomerAPI
     public class Startup
     {
 
-        readonly string localLostOrigin = "_localOrigin";
+        readonly string localhostOrigin = "_localOrigin";
 
         public Startup(IConfiguration configuration)
         {
@@ -34,11 +34,12 @@ namespace CustomerAPI
         {
             services.AddCors(options =>
                 {
-                    options.AddPolicy(name: localLostOrigin, builder =>
+                    options.AddPolicy(localhostOrigin, builder =>
                     {
-                        builder.WithOrigins(new string[1] { "http://localhost:3000" });
+                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                     });
                 });
+
             services.AddControllers();
 
             services.AddScoped<CloudTableClient>(provider =>
@@ -72,7 +73,7 @@ namespace CustomerAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors(localLostOrigin);
+            app.UseCors(localhostOrigin);
             app.UseHttpMetrics();
 
             app.UseAuthorization();

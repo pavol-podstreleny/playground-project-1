@@ -18,7 +18,7 @@ namespace CustomerAPI.Model
         public string LastName { get; set; }
 
         [EmailAddress]
-        [StringLength(5, MinimumLength = 3)]
+        [StringLength(50)]
         public string Email { get; set; }
 
         [Required]
