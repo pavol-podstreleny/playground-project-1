@@ -1,3 +1,4 @@
+import { Request } from "../../store/apis";
 import { getAxios } from "./axiosService";
 
 export interface Result<T> {
@@ -11,8 +12,7 @@ export interface Error {
 }
 
 export interface HttpMethods {
-  get<T>(url: string): Promise<Result<T>>;
-  post<T>(url: string, data: T): Promise<Result<T>>;
+  request<T>(request: Request, baseURL: string): Promise<Result<T>>;
 }
 
 export const http = getAxios;

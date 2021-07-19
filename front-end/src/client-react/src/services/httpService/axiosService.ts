@@ -1,5 +1,10 @@
 import axios, { AxiosError } from "axios";
+import { Request } from "../../store/apis";
 import { HttpMethods, Result } from "./httpService";
+
+interface CustomerApiErrorResponse {
+  errors: string[] | null;
+}
 
 axios.interceptors.response.use(
   function (response) {
@@ -7,76 +12,62 @@ axios.interceptors.response.use(
   },
   function (error) {
     // Do something with response error
-    console.log(error);
+    // Maybe do some log uploads :)
     return Promise.reject(error);
   }
 );
 
 function extractErrorMessages(
-  error: any,
-  type: "response" | "request"
+  error: AxiosError<CustomerApiErrorResponse>
 ): string | undefined {
-  const errors = error?.error?.response?.data?.errors;
+  const errors = error?.response
+    ? error?.response?.data?.errors
+    : error?.request?.data?.errors;
+
   const errorMessages = [];
+
   if (errors) {
     for (let key in errors) {
       errorMessages.push(errors[key]);
     }
   }
-  console.log(errorMessages);
   if (errorMessages) return errorMessages.join(" ");
   return undefined;
 }
 
 function handleError<T>(error: any): Promise<Result<T>> {
-  console.log("error lol");
   if (error.request) {
     return new Promise<Result<T>>((executor, reject) => {
       reject({
-        error: error,
         type: "request",
-        errorMessages: extractErrorMessages(error, "request"),
+        errorMessages: extractErrorMessages(error),
       });
     });
   }
 
   if (error.response) {
     return new Promise<Result<T>>((executor, reject) => {
-      console.log("error response");
       reject({
-        error: error,
         type: "response",
-        errorMessages: extractErrorMessages(error, "response"),
+        errorMessages: extractErrorMessages(error),
       });
     });
   }
   return new Promise<Result<T>>((executor, reject) => {
     reject({
-      error: error,
       type: "unexpected",
     });
   });
 }
 
-function post<T>(url: string, data: T): Promise<Result<T>> {
+function request<T>(request: Request, baseURL: string): Promise<Result<T>> {
   return axios
-    .post(url, data)
-    .then((value) => {
-      return new Promise<Result<T>>((executor, reject) => {
-        return executor({
-          statusCode: value.status,
-          data: value.data,
-        });
-      });
+    .request({
+      baseURL,
+      data: request.data,
+      method: request.method,
+      url: request.url,
     })
-    .catch(function (error) {
-      return handleError<T>(error);
-    });
-}
-
-function get<T>(url: string): Promise<Result<T>> {
-  return axios
-    .get<T>(url)
     .then((value) => {
       return new Promise<Result<T>>((executor, reject) => {
         return executor({
@@ -91,6 +82,5 @@ function get<T>(url: string): Promise<Result<T>> {
 }
 
 export const getAxios: HttpMethods = {
-  get,
-  post,
+  request,
 };
