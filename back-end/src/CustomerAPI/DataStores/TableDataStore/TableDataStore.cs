@@ -71,6 +71,7 @@ namespace CustomerAPI.DataStores.TableDataStore
 
         private async Task<TABLE_ENTITY> ExecuteAsyncQueryAndMapResult(TABLE_ENTITY entity, Func<ITableEntity, TableOperation> operation, TableKey key = null)
         {
+            entity.ETag = "*";
             if (key != null && key.isValid())
             {
                 entity.RowKey = key.RowKey;
