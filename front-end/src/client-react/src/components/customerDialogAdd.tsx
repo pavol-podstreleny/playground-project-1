@@ -1,21 +1,34 @@
 import React from "react";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { useAppSelector } from "../hooks/useAppSelector";
 import Customer from "../model/customer";
-import { MessageType } from "./common/dialogs/cardDialog";
+import {
+  customerAddDialogCanceled,
+  customerDialogsCancel,
+  postCustomer,
+} from "../store/customers";
 import CustomerDialogForm from "./customerDialogForm";
 
-export interface CustomerDialogAddProps {
-  onDialogSubmit: (customer: Customer) => void;
-  onDialogCancel: () => void;
-  visible: boolean;
-  errorMessage?: MessageType;
-}
+interface CustomerDialogAddProps {}
 
-const CustomerDialogAdd: React.FC<CustomerDialogAddProps> = ({
-  onDialogSubmit,
-  onDialogCancel,
-  visible,
-  errorMessage,
-}) => {
+const CustomerDialogAdd: React.FC<CustomerDialogAddProps> = ({}) => {
+  const dispatch = useAppDispatch();
+  const dialogVisibile = useAppSelector(
+    (state) => state.entities.customers.dialogs.addDialogVisibile
+  );
+  const errorMessage = useAppSelector(
+    (state) => state.entities.customers.api.post.errorMessage
+  );
+
+  const handleDialogCancel = () => {
+    dispatch(customerDialogsCancel());
+    dispatch(customerAddDialogCanceled());
+  };
+
+  const handleDialogSubmit = (customer: Customer) => {
+    dispatch(postCustomer(customer));
+  };
+
   const customer: Customer = {
     age: 0,
     city: "",
@@ -26,15 +39,20 @@ const CustomerDialogAdd: React.FC<CustomerDialogAddProps> = ({
     postalCode: "",
     email: null,
   };
+
+  if (!dialogVisibile) {
+    return null;
+  }
+
   return (
     <CustomerDialogForm
       title="Add Customer"
       buttonName="Add"
       customer={customer}
-      onDialogCancel={onDialogCancel}
-      onDialogSubmit={onDialogSubmit}
-      visible={visible}
-      errorMessage={errorMessage}
+      onDialogCancel={handleDialogCancel}
+      onDialogSubmit={handleDialogSubmit}
+      visible={dialogVisibile}
+      errorMessage={[{ isError: true, message: errorMessage || "" }]}
     />
   );
 };

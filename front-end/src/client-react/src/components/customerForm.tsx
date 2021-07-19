@@ -8,7 +8,7 @@ import InputField, { InputType } from "./common/inputFields/inputField";
 export interface CustomerFormProps {
   customer: Customer;
   onSubmit: (customer: Customer) => void;
-  onCancel: (e: MouseEvent) => void;
+  onCancel: () => void;
   twoColumns: boolean;
   buttonName: string;
 }

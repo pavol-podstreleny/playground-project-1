@@ -8,6 +8,7 @@ export interface Api {
   get: RequestProgress;
   post: RequestProgress;
   patch: RequestProgress;
+  delete: RequestProgress;
   [state: string]: RequestProgress | null;
 }
 

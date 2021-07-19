@@ -14,7 +14,7 @@ export interface CustomerDialogFormProps {
   customer: Customer;
   title: string;
   buttonName: string;
-  errorMessage?: MessageType;
+  errorMessage?: MessageType[];
 }
 
 const CustomerDialogForm: React.FC<CustomerDialogFormProps> = ({
@@ -36,8 +36,7 @@ const CustomerDialogForm: React.FC<CustomerDialogFormProps> = ({
     }
   );
 
-  const onCancel = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const onCancel = () => {
     setClickOutside(true);
     onDialogCancel();
   };
@@ -52,7 +51,7 @@ const CustomerDialogForm: React.FC<CustomerDialogFormProps> = ({
         title={title}
         size={CardSize.MEDIUM}
         ref={cardDialogRef}
-        message={errorMessage}
+        messages={errorMessage}
       >
         <CustomerForm
           onSubmit={onDialogSubmit}

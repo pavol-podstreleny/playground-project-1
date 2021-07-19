@@ -1,6 +1,11 @@
 import React from "react";
+import { useAppDispatch } from "../hooks/useAppDispatch";
 import Customer from "../model/customer";
-import { paginate } from "../utils/paginate";
+import {
+  customerDeleteDialogShowed,
+  customerEditDialogShowed,
+  customerSelected,
+} from "../store/customers";
 import { MenuItem } from "./common/menus/popupMenu/popupMenu";
 import Table, { Paginate } from "./common/tables/table";
 import { Column } from "./common/tables/tableHeader/tableHeader";
@@ -9,32 +14,32 @@ import CustomerTableMenuItems from "./customerTableMenuItems";
 interface CustomerTableProps {
   customers: Customer[];
   pagination?: Paginate<Customer>;
-  onDeleteMenuItemClick: (customer: Customer) => void;
-  onUpdateMenuItemClick: (customer: Customer) => void;
 }
 
 const CustomerTable: React.FC<CustomerTableProps> = ({
   customers,
-  onDeleteMenuItemClick,
-  onUpdateMenuItemClick,
   pagination,
 }) => {
-  const raiseDeleteMenuItem = (customer: Customer) => {
-    onDeleteMenuItemClick(customer);
+  const dispatch = useAppDispatch();
+
+  const handleDeleteCustomerClick = (customer: Customer) => {
+    dispatch(customerSelected(customer));
+    dispatch(customerDeleteDialogShowed());
   };
 
-  const raiseUpdateMenuItem = (customer: Customer) => {
-    onUpdateMenuItemClick(customer);
+  const handleEditCustomerClick = (customer: Customer) => {
+    dispatch(customerSelected(customer));
+    dispatch(customerEditDialogShowed());
   };
 
   const menuItems: MenuItem<Customer>[] = [
     {
       name: "Delete",
-      handler: raiseDeleteMenuItem,
+      handler: handleDeleteCustomerClick,
     },
     {
       name: "Update",
-      handler: raiseUpdateMenuItem,
+      handler: handleEditCustomerClick,
     },
   ];
   const columns: Column<Customer>[] = [

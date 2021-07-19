@@ -43,6 +43,10 @@ const initialState: CustomerPayload = {
       isLoading: false,
       errorMessage: null,
     },
+    delete: {
+      isLoading: false,
+      errorMessage: null,
+    },
   },
 };
 
@@ -58,7 +62,7 @@ const customerSlice = createSlice({
     },
 
     // CALLING API
-    customersRequested: (state, action: PayloadAction<RequestMethod>) => {
+    customersRequestStarted: (state, action: PayloadAction<RequestMethod>) => {
       if (action.payload.method in state.api) {
         state.api[action.payload.method]!.isLoading = true;
       }
@@ -80,12 +84,34 @@ const customerSlice = createSlice({
       };
       state.data.push(action.payload);
     },
+
+    customerRequestDeleteSucceeded: (
+      state,
+      action: PayloadAction<Customer>
+    ) => {
+      state.api.delete = {
+        isLoading: false,
+        errorMessage: null,
+      };
+      const index = state.data.findIndex(
+        (customer) => customer.rowKey === action.payload.rowKey
+      );
+      if (index >= 0 && index < state.data.length) {
+        state.data.splice(index, 1);
+      }
+    },
+
     customerRequestPatchSucceeded: (state, action: PayloadAction<Customer>) => {
-      //Figure out patch :)
       state.api.patch = {
         isLoading: false,
         errorMessage: null,
       };
+      const index = state.data.findIndex(
+        (customer) => customer.rowKey === action.payload.rowKey
+      );
+      if (index >= 0 && index < state.data.length) {
+        state.data[index] = action.payload;
+      }
     },
 
     customersRequestSucceeded: (state, action: PayloadAction<Customer[]>) => {
@@ -141,8 +167,9 @@ const customerSlice = createSlice({
 
 export const {
   customerRequestPostSucceeded,
+  customerRequestDeleteSucceeded,
   customerSelected,
-  customersRequested,
+  customersRequestStarted,
   customersRequestFailed,
   customersRequestSucceeded,
   customerAddDialogShowed,
@@ -155,15 +182,52 @@ export const {
   customerAddDialogCanceled,
 } = customerSlice.actions;
 
+export const getCustomers = () => {
+  return apiCallBegan({
+    url: "/customers",
+    method: "get",
+    onErrorActionNames: [customersRequestFailed.type],
+    onStartActionNames: [customersRequestStarted.type],
+    onSuccessActionNames: [customersRequestSucceeded.type],
+  });
+};
+
 export const postCustomer = (customer: Customer) => {
   return apiCallBegan({
     method: "post",
     url: "customers",
     data: customer,
     onErrorActionNames: [customersRequestFailed.type],
-    onStartActionNames: [customersRequested.type],
+    onStartActionNames: [customersRequestStarted.type],
     onSuccessActionNames: [
       customerRequestPostSucceeded.type,
+      customerDialogsCancel.type,
+    ],
+  });
+};
+
+export const patchCustomer = (customer: Customer) => {
+  return apiCallBegan({
+    method: "patch",
+    url: `customers/${customer.rowKey}/${customer.partitionKey}`,
+    data: customer,
+    onErrorActionNames: [customersRequestFailed.type],
+    onStartActionNames: [customersRequestStarted.type],
+    onSuccessActionNames: [
+      customerRequestPatchSucceeded.type,
+      customerDialogsCancel.type,
+    ],
+  });
+};
+
+export const deleteCustomer = (customer: Customer) => {
+  return apiCallBegan({
+    method: "delete",
+    data: customer,
+    url: `customers/${customer.rowKey}/${customer.partitionKey}/`,
+    onErrorActionNames: [customersRequestFailed.type],
+    onSuccessActionNames: [
+      customerRequestDeleteSucceeded.type,
       customerDialogsCancel.type,
     ],
   });

@@ -4,47 +4,70 @@ import { CardSize } from "./common/cards/card";
 import CardDialog from "./common/dialogs/cardDialog";
 import Overlay from "./common/overlay/overlay";
 import { useDetectOutsideClickWithCallback } from "../hooks/useDetectOutsideClickWithCallback";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { customerDialogsCancel, deleteCustomer } from "../store/customers";
+import { useAppSelector } from "../hooks/useAppSelector";
+import { isError } from "joi";
 
-export interface CustomerDialogDeleteProps {
-  onDialogCancel: () => void;
-  onDialogDelete: (customer: Customer) => void;
-  visible: boolean;
-  customer: Customer;
-}
+interface CustomerDialogDeleteProps {}
 
-const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = ({
-  onDialogCancel,
-  onDialogDelete,
-  customer,
-  visible,
-}) => {
+const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = () => {
+  const dispatch = useAppDispatch();
+  const isDialogVisile = useAppSelector(
+    (state) => state.entities.customers.dialogs.deleteDialogVisible
+  );
+  const errorMessage = useAppSelector(
+    (state) => state.entities.customers.api.delete.errorMessage
+  );
+  const customer = useAppSelector((state) => state.entities.customers.selected);
   const cardDialogRef = createRef<HTMLDivElement>();
   const [, setClickOutside] = useDetectOutsideClickWithCallback(
     cardDialogRef,
     true,
     () => {
       setClickOutside(true);
-      onDialogCancel();
+      handleDialogCancel();
     }
   );
+
+  const handleDialogCancel = () => {
+    dispatch(customerDialogsCancel());
+  };
+
+  const handleCustomerDelete = (customer: Customer) => {
+    dispatch(deleteCustomer(customer));
+  };
 
   const raiseCancel = (e: React.MouseEvent) => {
     e.preventDefault();
     setClickOutside(true);
-    onDialogCancel();
+    handleDialogCancel();
   };
 
-  if (!visible) return null;
+  if (!isDialogVisile || !customer) return null;
+
+  const messages = [
+    {
+      message: `Are you sure you want to delete customer ${
+        customer!.firstName
+      } ${customer!.lastName}`,
+      isError: false,
+    },
+  ];
+
+  if (errorMessage) {
+    messages.push({
+      message: errorMessage,
+      isError: true,
+    });
+  }
 
   return (
     <Overlay>
       <CardDialog
         title="Customer Deletion"
         size={CardSize.REGULAR}
-        message={{
-          message: `Are you sure you want to delete customer ${customer.firstName} ${customer.lastName}?`,
-          isError: false,
-        }}
+        messages={messages}
         ref={cardDialogRef}
       >
         <div className="flex-row flex-end">
@@ -56,7 +79,7 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = ({
           </button>
           <button
             className="button button-delete"
-            onClick={() => onDialogDelete(customer)}
+            onClick={() => handleCustomerDelete(customer!)}
           >
             Delete
           </button>

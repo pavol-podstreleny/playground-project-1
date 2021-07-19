@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Customer from "../model/customer";
+import React from "react";
 import Card from "./common/cards/card";
 import PageSizeSelector from "./common/pagination/pageSizeSelector";
 import Pagination from "./common/pagination/pagination";
@@ -7,123 +6,54 @@ import CustomerDialogAdd from "./customerDialogAdd";
 import CustomerDialogDelete from "./customerDialogDelete";
 import CustomerDialogEdit from "./customerDialogEdit";
 import CustomerTable from "./customerTable";
-import { http } from "../services/httpService/httpService";
-import config from "../config.json";
-import { useFetchData } from "../hooks/useFetchData";
-import Loader from "./common/loading/loader";
 import TryAgain from "./common/errors/tryAgain";
-import { MessageType } from "./common/dialogs/cardDialog";
+import { useFetchCustomers } from "../hooks/customers/useFetchCustomers";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import {
+  customerAddDialogShowed,
+  customerCurrentPaginationPageChanged,
+  customerPaginationPageSizeChanged,
+} from "../store/customers";
+import Loader from "./common/loading/loader";
+import { useAppSelector } from "../hooks/useAppSelector";
 
-interface CustomerDialogs {
-  addDialog: boolean;
-  editDialog: boolean;
-  deleteDialog: boolean;
-}
+const pageOptions = [1, 2, 5, 10, 25, 50, 100];
 
 export const CustomerListSection = () => {
-  const [
-    customers,
-    setCustomers,
-    isLoading,
-    initialRequestError,
-    reFetchCustomer,
-  ] = useFetchData<Customer[]>("customers");
-  const [customerDialogs, setCustomerDialogsVisibility] =
-    useState<CustomerDialogs>({
-      addDialog: false,
-      editDialog: false,
-      deleteDialog: false,
-    });
-  const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
-  const [customerAddErrorMessage, setCustomerAddErrorMessage] =
-    useState<MessageType>();
+  const [customers, isLoading, errorMessages, refetch] = useFetchCustomers();
+  const dispatch = useAppDispatch();
+  const currentPage = useAppSelector(
+    (state) => state.entities.customers.pagination.currentPage
+  );
+  const pageSize = useAppSelector(
+    (state) => state.entities.customers.pagination.pageSize
+  );
 
   const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
+    dispatch(customerCurrentPaginationPageChanged(pageNumber));
   };
 
   const handlePageSizeChange = (pageSize: number) => {
-    setCurrentPage(1);
-    setPageSize(pageSize);
-  };
-
-  const handleDeleteMenuItemClick = (customer: Customer) => {
-    setCustomerDialogsVisibility({
-      deleteDialog: true,
-      editDialog: false,
-      addDialog: false,
-    });
-    setSelectedCustomer(customer);
-  };
-
-  const handleEditMenuItemClick = (customer: Customer) => {
-    setCustomerDialogsVisibility({
-      deleteDialog: false,
-      editDialog: true,
-      addDialog: false,
-    });
-    setSelectedCustomer({ ...customer });
+    dispatch(customerCurrentPaginationPageChanged(1));
+    dispatch(customerPaginationPageSizeChanged(pageSize));
   };
 
   const handleAddCustomerButtonClick = () => {
-    setCustomerDialogsVisibility({
-      deleteDialog: false,
-      editDialog: false,
-      addDialog: true,
-    });
+    dispatch(customerAddDialogShowed());
   };
 
-  const handleDialogCancel = () => {
-    setCustomerDialogsVisibility({
-      deleteDialog: false,
-      editDialog: false,
-      addDialog: false,
-    });
-    setCustomerAddErrorMessage(undefined);
-  };
-
-  const handleDeleteCustomer = (customer: Customer): void => {
-    customerDialogs.deleteDialog = false;
-    setCustomerDialogsVisibility({ ...customerDialogs });
-  };
-
-  const handleEditCustomer = (customer: Customer): void => {
-    customerDialogs.editDialog = false;
-    setCustomerDialogsVisibility({ ...customerDialogs });
-  };
-
-  const handleAddCustomer = (customer: Customer): void => {
-    const copyCustomers = customers ? [...customers] : [];
-    customers?.push(customer);
-    setCustomers(customers);
-    http
-      .post(`${config.apiEndpoint}customers`, customer)
-      .then(() => {
-        customerDialogs.addDialog = false;
-        setCustomerDialogsVisibility({ ...customerDialogs });
-        setCustomerAddErrorMessage(undefined);
-      })
-      .catch((error) => {
-        setCustomers(copyCustomers);
-        setCustomerAddErrorMessage({
-          isError: true,
-          message: error?.errorMessage || "lol",
-        });
-      });
-  };
+  console.log("error messagea");
+  console.log(errorMessages);
+  if (errorMessages) {
+    return (
+      <div className="force-center">
+        <TryAgain onClick={refetch} />
+      </div>
+    );
+  }
 
   if (isLoading) {
     return <Loader />;
-  }
-
-  if (initialRequestError) {
-    return (
-      <div className="force-center">
-        <TryAgain onClick={reFetchCustomer} />
-      </div>
-    );
   }
 
   if (!customers) {
@@ -144,8 +74,6 @@ export const CustomerListSection = () => {
             <h1>Customers</h1>
             <CustomerTable
               customers={customers}
-              onDeleteMenuItemClick={handleDeleteMenuItemClick}
-              onUpdateMenuItemClick={handleEditMenuItemClick}
               pagination={{
                 pageNumber: currentPage,
                 pageSize: pageSize,
@@ -162,31 +90,12 @@ export const CustomerListSection = () => {
         <PageSizeSelector
           actualPageSize={pageSize}
           onPageSizeChange={handlePageSizeChange}
-          pageOptions={[1, 2, 5, 10, 25, 50, 100]}
+          pageOptions={pageOptions}
         />
       </section>
-      {selectedCustomer && (
-        <CustomerDialogDelete
-          onDialogCancel={handleDialogCancel}
-          onDialogDelete={handleDeleteCustomer}
-          customer={selectedCustomer}
-          visible={customerDialogs.deleteDialog}
-        />
-      )}
-      {selectedCustomer && (
-        <CustomerDialogEdit
-          customer={selectedCustomer}
-          onDialogSubmit={handleEditCustomer}
-          onDialogCancel={handleDialogCancel}
-          visible={customerDialogs.editDialog}
-        />
-      )}
-      <CustomerDialogAdd
-        onDialogCancel={handleDialogCancel}
-        onDialogSubmit={handleAddCustomer}
-        visible={customerDialogs.addDialog}
-        errorMessage={customerAddErrorMessage}
-      />
+      <CustomerDialogDelete />
+      <CustomerDialogEdit />
+      <CustomerDialogAdd />
     </React.Fragment>
   );
 };

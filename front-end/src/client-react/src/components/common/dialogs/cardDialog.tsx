@@ -8,24 +8,30 @@ export interface MessageType {
 }
 
 export interface CardDialogProps {
-  message?: MessageType;
+  messages?: MessageType[];
   title: string;
   children: React.ReactNode;
   size?: CardSize;
 }
 
 const CardDialog = React.forwardRef<HTMLDivElement, CardDialogProps>(
-  ({ message, title, children, size }, ref) => {
+  ({ messages, title, children, size }, ref) => {
     return (
       <div ref={ref}>
         <Card size={size}>
           <section className="card-dialog">
             <h3>{title}</h3>
-            {message && (
-              <p className={message.isError ? "error" : ""}>
-                {message.message}
-              </p>
-            )}
+            {messages &&
+              messages.map((message) => {
+                return (
+                  <p
+                    key={message.message}
+                    className={message.isError ? "error" : ""}
+                  >
+                    {message.message}
+                  </p>
+                );
+              })}
             {children}
           </section>
         </Card>

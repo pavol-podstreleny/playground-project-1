@@ -4,9 +4,9 @@ export interface Request {
   url: string;
   method: "get" | "post" | "put" | "patch" | "delete";
   data?: any;
-  onSuccessActionNames: string[];
-  onErrorActionNames: string[];
-  onStartActionNames: string[];
+  onSuccessActionNames?: string[];
+  onErrorActionNames?: string[];
+  onStartActionNames?: string[];
 }
 
 export const apiCallBegan = createAction<Request>("api/CallBegan");

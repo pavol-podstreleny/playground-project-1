@@ -1,21 +1,8 @@
 import { useEffect } from "react";
 import Customer from "../../model/customer";
-import { apiCallBegan, Request } from "../../store/apis";
-import {
-  customersRequested,
-  customersRequestFailed,
-  customersRequestSucceeded,
-} from "../../store/customers";
+import { getCustomers } from "../../store/customers";
 import { useAppDispatch } from "../useAppDispatch";
 import { useAppSelector } from "../useAppSelector";
-
-const customerPayload: Request = {
-  url: "/customers",
-  method: "get",
-  onErrorActionNames: [customersRequestFailed.type],
-  onStartActionNames: [customersRequested.type],
-  onSuccessActionNames: [customersRequestSucceeded.type],
-};
 
 export const useFetchCustomers = (): [
   Customer[],
@@ -32,14 +19,12 @@ export const useFetchCustomers = (): [
     (state) => state.entities.customers.api.get.errorMessage
   );
 
-  console.log(errorMessage);
-
   const refetch = () => {
-    dispatch(apiCallBegan(customerPayload));
+    dispatch(getCustomers());
   };
 
   useEffect(() => {
-    dispatch(apiCallBegan(customerPayload));
+    dispatch(getCustomers());
   }, []);
 
   return [customers, isLoading, errorMessage, refetch];
