@@ -1,15 +1,14 @@
 import { createAction } from "@reduxjs/toolkit";
-import { AnyAction } from "redux";
 
-export interface Request<T> {
+export interface Request {
   url: string;
   method: "get" | "post" | "put" | "patch" | "delete";
-  data?: T;
-  onSuccess: AnyAction;
-  onError: AnyAction;
-  onStart: AnyAction;
+  data?: any;
+  onSuccessActionNames: string[];
+  onErrorActionNames: string[];
+  onStartActionNames: string[];
 }
 
-export const apiCallBegan = createAction("api/CallBegan");
+export const apiCallBegan = createAction<Request>("api/CallBegan");
 export const apiCallSuccess = createAction("api/CallSuccess");
 export const apiCallFailed = createAction("api/CallFailed");
