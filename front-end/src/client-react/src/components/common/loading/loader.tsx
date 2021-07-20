@@ -1,11 +1,13 @@
 import "./loader.css";
-export interface LoaderProps {}
+export interface LoaderProps {
+  text?: string;
+}
 
-const Loader: React.FC<LoaderProps> = () => {
+const Loader: React.FC<LoaderProps> = ({ text }) => {
   return (
-    <div className="force-center">
+    <div>
       <div className="loader"></div>
-      <p className="loader-text">Loading...</p>
+      {text && <p className="loader-text">{text}</p>}
     </div>
   );
 };

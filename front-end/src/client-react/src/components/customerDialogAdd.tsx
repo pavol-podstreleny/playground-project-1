@@ -19,6 +19,9 @@ const CustomerDialogAdd: React.FC<CustomerDialogAddProps> = ({}) => {
   const errorMessage = useAppSelector(
     (state) => state.entities.customers.api.post.errorMessage
   );
+  const isLoading = useAppSelector(
+    (state) => state.entities.customers.api.post.isLoading
+  );
 
   const handleDialogCancel = () => {
     dispatch(customerDialogsCancel());
@@ -53,6 +56,7 @@ const CustomerDialogAdd: React.FC<CustomerDialogAddProps> = ({}) => {
       onDialogSubmit={handleDialogSubmit}
       visible={dialogVisibile}
       errorMessage={[{ isError: true, message: errorMessage || "" }]}
+      submitting={{ isLoading, text: "Submitting..." }}
     />
   );
 };

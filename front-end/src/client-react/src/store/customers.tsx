@@ -226,6 +226,7 @@ export const deleteCustomer = (customer: Customer) => {
     data: customer,
     url: `customers/${customer.rowKey}/${customer.partitionKey}/`,
     onErrorActionNames: [customersRequestFailed.type],
+    onStartActionNames: [customersRequestStarted.type],
     onSuccessActionNames: [
       customerRequestDeleteSucceeded.type,
       customerDialogsCancel.type,

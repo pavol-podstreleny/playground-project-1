@@ -1,9 +1,11 @@
 import Joi from "joi";
 import React, { MouseEvent, useState } from "react";
+import { useAppSelector } from "../hooks/useAppSelector";
 import Customer from "../model/customer";
 import { getPostalCodeEURegexp } from "../utils/postalCode";
 import { containsKey, validateProperty, ValidKey } from "../utils/utils";
 import InputField, { InputType } from "./common/inputFields/inputField";
+import Loader from "./common/loading/loader";
 
 export interface CustomerFormProps {
   customer: Customer;
@@ -11,6 +13,7 @@ export interface CustomerFormProps {
   onCancel: () => void;
   twoColumns: boolean;
   buttonName: string;
+  submitting: boolean;
 }
 
 export interface CustomerError extends ValidKey {
@@ -45,10 +48,10 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
   onCancel,
   twoColumns,
   buttonName,
+  submitting,
 }) => {
   const [customerInput, setCustomerInput] = useState<Customer>(customer);
   const [customerError, setCustomerError] = useState<CustomerError>({});
-
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     if (customerError !== null) {
@@ -137,10 +140,18 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
         />
       </div>
       <div className="flex-row flex-end">
-        <button className="button button-primary" onClick={onCancel}>
+        <button
+          className="button button-primary"
+          onClick={onCancel}
+          disabled={submitting}
+        >
           Cancel
         </button>
-        <button type="submit" className="button button-success">
+        <button
+          type="submit"
+          className="button button-success"
+          disabled={submitting}
+        >
           {buttonName}
         </button>
       </div>

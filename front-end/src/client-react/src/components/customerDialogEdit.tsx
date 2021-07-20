@@ -23,6 +23,9 @@ const CustomerDialogEdit: React.FC<CustomerDialogEditProps> = () => {
   const dialogVisible = useAppSelector(
     (state) => state.entities.customers.dialogs.editDialogVisible
   );
+  const isLoading = useAppSelector(
+    (state) => state.entities.customers.api.patch.isLoading
+  );
 
   const handleDialogCancel = () => {
     dispatch(customerDialogsCancel());
@@ -46,6 +49,7 @@ const CustomerDialogEdit: React.FC<CustomerDialogEditProps> = () => {
       onDialogSubmit={handleDialogSubmit}
       visible={dialogVisible}
       errorMessage={errors ? [errors] : undefined}
+      submitting={{ isLoading, text: "Editting..." }}
     />
   );
 };

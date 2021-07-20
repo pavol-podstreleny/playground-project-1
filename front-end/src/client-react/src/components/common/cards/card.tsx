@@ -2,6 +2,7 @@ import "./card.css";
 
 export interface CardProps {
   size?: CardSize;
+  relative?: boolean;
 }
 
 export enum CardSize {
@@ -9,8 +10,21 @@ export enum CardSize {
   MEDIUM = "medium",
 }
 
-const Card: React.FC<CardProps> = ({ children, size }) => {
-  return <div className={size ? `card card-${size}` : "card"}>{children}</div>;
+const Card: React.FC<CardProps> = ({ children, size, relative }) => {
+  const classes = () => {
+    const result = [];
+    if (size) {
+      result.push(`card card-${size}`);
+    } else {
+      result.push("card");
+    }
+
+    if (relative) {
+      result.push("relative");
+    }
+    return result.join(" ");
+  };
+  return <div className={classes()}>{children}</div>;
 };
 
 export default Card;

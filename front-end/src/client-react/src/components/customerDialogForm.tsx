@@ -3,7 +3,10 @@ import { createRef } from "react";
 import { useDetectOutsideClickWithCallback } from "../hooks/useDetectOutsideClickWithCallback";
 import Customer from "../model/customer";
 import { CardSize } from "./common/cards/card";
-import CardDialog, { MessageType } from "./common/dialogs/cardDialog";
+import CardDialog, {
+  CardLoaderProps,
+  MessageType,
+} from "./common/dialogs/cardDialog";
 import Overlay from "./common/overlay/overlay";
 import CustomerForm from "./customerForm";
 
@@ -15,6 +18,7 @@ export interface CustomerDialogFormProps {
   title: string;
   buttonName: string;
   errorMessage?: MessageType[];
+  submitting: CardLoaderProps;
 }
 
 const CustomerDialogForm: React.FC<CustomerDialogFormProps> = ({
@@ -25,6 +29,7 @@ const CustomerDialogForm: React.FC<CustomerDialogFormProps> = ({
   title,
   buttonName,
   errorMessage,
+  submitting,
 }) => {
   const cardDialogRef = createRef<HTMLDivElement>();
   const [, setClickOutside] = useDetectOutsideClickWithCallback(
@@ -52,6 +57,7 @@ const CustomerDialogForm: React.FC<CustomerDialogFormProps> = ({
         size={CardSize.MEDIUM}
         ref={cardDialogRef}
         messages={errorMessage}
+        isLoading={submitting}
       >
         <CustomerForm
           onSubmit={onDialogSubmit}
@@ -59,6 +65,7 @@ const CustomerDialogForm: React.FC<CustomerDialogFormProps> = ({
           customer={customer}
           twoColumns={true}
           buttonName={buttonName}
+          submitting={submitting.isLoading}
         />
       </CardDialog>
     </Overlay>

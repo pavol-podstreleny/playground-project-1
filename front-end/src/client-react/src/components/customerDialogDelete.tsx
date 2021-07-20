@@ -8,6 +8,7 @@ import { useAppDispatch } from "../hooks/useAppDispatch";
 import { customerDialogsCancel, deleteCustomer } from "../store/customers";
 import { useAppSelector } from "../hooks/useAppSelector";
 import { isError } from "joi";
+import Loader from "./common/loading/loader";
 
 interface CustomerDialogDeleteProps {}
 
@@ -18,6 +19,9 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = () => {
   );
   const errorMessage = useAppSelector(
     (state) => state.entities.customers.api.delete.errorMessage
+  );
+  const isLoading = useAppSelector(
+    (state) => state.entities.customers.api.delete.isLoading
   );
   const customer = useAppSelector((state) => state.entities.customers.selected);
   const cardDialogRef = createRef<HTMLDivElement>();
@@ -46,14 +50,7 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = () => {
 
   if (!isDialogVisile || !customer) return null;
 
-  const messages = [
-    {
-      message: `Are you sure you want to delete customer ${
-        customer!.firstName
-      } ${customer!.lastName}`,
-      isError: false,
-    },
-  ];
+  const messages = [];
 
   if (errorMessage) {
     messages.push({
@@ -61,6 +58,12 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = () => {
       isError: true,
     });
   }
+  messages.push({
+    message: `Are you sure you want to delete customer ${customer!.firstName} ${
+      customer!.lastName
+    }`,
+    isError: false,
+  });
 
   return (
     <Overlay>
@@ -69,16 +72,19 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = () => {
         size={CardSize.REGULAR}
         messages={messages}
         ref={cardDialogRef}
+        isLoading={{ isLoading, text: "Deleting..." }}
       >
         <div className="flex-row flex-end">
           <button
             className="button button-primary"
+            disabled={isLoading}
             onClick={(e) => raiseCancel(e)}
           >
             Cancel
           </button>
           <button
             className="button button-delete"
+            disabled={isLoading}
             onClick={() => handleCustomerDelete(customer!)}
           >
             Delete

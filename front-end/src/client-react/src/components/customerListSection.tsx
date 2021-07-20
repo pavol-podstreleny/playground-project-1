@@ -53,7 +53,7 @@ export const CustomerListSection = () => {
   }
 
   if (isLoading) {
-    return <Loader />;
+    return <Loader text="Loading..." />;
   }
 
   if (!customers) {
