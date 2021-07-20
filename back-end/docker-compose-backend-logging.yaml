@@ -1,0 +1,14 @@
+version: "3.17"
+
+services:
+  storage-table:
+    logging:
+      driver: "fluentd"
+      options:
+        tag: "customers.table-storage.{{.ImageName}}"
+
+  customer-api:
+    logging:
+      driver: "fluentd"
+      options:
+        tag: "customers.api.{{.ImageName}}"
