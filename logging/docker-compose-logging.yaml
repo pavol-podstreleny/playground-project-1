@@ -1,0 +1,9 @@
+version: "3.7"
+
+services:
+  fluentd:
+    image: ${DOCKER_REGISTRY:-docker.io}/palopodstreleny/fluentd:v1-build-${BUILD_NUMBER:-local}
+  elasticsearch:
+    image: ${DOCKER_REGISTRY:-docker.io}/palopodstreleny/elasticsearch:v1-build-${BUILD_NUMBER:-local}
+  kibana:
+    image: ${DOCKER_REGISTRY:-docker.io}/palopodstreleny/kibana:v1-build-${BUILD_NUMBER:-local}

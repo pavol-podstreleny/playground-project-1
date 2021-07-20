@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  fluentd:
+    ports:
+      - 24224:24224
+      - 24224:24224/udp
+    networks:
+      - logging-network
+    environment:
+      FLUENTD_CONF: elasticsearch.conf
+    volumes:
+      - ./Fluentd/config/:/fluentd/etc/
+
+  elasticsearch:
+    ports:
+      - 9300:9300
+      - 9200:9200
+    networks:
+      - logging-network
+  kibana:
+    ports:
+      - 5601:5601
+    networks:
+      - logging-network
+
+networks:
+  logging-network:
+  customers-dev-network:
