@@ -18,6 +18,7 @@ services:
       - 9200:9200
     networks:
       - logging-network
+
   kibana:
     ports:
       - 5601:5601
