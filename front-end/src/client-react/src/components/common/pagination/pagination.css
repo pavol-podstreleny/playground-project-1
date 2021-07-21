@@ -1,13 +1,15 @@
-ul.pagination {
+.pagination {
   display: flex;
   flex-direction: row;
   list-style: none;
 }
-ul.pagination li {
+.pagination__list-item {
   padding: 0px;
   margin: 0px;
 }
-.page-item button {
+
+.pagination__button {
+  cursor: pointer;
   display: block;
   padding: 0.5rem 0.8rem;
   color: black;
@@ -17,12 +19,12 @@ ul.pagination li {
   background: #fff;
 }
 
-#active-page {
-  color: white;
+.pagination__button--active {
+  color: #fff;
   background: blue;
 }
 
-.page-item button:hover {
+.pagination__button:hover {
   cursor: pointer;
   background: blue;
   color: white;

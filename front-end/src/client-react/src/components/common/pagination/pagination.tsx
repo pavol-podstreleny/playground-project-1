@@ -29,12 +29,17 @@ const Pagination: React.FC<PaginationProps> = ({
       <ul className="pagination">
         {pages.map((page) => {
           return (
-            <li
-              className={"page-item"}
-              id={currentPage === page ? "active-page" : undefined}
-              key={page}
-            >
-              <button onClick={() => onPageChange(page)}>{page}</button>
+            <li className={"pagination__list-item"} key={page}>
+              <button
+                className={
+                  currentPage === page
+                    ? "pagination__button pagination__button--active"
+                    : "pagination__button"
+                }
+                onClick={() => onPageChange(page)}
+              >
+                {page}
+              </button>
             </li>
           );
         })}
