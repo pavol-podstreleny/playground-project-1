@@ -1,19 +1,20 @@
-.input-section {
+.input-group {
   margin: 1.5rem 0;
 }
 
-.input-label {
+.input-group__label {
   font-size: 1.2rem;
   display: block;
   padding-bottom: 0.6rem;
   font-weight: 600;
 }
-.label-required::after {
+
+.input-group__label--required::after {
   content: "*";
   color: brown;
 }
 
-.input-content {
+.input-group__field {
   width: 100%;
   padding: 1.1rem;
   border: 1px solid black;
@@ -21,8 +22,11 @@
   font-size: 1.3rem;
 }
 
-.input-error {
+.input-group__message {
   font-size: 0.8rem;
-  color: brown;
   margin: 0.5rem 0rem;
+}
+
+.input-group__message--error {
+  color: brown;
 }

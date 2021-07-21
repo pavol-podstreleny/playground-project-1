@@ -33,15 +33,19 @@ const InputField: React.FC<InputFieldSectionProps> = ({
   errorMessage,
 }) => {
   return (
-    <div className="input-section">
+    <div className="input-group">
       <label
-        className={required ? "input-label label-required" : "input-label"}
+        className={
+          required
+            ? "input-group__label input-group__label--required"
+            : "input-group__label"
+        }
         htmlFor={fieldName}
       >
         {name}
       </label>
       <input
-        className="input-content"
+        className="input-group__field"
         name={fieldName}
         id={fieldName}
         type={type}
@@ -52,7 +56,11 @@ const InputField: React.FC<InputFieldSectionProps> = ({
         max={max}
         autoComplete="off"
       />
-      {errorMessage && <p className="input-error">{errorMessage}</p>}
+      {errorMessage && (
+        <p className="input-group__message input-group__message--error">
+          {errorMessage}
+        </p>
+      )}
     </div>
   );
 };
