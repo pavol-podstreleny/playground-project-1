@@ -7,7 +7,7 @@ const Loader: React.FC<LoaderProps> = ({ text }) => {
   return (
     <div>
       <div className="loader"></div>
-      {text && <p className="loader-text">{text}</p>}
+      {text && <p className="loader__text">{text}</p>}
     </div>
   );
 };
