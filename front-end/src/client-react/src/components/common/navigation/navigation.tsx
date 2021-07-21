@@ -12,12 +12,14 @@ export interface NavigationProps {
 const Navigation: React.FC<NavigationProps> = ({ menuItems }) => {
   return (
     <header>
-      <nav id="main-nav" className="center">
-        <ul className="flex-row flex-end">
+      <nav className="main-nav">
+        <ul className="main-nav__item-group">
           {menuItems.map((item) => {
             return (
-              <li key={item.name}>
-                <NavLink to={item.url}>{item.name}</NavLink>
+              <li className="main-nav__item" key={item.name}>
+                <NavLink to={item.url} className="main-nav__link">
+                  {item.name}
+                </NavLink>
               </li>
             );
           })}

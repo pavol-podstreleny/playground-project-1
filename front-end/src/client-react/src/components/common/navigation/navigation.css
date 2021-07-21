@@ -1,26 +1,29 @@
 header {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
-
-#main-nav {
+.main-nav {
   background: #fff;
+  margin: 0 auto;
+  width: 960px;
 }
-#main-nav ul {
+.main-nav__item-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   margin: 0px;
   list-style-type: none;
 }
-#main-nav ul li {
+.main-nav__item {
   margin-right: 2rem;
 }
-
-#main-nav ul li a {
+.main-nav__link {
   text-decoration: none;
   font-size: 1.4rem;
   display: block;
   padding: 2rem 1.4rem;
   color: rgba(0, 0, 0, 0.6);
 }
-#main-nav ul li a.active,
-#main-nav ul li a:hover {
+.main-nav__link,
+.main-nav__link--active {
   color: rgba(0, 0, 0, 0.85);
 }
