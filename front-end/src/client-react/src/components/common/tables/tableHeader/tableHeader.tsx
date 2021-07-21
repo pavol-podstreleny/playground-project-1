@@ -1,4 +1,3 @@
-import { on } from "events";
 import "./tableHeader.css";
 
 export interface Column<T> {
@@ -60,8 +59,8 @@ const TableHeader = <T extends object>({
         <th
           className={
             sortColumn.columnName === column.propName
-              ? "hoverable selected-column"
-              : "hoverable"
+              ? "table__header-cell table__header-cell--hoverable table__header-cell--selected"
+              : "table__header-cell table__header-cell--hoverable"
           }
           key={column.name}
           onClick={() => raiseSort(column.propName, index)}
@@ -71,13 +70,17 @@ const TableHeader = <T extends object>({
         </th>
       );
     } else {
-      return <th key={column.name}>{column.name}</th>;
+      return (
+        <th className="table__header-cell" key={column.name}>
+          {column.name}
+        </th>
+      );
     }
   };
 
   return (
     <thead>
-      <tr className="table-columns">
+      <tr className="table__header-row">
         {columns.map((column, index) => {
           if (column.render) {
             return renderTableColumn(

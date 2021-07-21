@@ -1,16 +1,15 @@
-.table-columns th {
+.table__header-cell {
   color: rgba(0, 0, 0, 0.55);
   font-size: 1.2rem;
   font-weight: 600;
   font-family: "Open Sans", sans-serif;
   padding: 0.8rem 1.8rem;
 }
-td.table-action-column {
-  position: relative;
-  z-index: 0;
-  padding: 0px;
+
+.table__header-cell--hoverable {
+  cursor: pointer;
 }
 
-.selected-column {
-  color: rgba(0, 0, 0, 0.8);
+.table__header-cell--selected {
+  color: blue;
 }

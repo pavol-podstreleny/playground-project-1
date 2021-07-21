@@ -3,6 +3,7 @@ import { paginate } from "../../../utils/paginate";
 import { sortColumns } from "../../../utils/sortColumn";
 import { TableBody } from "./tableBody/tableBody";
 import TableHeader, { Column, SortColumn } from "./tableHeader/tableHeader";
+import "./table.css";
 
 export interface Paginate<T> {
   pageNumber: number;
@@ -45,7 +46,7 @@ const Table = <T extends object, K extends keyof T>({
     data = paginate(items, pagination.pageNumber, pagination.pageSize);
   }
   return (
-    <table>
+    <table className="table">
       <TableHeader
         columns={columns}
         onSort={raiseSort}

@@ -22,11 +22,11 @@ export const TableBody = <T extends object, K extends keyof T>({
     <tbody>
       {items.map((item, index) => {
         return (
-          <tr className="table-data" key={index}>
+          <tr className="table__body-row" key={index}>
             {columns.map((column, index) => {
               if (column.render) {
                 return (
-                  <td key={column.name}>
+                  <td className="table__body-data" key={column.name}>
                     {item[columnKeys[index]]}
                     {renderInnerElement(item, column)}
                   </td>
