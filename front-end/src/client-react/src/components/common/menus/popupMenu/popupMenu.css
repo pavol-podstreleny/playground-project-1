@@ -2,28 +2,40 @@
   position: absolute;
   top: 4.3rem;
   right: 1.6rem;
-  width: 200px;
   display: none;
+  z-index: 1;
 }
 
-.popup-menu .card {
-  padding: 1rem 0px;
-  z-index: 99;
+.popup-menu--small {
+  width: 20rem;
+}
+
+.popup-menu--visible {
+  display: block;
+}
+
+.popup-menu__card {
   background: #fff;
-  box-shadow: 0 10px 10x rgba(0, 0, 0, 0.8);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 }
 
-.popup-menu li {
+.popup-menu__item-group {
+  list-style-type: none;
+  padding: 1.6rem 0rem;
+}
+
+.popup-menu__link {
+  cursor: pointer;
+  width: 100%;
   font-size: 1.2rem;
   font-weight: 600;
   font-family: "Open Sans", sans-serif;
-  padding: 1rem;
+  padding: 1.3rem;
+  border: none;
+  background: inherit;
+  text-align: left;
 }
 
-.popup-menu li:hover {
+.popup-menu__link:hover {
   background: rgba(0, 0, 0, 0.03);
-}
-
-tr:hover .popup-menu {
-  background: #fff;
 }
