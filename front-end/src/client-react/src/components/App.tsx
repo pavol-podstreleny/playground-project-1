@@ -1,4 +1,4 @@
-import { CustomerListSection } from "./customerListSection";
+import { CustomerPage } from "./customerPage/customerPage";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Navigation from "./common/navigation/navigation";
 import NotFound from "./common/errors/notFound/notFound";
@@ -20,7 +20,7 @@ function App() {
         <main className="center">
           <Switch>
             <Route path="/not-found" exact component={NotFound} />
-            <Route path="/customers" exact component={CustomerListSection} />
+            <Route path="/customers" exact component={CustomerPage} />
             <Redirect from="/" exact to="/customers" />
             <Redirect to="/not-found" />
           </Switch>
