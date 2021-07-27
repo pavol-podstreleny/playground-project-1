@@ -6,7 +6,7 @@ export const sortColumns = <T, K extends keyof T>(
   sortColumn: SortColumn,
   selectedColumnKeyIndex: number,
   columnKeys: K[]
-) => {
+): T[] => {
   if (
     sortColumn.columnName !== "" &&
     selectedColumnKeyIndex !== -1 &&
@@ -14,8 +14,9 @@ export const sortColumns = <T, K extends keyof T>(
   ) {
     if (columnKeys[selectedColumnKeyIndex]) {
       const key: K = columnKeys[selectedColumnKeyIndex];
-      items.sort((a, b) => {
-        if (a && b && a != null && b != null)
+      const itemsCopy = [...items];
+      itemsCopy.sort((a, b) => {
+        if (a && b && a !== null && b !== null) {
           if (typeof a[key] === "number") {
             const result =
               (a[key] as unknown as number) - (b[key] as unknown as number);
@@ -30,8 +31,11 @@ export const sortColumns = <T, K extends keyof T>(
               "Sorting allowed only for no nullable numbers and strings"
             );
           }
+        }
         return 0;
       });
+      return itemsCopy;
     }
   }
+  return items;
 };
