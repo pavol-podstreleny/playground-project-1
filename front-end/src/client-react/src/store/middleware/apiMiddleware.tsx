@@ -42,9 +42,7 @@ const apiMiddleware: Middleware<{}, any> =
 
     // Dispatch onStartActions  if specified in payload
     if (onStartActionNames) {
-      console.log(onStartActionNames);
       for (let actionName of onStartActionNames) {
-        console.log(actionName);
         dispatch({
           type: actionName,
           payload: { method: payloadRequest.method },
