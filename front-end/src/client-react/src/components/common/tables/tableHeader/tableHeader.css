@@ -1,15 +1,28 @@
-.table__header-cell {
-  color: rgba(0, 0, 0, 0.55);
-  font-size: 1.2rem;
-  font-weight: 600;
-  font-family: "Open Sans", sans-serif;
-  padding: 0.8rem 1.8rem;
+.table__head {
+  background-color: #fff4bb;
 }
 
+.table__header-cell {
+  color: #424242;
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-family: "Open Sans", sans-serif;
+  padding: 1.8rem 1.8rem;
+  white-space: nowrap;
+}
+
+.table__header-cell--max-width-small {
+  max-width: 200px;
+}
+.table__header-cell--max-width-medium {
+  max-width: 300px;
+}
+.table__header-cell--max-width-large {
+  max-width: 400px;
+}
 .table__header-cell--hoverable {
   cursor: pointer;
 }
-
 .table__header-cell--selected {
-  color: blue;
+  color: #141414;
 }

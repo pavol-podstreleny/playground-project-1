@@ -1,10 +1,17 @@
+import { withTableResponsiveHeader } from "../withTableResponsive";
 import "./tableHeader.css";
+
+interface ResponsiveColumn {
+  maxWidth: number;
+  hasToRender: boolean;
+}
 
 export interface Column<T> {
   name: string;
   propName: string;
   render: boolean;
   sortable: boolean;
+  responsiveColumn: ResponsiveColumn | null;
   element?: (data: T) => React.ReactElement;
 }
 
@@ -48,38 +55,41 @@ const TableHeader = <T extends object>({
     return <span>&#8595;</span>;
   };
 
+  const provideClasses = (
+    onSort: boolean,
+    column: Column<T>,
+    sortColumn: SortColumn | undefined
+  ): string => {
+    const classes = ["table__header-cell"];
+    if (onSort && sortColumn && column.sortable) {
+      classes.push("table__header-cell--hoverable");
+    }
+    if (sortColumn?.columnName === column.propName) {
+      classes.push("table__header-cell--selected");
+    }
+    return classes.join(" ");
+  };
+
   const renderTableColumn = (
     onSort: boolean,
     column: Column<T>,
     sortColumn: SortColumn | undefined,
     index: number
   ) => {
-    if (onSort && column.sortable && sortColumn) {
-      return (
-        <th
-          className={
-            sortColumn.columnName === column.propName
-              ? "table__header-cell table__header-cell--hoverable table__header-cell--selected"
-              : "table__header-cell table__header-cell--hoverable"
-          }
-          key={column.name}
-          onClick={() => raiseSort(column.propName, index)}
-        >
-          {column.name}
-          {renderSortIcon(column)}
-        </th>
-      );
-    } else {
-      return (
-        <th className="table__header-cell" key={column.name}>
-          {column.name}
-        </th>
-      );
-    }
+    return (
+      <th
+        className={provideClasses(onSort, column, sortColumn)}
+        key={column.name}
+        onClick={() => raiseSort(column.propName, index)}
+      >
+        {column.name}
+        {renderSortIcon(column)}
+      </th>
+    );
   };
 
   return (
-    <thead>
+    <thead className="table__head">
       <tr className="table__header-row">
         {columns.map((column, index) => {
           if (column.render) {
@@ -90,6 +100,7 @@ const TableHeader = <T extends object>({
               index
             );
           }
+          return null;
         })}
       </tr>
     </thead>
@@ -97,3 +108,4 @@ const TableHeader = <T extends object>({
 };
 
 export default TableHeader;
+export const TableHeaderResponsive = withTableResponsiveHeader(TableHeader);

@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { paginate } from "../../../utils/paginate";
 import { sortColumns } from "../../../utils/sortColumn";
-import { TableBody } from "./tableBody/tableBody";
-import TableHeader, { Column, SortColumn } from "./tableHeader/tableHeader";
+import { TableBodyResponsive } from "./tableBody/tableBody";
+import {
+  Column,
+  SortColumn,
+  TableHeaderResponsive,
+} from "./tableHeader/tableHeader";
 import "./table.css";
 
-export interface Paginate<T> {
+export interface Paginate {
   pageNumber: number;
   pageSize: number;
 }
@@ -15,7 +19,7 @@ export interface TableProps<T, K> {
   columnKeys: K[];
   items: T[];
   sortColumnPropName?: string;
-  pagination?: Paginate<T>;
+  pagination?: Paginate;
 }
 
 const Table = <T extends object, K extends keyof T>({
@@ -38,22 +42,31 @@ const Table = <T extends object, K extends keyof T>({
   };
 
   // Sort
-  sortColumns<T, K>(items, sortColumn, columnKeyIndex, columnKeys);
-
-  let data: T[] = items;
+  let data: T[] = sortColumns<T, K>(
+    items,
+    sortColumn,
+    columnKeyIndex,
+    columnKeys
+  );
   // Paginate
   if (pagination) {
-    data = paginate(items, pagination.pageNumber, pagination.pageSize);
+    data = paginate(data, pagination.pageNumber, pagination.pageSize);
   }
   return (
-    <table className="table">
-      <TableHeader
-        columns={columns}
-        onSort={raiseSort}
-        sortColumn={sortColumn}
-      />
-      <TableBody items={data} columnKeys={columnKeys} columns={columns} />
-    </table>
+    <div className="table-overflow-scroll">
+      <table className="table">
+        <TableHeaderResponsive
+          columns={columns}
+          onSort={raiseSort}
+          sortColumn={sortColumn}
+        />
+        <TableBodyResponsive
+          items={data}
+          columnKeys={columnKeys}
+          columns={columns}
+        />
+      </table>
+    </div>
   );
 };
 

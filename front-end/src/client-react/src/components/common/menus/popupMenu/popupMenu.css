@@ -1,6 +1,5 @@
 .popup-menu {
   position: absolute;
-  top: 4.3rem;
   right: 1.6rem;
   display: none;
   z-index: 1;
@@ -21,14 +20,16 @@
 
 .popup-menu__item-group {
   list-style-type: none;
+  flex-direction: column;
   padding: 1.6rem 0rem;
 }
 
 .popup-menu__link {
   cursor: pointer;
   width: 100%;
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #454545;
   font-family: "Open Sans", sans-serif;
   padding: 1.3rem;
   border: none;
@@ -37,5 +38,5 @@
 }
 
 .popup-menu__link:hover {
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(0, 0, 0, 0.04);
 }

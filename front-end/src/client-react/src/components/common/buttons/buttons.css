@@ -1,35 +1,39 @@
 .button {
   display: block;
-  padding: 1rem 1.4rem;
+  padding: 1.4rem 1.6rem;
   color: rgba(255, 255, 255, 1);
   background: transparent;
   border: none;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
   border-radius: 0.2rem;
   cursor: pointer;
   text-align: center;
 }
 
-.button-primary,
+.button--primary,
 .button-cancel {
   background: rgba(0, 120, 212, 1);
 }
 
-.button-primary:hover,
+.button--primary:hover,
 .button-cancel:hover {
   background: rgb(12, 109, 184);
 }
 
-.button-delete {
+.button--delete {
   background: #c62828;
 }
-.button-delete:hover {
+.button--delete:hover {
   background: #b71c1c;
 }
-.button-success {
-  background: #2e7d32;
+.button--success {
+  background: #53af67;
+  transition: background ease 0.5s;
 }
-.button-success:hover {
-  background: #1b5e20;
+.button--success:hover {
+  background: #459b57;
 }
 
 .button:disabled,

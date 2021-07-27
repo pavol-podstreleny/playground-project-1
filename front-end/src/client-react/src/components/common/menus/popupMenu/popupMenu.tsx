@@ -1,4 +1,3 @@
-import Card from "../../cards/card";
 import "./popupMenu.css";
 
 export interface MenuItem<T> {
@@ -18,28 +17,30 @@ const PopUpMenu = <T extends object>({
   item,
 }: PopUpMenuProps<T>) => {
   return (
-    <div
-      className={
-        isVisible
-          ? "popup-menu popup-menu--visible popup-menu--small"
-          : "popup-menu popup-menu--small"
-      }
-    >
-      <div className="popup-menu__card">
-        <ul className="popup-menu__item-group">
-          {menuItems.map((handledItem) => {
-            return (
-              <li key={handledItem.name}>
-                <button
-                  onClick={() => handledItem.handler(item)}
-                  className="popup-menu__link"
-                >
-                  {handledItem.name}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+    <div style={{ position: "relative" }}>
+      <div
+        className={
+          isVisible
+            ? "popup-menu popup-menu--visible popup-menu--small"
+            : "popup-menu popup-menu--small"
+        }
+      >
+        <div className="popup-menu__card">
+          <ul className="popup-menu__item-group">
+            {menuItems.map((handledItem) => {
+              return (
+                <li key={handledItem.name}>
+                  <button
+                    onClick={() => handledItem.handler(item)}
+                    className="popup-menu__link"
+                  >
+                    {handledItem.name}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </div>
   );

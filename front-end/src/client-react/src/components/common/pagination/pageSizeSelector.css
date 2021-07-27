@@ -1,3 +1,11 @@
 .page-selector {
-  padding: 1.5rem;
+  padding: 1.2rem;
+  border: 1px solid #e3e3e3;
+  border-radius: 2px;
+  padding: 1rem 1rem 1rem 1rem;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.3rem;
 }

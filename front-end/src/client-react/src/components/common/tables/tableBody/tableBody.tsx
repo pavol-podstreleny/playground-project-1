@@ -1,3 +1,4 @@
+import withTableResponsiveBody from "../withTableResponsive";
 import { Column } from "../tableHeader/tableHeader";
 import "./tableBody.css";
 
@@ -7,7 +8,7 @@ export interface TableBodyProps<T, K> {
   columns: Column<T>[];
 }
 
-export const TableBody = <T extends object, K extends keyof T>({
+const TableBody = <T extends object, K extends keyof T>({
   items,
   columns,
   columnKeys,
@@ -26,7 +27,14 @@ export const TableBody = <T extends object, K extends keyof T>({
             {columns.map((column, index) => {
               if (column.render) {
                 return (
-                  <td className="table__body-data" key={column.name}>
+                  <td
+                    className={
+                      column.element
+                        ? "table__body-data-action"
+                        : "table__body-data"
+                    }
+                    key={column.name}
+                  >
                     {item[columnKeys[index]]}
                     {renderInnerElement(item, column)}
                   </td>
@@ -40,3 +48,6 @@ export const TableBody = <T extends object, K extends keyof T>({
     </tbody>
   );
 };
+
+export const TableBodyResponsive = withTableResponsiveBody(TableBody);
+export default TableBody;

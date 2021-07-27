@@ -3,4 +3,8 @@
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+  position: relative;
+}
+.table-overflow-scroll {
+  overflow-y: visible !important;
 }
