@@ -1,6 +1,6 @@
 import "./card.css";
 
-export interface CardProps {
+interface CardProps {
   size?: CardSize;
   relative?: boolean;
 }
