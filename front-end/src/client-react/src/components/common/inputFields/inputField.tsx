@@ -7,9 +7,7 @@ export enum InputType {
   Number = "number",
 }
 
-export interface IInputField {}
-
-export interface InputFieldSectionProps {
+interface InputFieldSectionProps {
   fieldName: string;
   name: string;
   value: string | number;
@@ -19,6 +17,7 @@ export interface InputFieldSectionProps {
   errorMessage?: string;
   min?: string | number;
   max?: string | number;
+  autocomplete?: "on" | "off";
 }
 
 const InputField: React.FC<InputFieldSectionProps> = ({
@@ -31,6 +30,7 @@ const InputField: React.FC<InputFieldSectionProps> = ({
   min,
   max,
   errorMessage,
+  autocomplete,
 }) => {
   return (
     <div className="input-group">
@@ -58,7 +58,7 @@ const InputField: React.FC<InputFieldSectionProps> = ({
         required={required}
         min={min}
         max={max}
-        autoComplete="off"
+        autoComplete={autocomplete}
       />
       {errorMessage && (
         <p className="input-group__message input-group__message--error">
