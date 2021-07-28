@@ -13,7 +13,7 @@ export interface CardLoaderProps {
   text?: string;
 }
 
-export interface CardDialogProps {
+interface CardDialogProps {
   messages?: MessageType[];
   title: string;
   isLoading?: CardLoaderProps;
@@ -34,20 +34,18 @@ const CardDialog = React.forwardRef<HTMLDivElement, CardDialogProps>(
           <section className="card-dialog__section">
             <h3 className="card-dialog__heading">{title}</h3>
             {messages &&
-              messages.map((message) => {
-                return (
-                  <p
-                    key={message.message}
-                    className={
-                      message.isError
-                        ? "card-dialog__error-text"
-                        : "card-dialog__text"
-                    }
-                  >
-                    {message.message}
-                  </p>
-                );
-              })}
+              messages.map((message) => (
+                <p
+                  key={message.message}
+                  className={
+                    message.isError
+                      ? "card-dialog__error-text"
+                      : "card-dialog__text"
+                  }
+                >
+                  {message.message}
+                </p>
+              ))}
             {children}
           </section>
         </Card>
