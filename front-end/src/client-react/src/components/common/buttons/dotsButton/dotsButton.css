@@ -1,9 +1,9 @@
-tr:hover .button-dots {
+tr:hover .button--dots {
   color: rgba(0, 0, 0, 1);
   background: rgba(0, 0, 0, 0.05);
   padding: 8px 14px;
 }
 
-tr:hover .button-dots:hover {
+tr:hover .button--dots:hover {
   background: rgba(0, 0, 0, 0.1);
 }
