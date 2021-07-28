@@ -1,12 +1,19 @@
 import "./loader.css";
-export interface LoaderProps {
+
+interface LoaderProps {
   text?: string;
+  size?: LoaderSize;
 }
 
-const Loader: React.FC<LoaderProps> = ({ text }) => {
+enum LoaderSize {
+  SMALL = "small",
+  MEDIUM = "medium",
+}
+
+const Loader: React.FC<LoaderProps> = ({ text, size }) => {
   return (
     <div>
-      <div className="loader"></div>
+      <div className={size ? `loader loader--${size}` : "loader"}></div>
       {text && <p className="loader__text">{text}</p>}
     </div>
   );
