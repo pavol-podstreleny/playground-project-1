@@ -11,20 +11,15 @@ export enum CardSize {
 }
 
 const Card: React.FC<CardProps> = ({ children, size, relative }) => {
-  const classes = () => {
-    const result = [];
-    if (size) {
-      result.push(`card card--${size}`);
-    } else {
-      result.push("card");
-    }
-
+  const getClasses = (): string => {
+    const classes = [];
+    classes.push(size ? `card card--${size}` : "card");
     if (relative) {
-      result.push("card--relative");
+      classes.push("card--relative");
     }
-    return result.join(" ");
+    return classes.join(" ");
   };
-  return <div className={classes()}>{children}</div>;
+  return <div className={getClasses()}>{children}</div>;
 };
 
 export default Card;
