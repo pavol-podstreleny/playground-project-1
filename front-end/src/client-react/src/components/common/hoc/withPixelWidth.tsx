@@ -9,6 +9,8 @@ export default function withPixelWidth<P extends object>(
   Component: React.ComponentType<P>
 ) {
   return class WithPixelWidth extends React.Component<P, WithPixelState> {
+    divRef = React.createRef<HTMLDivElement>();
+
     constructor(props: P) {
       super(props);
       this.state = {
@@ -20,8 +22,6 @@ export default function withPixelWidth<P extends object>(
       const currentDiv = this.divRef.current;
       if (currentDiv) this.setState({ width: currentDiv.offsetWidth });
     };
-
-    divRef = React.createRef<HTMLDivElement>();
 
     componentDidMount() {
       if (this.divRef.current)
