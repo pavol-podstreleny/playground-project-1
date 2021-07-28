@@ -10,6 +10,7 @@
   border-radius: 0.2rem;
   cursor: pointer;
   text-align: center;
+  transition: background ease 0.5s;
 }
 
 .button--primary,
@@ -30,7 +31,6 @@
 }
 .button--success {
   background: #53af67;
-  transition: background ease 0.5s;
 }
 .button--success:hover {
   background: #459b57;
