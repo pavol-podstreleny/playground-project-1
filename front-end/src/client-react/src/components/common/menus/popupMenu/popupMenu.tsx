@@ -5,7 +5,7 @@ export interface MenuItem<T> {
   handler: (item: T) => void;
 }
 
-export interface PopUpMenuProps<T> {
+interface PopUpMenuProps<T> {
   menuItems: MenuItem<T>[];
   isVisible: boolean;
   item: T;
@@ -17,12 +17,12 @@ const PopUpMenu = <T extends object>({
   item,
 }: PopUpMenuProps<T>) => {
   return (
-    <div style={{ position: "relative" }}>
+    <div className="popup-wrapper">
       <div
         className={
           isVisible
-            ? "popup-menu popup-menu--visible popup-menu--small"
-            : "popup-menu popup-menu--small"
+            ? "popup-menu  popup-menu--visible popup-menu--small"
+            : "popup-menu  popup-menu--small"
         }
       >
         <div className="popup-menu__card">

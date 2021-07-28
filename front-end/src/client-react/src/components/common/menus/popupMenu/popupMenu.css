@@ -1,3 +1,7 @@
+.popup-wrapper {
+  position: relative;
+}
+
 .popup-menu {
   position: absolute;
   right: 1.6rem;

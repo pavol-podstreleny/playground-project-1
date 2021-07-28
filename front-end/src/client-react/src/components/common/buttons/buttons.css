@@ -10,11 +10,17 @@
   border-radius: 0.2rem;
   cursor: pointer;
   text-align: center;
-  transition: background ease 0.5s;
 }
 
 .button--primary,
-.button-cancel {
+.button--cancel,
+.button--success,
+.button--delete {
+  transition: background 0.5s ease;
+}
+
+.button--primary,
+.button--cancel {
   background: rgba(0, 120, 212, 1);
 }
 
