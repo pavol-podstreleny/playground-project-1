@@ -2,12 +2,9 @@ import React from "react";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { useAppSelector } from "../hooks/useAppSelector";
 import Customer from "../model/customer";
-import { apiCallBegan } from "../store/apis";
 import {
   customerDialogsCancel,
-  customerRequestPatchSucceeded,
-  customersRequestFailed,
-  customersRequestStarted,
+  customerDialogsEditRemoveErrors,
   patchCustomer,
 } from "../store/customers";
 import CustomerDialogForm from "./customerDialogForm";
@@ -29,6 +26,7 @@ const CustomerDialogEdit: React.FC<CustomerDialogEditProps> = () => {
 
   const handleDialogCancel = () => {
     dispatch(customerDialogsCancel());
+    dispatch(customerDialogsEditRemoveErrors());
   };
 
   const handleDialogSubmit = (customer: Customer) => {

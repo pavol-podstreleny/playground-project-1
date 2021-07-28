@@ -7,8 +7,6 @@ import { useDetectOutsideClickWithCallback } from "../hooks/useDetectOutsideClic
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { customerDialogsCancel, deleteCustomer } from "../store/customers";
 import { useAppSelector } from "../hooks/useAppSelector";
-import { isError } from "joi";
-import Loader from "./common/loading/loader";
 
 interface CustomerDialogDeleteProps {}
 
@@ -61,7 +59,7 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = () => {
   messages.push({
     message: `Are you sure you want to delete customer ${customer!.firstName} ${
       customer!.lastName
-    }`,
+    }?`,
     isError: false,
   });
 
@@ -74,16 +72,16 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = () => {
         ref={cardDialogRef}
         isLoading={{ isLoading, text: "Deleting..." }}
       >
-        <div className="flex-row flex-end">
+        <div className="form__buttons">
           <button
-            className="button button-primary"
+            className="button button--primary"
             disabled={isLoading}
             onClick={(e) => raiseCancel(e)}
           >
             Cancel
           </button>
           <button
-            className="button button-delete"
+            className="button button--delete"
             disabled={isLoading}
             onClick={() => handleCustomerDelete(customer!)}
           >

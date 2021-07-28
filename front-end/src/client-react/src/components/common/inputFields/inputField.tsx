@@ -45,7 +45,11 @@ const InputField: React.FC<InputFieldSectionProps> = ({
         {name}
       </label>
       <input
-        className="input-group__field"
+        className={
+          errorMessage
+            ? "input-group__field input-group__field--error"
+            : "input-group__field"
+        }
         name={fieldName}
         id={fieldName}
         type={type}

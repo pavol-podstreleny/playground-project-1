@@ -8,7 +8,7 @@ import CardDialog, {
   MessageType,
 } from "./common/dialogs/cardDialog";
 import Overlay from "./common/overlay/overlay";
-import CustomerForm from "./customerForm";
+import CustomerForm from "./customerForm/customerForm";
 
 export interface CustomerDialogFormProps {
   onDialogSubmit: (customer: Customer) => void;

@@ -1,17 +1,29 @@
 .card-dialog {
-  padding: 2rem;
+  padding: 2rem 2.4rem;
+  width: 100%;
 }
-.card-dialog h3 {
+.card-dialog__section {
+  padding: 2.6rem 2.6rem;
+}
+.card-dialog__heading {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
   font-size: 1.5rem;
 }
 
-.card-dialog p {
+.card-dialog__text {
   font-size: 1.3rem;
 }
-.card-dialog p.error {
+.card-dialog__error-text {
   color: brown;
+  font-size: 1.3rem;
+  font-family: "Open Sans", sans-serif;
 }
-.card-dialog button {
-  margin-top: 1rem;
-  margin-left: 1rem;
+
+.card-dialog__loader {
+  position: absolute;
+  top: 2.4rem;
+  right: 2.4rem;
 }

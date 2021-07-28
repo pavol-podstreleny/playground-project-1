@@ -149,6 +149,10 @@ const customerSlice = createSlice({
       };
     },
 
+    customerDialogsEditRemoveErrors: (state) => {
+      state.api.patch.errorMessage = null;
+    },
+
     // Pagination
     customerCurrentPaginationPageChanged: (
       state,
@@ -180,6 +184,7 @@ export const {
   customerPaginationPageSizeChanged,
   customerRequestPatchSucceeded,
   customerAddDialogCanceled,
+  customerDialogsEditRemoveErrors,
 } = customerSlice.actions;
 
 export const getCustomers = () => {

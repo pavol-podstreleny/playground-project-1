@@ -25,7 +25,7 @@ export const useFetchCustomers = (): [
 
   useEffect(() => {
     dispatch(getCustomers());
-  }, []);
+  }, [dispatch]);
 
   return [customers, isLoading, errorMessage, refetch];
 };

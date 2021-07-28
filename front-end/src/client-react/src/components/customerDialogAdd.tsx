@@ -11,7 +11,7 @@ import CustomerDialogForm from "./customerDialogForm";
 
 interface CustomerDialogAddProps {}
 
-const CustomerDialogAdd: React.FC<CustomerDialogAddProps> = ({}) => {
+const CustomerDialogAdd: React.FC<CustomerDialogAddProps> = () => {
   const dispatch = useAppDispatch();
   const dialogVisibile = useAppSelector(
     (state) => state.entities.customers.dialogs.addDialogVisibile

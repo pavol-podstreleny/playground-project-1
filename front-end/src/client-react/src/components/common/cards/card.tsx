@@ -14,13 +14,13 @@ const Card: React.FC<CardProps> = ({ children, size, relative }) => {
   const classes = () => {
     const result = [];
     if (size) {
-      result.push(`card card-${size}`);
+      result.push(`card card--${size}`);
     } else {
       result.push("card");
     }
 
     if (relative) {
-      result.push("relative");
+      result.push("card--relative");
     }
     return result.join(" ");
   };

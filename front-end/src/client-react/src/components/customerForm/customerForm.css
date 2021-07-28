@@ -1,0 +1,35 @@
+.form {
+  width: 100%;
+}
+
+.form__layout {
+  display: flex;
+  flex-direction: column;
+}
+.form__buttons {
+  display: flex;
+  margin-top: 1.5rem;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.form__buttons .button {
+  margin-left: 1.3rem;
+}
+
+@media screen and (min-width: 580px) {
+  .form__layout {
+    flex-direction: row;
+    flex-wrap: wrap;
+    grid-template-columns: auto auto;
+  }
+  .input-group {
+    width: 49%;
+  }
+  .input-group:nth-child(odd) {
+    margin-right: calc(2% / 2);
+  }
+  .input-group:nth-child(even) {
+    margin-left: calc(2% / 2);
+  }
+}

@@ -24,21 +24,25 @@ export interface CardDialogProps {
 const CardDialog = React.forwardRef<HTMLDivElement, CardDialogProps>(
   ({ messages, title, children, size, isLoading }, ref) => {
     return (
-      <div ref={ref}>
+      <div ref={ref} className="card-dialog">
         <Card size={size} relative>
           {isLoading && isLoading.isLoading && (
-            <div className="absolute-right-top">
-              <Loader text={isLoading.text} />
+            <div className="card-dialog__loader">
+              <Loader />
             </div>
           )}
-          <section className="card-dialog">
-            <h3>{title}</h3>
+          <section className="card-dialog__section">
+            <h3 className="card-dialog__heading">{title}</h3>
             {messages &&
               messages.map((message) => {
                 return (
                   <p
                     key={message.message}
-                    className={message.isError ? "error" : ""}
+                    className={
+                      message.isError
+                        ? "card-dialog__error-text"
+                        : "card-dialog__text"
+                    }
                   >
                     {message.message}
                   </p>

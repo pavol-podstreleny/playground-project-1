@@ -1,9 +1,10 @@
 .input-group {
-  margin: 1.5rem 0;
+  margin: 1.3rem 0;
 }
 
 .input-group__label {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  font-family: "Open Sans", sans-serif;
   display: block;
   padding-bottom: 0.6rem;
   font-weight: 600;
@@ -16,17 +17,35 @@
 
 .input-group__field {
   width: 100%;
-  padding: 1.1rem;
-  border: 1px solid black;
-  border-radius: 0.4rem;
+  padding: 1.3rem;
+  font-family: "Open Sans", sans-serif;
+  border: 1px solid #d3d3d3;
+  border-radius: 0.2rem;
   font-size: 1.3rem;
 }
+.input-group__field:focus {
+  outline: cornflowerblue;
+  border-radius: 2px;
+  border: 2px solid cornflowerblue;
+}
 
-.input-group__message {
-  font-size: 0.8rem;
+.input-group__field--error {
+  border-radius: 2px;
+  border: 1px solid brown;
+}
+.input-group__field--error:focus {
+  border-radius: 2px;
+  outline-color: brown;
+  border: 2px solid brown;
+}
+.input-group__field--error:o .input-group__message {
+  font-size: 1.3rem;
   margin: 0.5rem 0rem;
 }
 
 .input-group__message--error {
   color: brown;
+  font-size: 1.3rem;
+  font-weight: 500;
+  font-family: "Open sans", sans-serif;
 }

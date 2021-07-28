@@ -1,11 +1,10 @@
 import Joi from "joi";
-import React, { MouseEvent, useState } from "react";
-import { useAppSelector } from "../hooks/useAppSelector";
-import Customer from "../model/customer";
-import { getPostalCodeEURegexp } from "../utils/postalCode";
-import { containsKey, validateProperty, ValidKey } from "../utils/utils";
-import InputField, { InputType } from "./common/inputFields/inputField";
-import Loader from "./common/loading/loader";
+import React, { useState } from "react";
+import Customer from "../../model/customer";
+import { getPostalCodeEURegexp } from "../../utils/postalCode";
+import { containsKey, validateProperty, ValidKey } from "../../utils/utils";
+import InputField, { InputType } from "../common/inputFields/inputField";
+import "./customerForm.css";
 
 export interface CustomerFormProps {
   customer: Customer;
@@ -84,8 +83,8 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className={twoColumns ? "grid-two grid-gap-small" : ""}>
+    <form onSubmit={handleSubmit} className="form">
+      <div className="form__layout">
         <InputField
           name="First Name"
           fieldName="firstName"
@@ -139,9 +138,9 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
           handler={handleChange}
         />
       </div>
-      <div className="flex-row flex-end">
+      <div className="form__buttons">
         <button
-          className="button button-primary"
+          className="button button--primary"
           onClick={onCancel}
           disabled={submitting}
         >
@@ -149,7 +148,7 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
         </button>
         <button
           type="submit"
-          className="button button-success"
+          className="button button--success"
           disabled={submitting}
         >
           {buttonName}
