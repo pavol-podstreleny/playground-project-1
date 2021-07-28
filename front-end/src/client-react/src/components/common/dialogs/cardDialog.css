@@ -1,6 +1,7 @@
 .card-dialog {
   padding: 2rem 2.4rem;
   width: 100%;
+  overflow: auto;
 }
 .card-dialog__section {
   padding: 2.6rem 2.6rem;
