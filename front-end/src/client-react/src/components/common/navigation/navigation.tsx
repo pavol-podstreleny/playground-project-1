@@ -5,7 +5,7 @@ interface NavigationMenuItem {
   name: string;
   url: string;
 }
-export interface NavigationProps {
+interface NavigationProps {
   menuItems: NavigationMenuItem[];
 }
 
