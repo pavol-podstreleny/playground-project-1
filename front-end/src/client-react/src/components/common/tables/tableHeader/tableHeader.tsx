@@ -76,16 +76,28 @@ const TableHeader = <T extends object>({
     sortColumn: SortColumn | undefined,
     index: number
   ) => {
-    return (
-      <th
-        className={provideClasses(onSort, column, sortColumn)}
-        key={column.name}
-        onClick={() => raiseSort(column.propName, index)}
-      >
-        {column.name}
-        {renderSortIcon(column)}
-      </th>
-    );
+    if (column.sortable) {
+      return (
+        <th
+          className={provideClasses(onSort, column, sortColumn)}
+          key={column.name}
+          onClick={() => raiseSort(column.propName, index)}
+        >
+          {column.name}
+          {renderSortIcon(column)}
+        </th>
+      );
+    } else {
+      return (
+        <th
+          className={provideClasses(onSort, column, sortColumn)}
+          key={column.name}
+        >
+          {column.name}
+          {renderSortIcon(column)}
+        </th>
+      );
+    }
   };
 
   return (

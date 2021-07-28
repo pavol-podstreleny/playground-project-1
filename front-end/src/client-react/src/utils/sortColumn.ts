@@ -20,12 +20,12 @@ export const sortColumns = <T, K extends keyof T>(
           if (typeof a[key] === "number") {
             const result =
               (a[key] as unknown as number) - (b[key] as unknown as number);
-            return sortColumn.order === "asc" ? result : -result;
+            return result;
           } else if (typeof a[key] === "string") {
             const result = (a[key] as unknown as string).localeCompare(
               b[key] as unknown as string
             );
-            return sortColumn.order === "asc" ? result : -result;
+            return result;
           } else {
             console.warn(
               "Sorting allowed only for no nullable numbers and strings"
@@ -34,6 +34,9 @@ export const sortColumns = <T, K extends keyof T>(
         }
         return 0;
       });
+      if (sortColumn.order === "desc") {
+        return itemsCopy.reverse();
+      }
       return itemsCopy;
     }
   }

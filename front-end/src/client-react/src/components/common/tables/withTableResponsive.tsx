@@ -53,7 +53,7 @@ export function withTableResponsiveHeader(Component: typeof TableHeader) {
 
     const columns = createResponsiveColumns(undefined, props.columns, width)[0];
 
-    return <Component columns={columns} />;
+    return <Component {...props} columns={columns} />;
   };
   return WithTableResponseBody;
 }
