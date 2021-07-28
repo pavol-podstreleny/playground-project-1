@@ -1,0 +1,21 @@
+.try-again {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.try-again__heading {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Lato", sans-serif;
+  font-size: 1.8rem;
+}
+.try-again__text {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.4rem;
+  margin: 0px;
+}
+.try-again .button {
+  margin-top: 1.6rem;
+}

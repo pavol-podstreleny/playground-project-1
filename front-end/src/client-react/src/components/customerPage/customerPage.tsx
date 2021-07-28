@@ -6,7 +6,7 @@ import CustomerDialogAdd from "../customerDialogAdd";
 import CustomerDialogDelete from "../customerDialogDelete";
 import CustomerDialogEdit from "../customerDialogEdit";
 import CustomerTable from "../customerTable/customerTable";
-import TryAgain from "../common/errors/tryAgain";
+import TryAgain from "../common/errors/tryAgain/tryAgain";
 import { useFetchCustomers } from "../../hooks/customers/useFetchCustomers";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import {
