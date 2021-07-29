@@ -63,7 +63,6 @@ const CustomerDialogForm: React.FC<CustomerDialogFormProps> = ({
           onSubmit={onDialogSubmit}
           onCancel={onCancel}
           customer={customer}
-          twoColumns={true}
           buttonName={buttonName}
           submitting={submitting.isLoading}
         />

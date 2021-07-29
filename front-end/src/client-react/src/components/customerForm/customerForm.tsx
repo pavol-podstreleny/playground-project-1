@@ -6,16 +6,15 @@ import { containsKey, validateProperty, ValidKey } from "../../utils/utils";
 import InputField, { InputType } from "../common/inputFields/inputField";
 import "./customerForm.css";
 
-export interface CustomerFormProps {
+interface CustomerFormProps {
   customer: Customer;
   onSubmit: (customer: Customer) => void;
   onCancel: () => void;
-  twoColumns: boolean;
   buttonName: string;
   submitting: boolean;
 }
 
-export interface CustomerError extends ValidKey {
+interface CustomerError extends ValidKey {
   firstName?: string;
   lastName?: string;
   email?: string;
@@ -24,7 +23,7 @@ export interface CustomerError extends ValidKey {
   city?: string;
 }
 
-const customerSchemaProps = {
+const customerSchema = {
   firstName: Joi.string().min(2).max(20).required().label("First Name"),
   lastName: Joi.string().min(2).max(20).required().label("Last Name"),
   email: Joi.string()
@@ -45,7 +44,6 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
   customer,
   onSubmit,
   onCancel,
-  twoColumns,
   buttonName,
   submitting,
 }) => {
@@ -62,13 +60,10 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
     const customerCopy: Customer = { ...customerInput };
     const key = e.target.name;
     const value = e.target.value;
-    if (
-      containsKey(customerCopy, key) &&
-      containsKey(customerSchemaProps, key)
-    ) {
+    if (containsKey(customerCopy, key) && containsKey(customerSchema, key)) {
       const errors = validateProperty<CustomerError, string>(
         Joi.object({
-          [e.target.name]: (customerSchemaProps as any)[key],
+          [e.target.name]: (customerSchema as any)[key],
         }),
         key,
         value,
