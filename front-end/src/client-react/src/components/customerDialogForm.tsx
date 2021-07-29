@@ -10,7 +10,7 @@ import CardDialog, {
 import Overlay from "./common/overlay/overlay";
 import CustomerForm from "./customerForm/customerForm";
 
-export interface CustomerDialogFormProps {
+interface CustomerDialogFormProps {
   onDialogSubmit: (customer: Customer) => void;
   onDialogCancel: () => void;
   visible: boolean;
