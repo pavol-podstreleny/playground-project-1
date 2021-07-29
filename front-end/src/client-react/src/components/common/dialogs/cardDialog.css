@@ -1,11 +1,12 @@
 .card-dialog {
-  padding: 2rem 2.4rem;
-  width: 100%;
   overflow: auto;
+  margin: 1.3rem;
 }
+
 .card-dialog__section {
   padding: 2.6rem 2.6rem;
 }
+
 .card-dialog__heading {
   margin: 0px;
   padding: 0px;
@@ -17,6 +18,7 @@
 .card-dialog__text {
   font-size: 1.3rem;
 }
+
 .card-dialog__error-text {
   color: brown;
   font-size: 1.3rem;
