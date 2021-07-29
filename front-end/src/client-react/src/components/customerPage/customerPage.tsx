@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Card from "../common/cards/card";
 import PageSizeSelector from "../common/pagination/pageSizeSelector";
 import Pagination from "../common/pagination/pagination";
@@ -17,7 +17,6 @@ import {
 import Loader from "../common/loading/loader";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import "./customerPage.css";
-import { useRef } from "react";
 
 const pageOptions = [1, 2, 5, 10, 25, 50, 100];
 
