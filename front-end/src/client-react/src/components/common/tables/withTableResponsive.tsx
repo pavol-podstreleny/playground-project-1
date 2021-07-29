@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { WidthContext } from "../../context/widthContext";
+import { WidthContext } from "../../../context/widthContext";
 import TableBody from "./tableBody/tableBody";
 import TableHeader, {
   Column,

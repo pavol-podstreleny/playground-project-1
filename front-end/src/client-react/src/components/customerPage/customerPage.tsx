@@ -17,7 +17,6 @@ import {
 import Loader from "../common/loading/loader";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import "./customerPage.css";
-import { WidthContext } from "../context/widthContext";
 import { useRef } from "react";
 
 const pageOptions = [1, 2, 5, 10, 25, 50, 100];

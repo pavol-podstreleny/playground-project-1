@@ -1,5 +1,5 @@
 import React from "react";
-import { WidthContext } from "../../context/widthContext";
+import { WidthContext } from "../../../context/widthContext";
 
 interface WithPixelState {
   width: number;
