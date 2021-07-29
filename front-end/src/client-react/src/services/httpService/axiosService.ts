@@ -6,17 +6,6 @@ interface CustomerApiErrorResponse {
   errors: string[] | null;
 }
 
-axios.interceptors.response.use(
-  function (response) {
-    return response;
-  },
-  function (error) {
-    // Do something with response error
-    // Maybe do some log uploads :)
-    return Promise.reject(error);
-  }
-);
-
 function extractErrorMessages(
   error: AxiosError<CustomerApiErrorResponse>
 ): string | undefined {
