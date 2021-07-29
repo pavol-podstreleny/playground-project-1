@@ -1,6 +1,6 @@
 import "./pageSizeSelector.css";
 
-export interface PageSizeSelectorProps {
+interface PageSizeSelectorProps {
   actualPageSize: number;
   pageOptions: number[];
   onPageSizeChange: (pageSize: number) => void;
@@ -18,13 +18,11 @@ const PageSizeSelector: React.FC<PageSizeSelectorProps> = ({
         value={actualPageSize}
         onChange={(e) => onPageSizeChange(parseInt(e.target.value))}
       >
-        {pageOptions.map((page) => {
-          return (
-            <option value={page} key={page}>
-              {page}
-            </option>
-          );
-        })}
+        {pageOptions.map((page) => (
+          <option value={page} key={page}>
+            {page}
+          </option>
+        ))}
       </select>
     </div>
   );

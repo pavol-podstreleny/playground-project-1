@@ -1,6 +1,6 @@
 import "./pagination.css";
 
-export interface PaginationProps {
+interface PaginationProps {
   itemsCount: number;
   pageSize: number;
   onPageChange: (page: number) => void;
@@ -27,22 +27,20 @@ const Pagination: React.FC<PaginationProps> = ({
   return (
     <nav>
       <ul className="pagination">
-        {pages.map((page) => {
-          return (
-            <li className={"pagination__list-item"} key={page}>
-              <button
-                className={
-                  currentPage === page
-                    ? "pagination__button pagination__button--active"
-                    : "pagination__button"
-                }
-                onClick={() => onPageChange(page)}
-              >
-                {page}
-              </button>
-            </li>
-          );
-        })}
+        {pages.map((page) => (
+          <li className={"pagination__list-item"} key={page}>
+            <button
+              className={
+                currentPage === page
+                  ? "pagination__button pagination__button--active"
+                  : "pagination__button"
+              }
+              onClick={() => onPageChange(page)}
+            >
+              {page}
+            </button>
+          </li>
+        ))}
       </ul>
     </nav>
   );
