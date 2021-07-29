@@ -1,0 +1,14 @@
+.customer-detail {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.customer-detail__text {
+  margin: 1rem 0rem;
+  padding: 0px;
+  font-size: 1.4rem;
+  font-family: "Open Sans", sans-serif;
+}
+.customer-detail__label {
+  font-weight: 600;
+}

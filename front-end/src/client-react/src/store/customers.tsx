@@ -11,6 +11,7 @@ interface CustomerPayload {
     addDialogVisibile: boolean;
     editDialogVisible: boolean;
     deleteDialogVisible: boolean;
+    detailDialogVisible: boolean;
   };
   pagination: {
     currentPage: number;
@@ -25,6 +26,7 @@ const initialState: CustomerPayload = {
     addDialogVisibile: false,
     editDialogVisible: false,
     deleteDialogVisible: false,
+    detailDialogVisible: false,
   },
   pagination: {
     currentPage: 1,
@@ -141,11 +143,16 @@ const customerSlice = createSlice({
       state.dialogs.deleteDialogVisible = true;
     },
 
+    customerDetailDialogShowed: (state) => {
+      state.dialogs.detailDialogVisible = true;
+    },
+
     customerDialogsCancel: (state) => {
       state.dialogs = {
         addDialogVisibile: false,
         editDialogVisible: false,
         deleteDialogVisible: false,
+        detailDialogVisible: false,
       };
     },
 
@@ -185,6 +192,7 @@ export const {
   customerRequestPatchSucceeded,
   customerAddDialogCanceled,
   customerDialogsEditRemoveErrors,
+  customerDetailDialogShowed,
 } = customerSlice.actions;
 
 export const getCustomers = () => {
@@ -223,6 +231,10 @@ export const patchCustomer = (customer: Customer) => {
       customerDialogsCancel.type,
     ],
   });
+};
+
+export const detailCustomer = () => {
+  return customerDetailDialogShowed;
 };
 
 export const deleteCustomer = (customer: Customer) => {

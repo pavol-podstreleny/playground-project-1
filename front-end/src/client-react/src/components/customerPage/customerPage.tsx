@@ -17,6 +17,7 @@ import {
 import Loader from "../common/loading/loader";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import "./customerPage.css";
+import CustomerDialogDetail from "../customerDialogs/detail/customerDialogDetails";
 
 const pageOptions = [1, 2, 5, 10, 25, 50, 100];
 
@@ -98,6 +99,7 @@ export const CustomerPage = () => {
       <CustomerDialogDelete />
       <CustomerDialogEdit />
       <CustomerDialogAdd />
+      <CustomerDialogDetail />
     </React.Fragment>
   );
 };

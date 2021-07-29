@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import Customer from "../../model/customer";
 import {
   customerDeleteDialogShowed,
+  customerDetailDialogShowed,
   customerEditDialogShowed,
   customerSelected,
 } from "../../store/customers";
@@ -29,7 +30,8 @@ const CustomerTable: React.FC<CustomerTableProps> = ({
   };
 
   const handleDetailsCustomerClick = (customer: Customer) => {
-    console.log("Detail clicked");
+    dispatch(customerSelected(customer));
+    dispatch(customerDetailDialogShowed());
   };
 
   const handleEditCustomerClick = (customer: Customer) => {
