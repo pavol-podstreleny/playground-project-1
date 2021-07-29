@@ -1,10 +1,12 @@
 .card-dialog {
   overflow: auto;
   margin: 1.3rem;
+  width: 100%;
 }
 
 .card-dialog__section {
   padding: 2.6rem 2.6rem;
+  width: 100%;
 }
 
 .card-dialog__heading {

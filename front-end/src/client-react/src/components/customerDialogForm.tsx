@@ -1,6 +1,4 @@
 import React from "react";
-import { createRef } from "react";
-import { useDetectOutsideClickWithCallback } from "../hooks/useDetectOutsideClickWithCallback";
 import Customer from "../model/customer";
 import { CardSize } from "./common/cards/card";
 import CardDialog, {
@@ -31,18 +29,7 @@ const CustomerDialogForm: React.FC<CustomerDialogFormProps> = ({
   errorMessage,
   submitting,
 }) => {
-  const cardDialogRef = createRef<HTMLDivElement>();
-  const [, setClickOutside] = useDetectOutsideClickWithCallback(
-    cardDialogRef,
-    true,
-    () => {
-      setClickOutside(true);
-      onDialogCancel();
-    }
-  );
-
   const onCancel = () => {
-    setClickOutside(true);
     onDialogCancel();
   };
 
@@ -55,7 +42,6 @@ const CustomerDialogForm: React.FC<CustomerDialogFormProps> = ({
       <CardDialog
         title={title}
         size={CardSize.MEDIUM}
-        ref={cardDialogRef}
         messages={errorMessage}
         isLoading={submitting}
       >

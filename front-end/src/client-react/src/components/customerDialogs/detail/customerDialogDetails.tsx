@@ -1,8 +1,6 @@
-import { createRef } from "react";
 import { CardSize } from "../../common/cards/card";
 import CardDialog from "../../common/dialogs/cardDialog";
 import Overlay from "../../common/overlay/overlay";
-import { useDetectOutsideClickWithCallback } from "../../../hooks/useDetectOutsideClickWithCallback";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { customerDialogsCancel } from "../../../store/customers";
 import { useAppSelector } from "../../../hooks/useAppSelector";
@@ -17,15 +15,6 @@ const CustomerDialogDetail: React.FC<CustomerDialogDetailsProps> = () => {
   );
 
   const customer = useAppSelector((state) => state.entities.customers.selected);
-  const cardDialogRef = createRef<HTMLDivElement>();
-  const [, setClickOutside] = useDetectOutsideClickWithCallback(
-    cardDialogRef,
-    true,
-    () => {
-      setClickOutside(true);
-      handleDialogCancel();
-    }
-  );
 
   const customerDetails = [
     {
@@ -60,7 +49,6 @@ const CustomerDialogDetail: React.FC<CustomerDialogDetailsProps> = () => {
 
   const raiseCancel = (e: React.MouseEvent) => {
     e.preventDefault();
-    setClickOutside(true);
     handleDialogCancel();
   };
 
@@ -68,11 +56,7 @@ const CustomerDialogDetail: React.FC<CustomerDialogDetailsProps> = () => {
 
   return (
     <Overlay>
-      <CardDialog
-        title="Customer Details"
-        size={CardSize.REGULAR}
-        ref={cardDialogRef}
-      >
+      <CardDialog title="Customer Details" size={CardSize.REGULAR}>
         <div className="customer-detail">
           {customerDetails.map((detail) => {
             if (detail.value) {

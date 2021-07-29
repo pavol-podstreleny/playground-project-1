@@ -1,9 +1,7 @@
-import { createRef } from "react";
 import Customer from "../model/customer";
 import { CardSize } from "./common/cards/card";
 import CardDialog from "./common/dialogs/cardDialog";
 import Overlay from "./common/overlay/overlay";
-import { useDetectOutsideClickWithCallback } from "../hooks/useDetectOutsideClickWithCallback";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { customerDialogsCancel, deleteCustomer } from "../store/customers";
 import { useAppSelector } from "../hooks/useAppSelector";
@@ -22,15 +20,6 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = () => {
     (state) => state.entities.customers.api.delete.isLoading
   );
   const customer = useAppSelector((state) => state.entities.customers.selected);
-  const cardDialogRef = createRef<HTMLDivElement>();
-  const [, setClickOutside] = useDetectOutsideClickWithCallback(
-    cardDialogRef,
-    true,
-    () => {
-      setClickOutside(true);
-      handleDialogCancel();
-    }
-  );
 
   const handleDialogCancel = () => {
     dispatch(customerDialogsCancel());
@@ -42,7 +31,6 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = () => {
 
   const raiseCancel = (e: React.MouseEvent) => {
     e.preventDefault();
-    setClickOutside(true);
     handleDialogCancel();
   };
 
@@ -69,7 +57,6 @@ const CustomerDialogDelete: React.FC<CustomerDialogDeleteProps> = () => {
         title="Customer Deletion"
         size={CardSize.REGULAR}
         messages={messages}
-        ref={cardDialogRef}
         isLoading={{ isLoading, text: "Deleting..." }}
       >
         <div className="form__buttons">
