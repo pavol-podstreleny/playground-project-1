@@ -1,6 +1,4 @@
-import React, { useState, useEffect, RefObject, EventHandler } from "react";
-import { useCallback } from "react";
-import { ForwardedRef } from "react";
+import React, { useState, useEffect, RefObject } from "react";
 
 export const useDetectOutsideClick = (
   elementRef: RefObject<HTMLElement>,
