@@ -56,7 +56,11 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     if (customerError !== null) {
-      onSubmit(customerInput);
+      const customerInputCopy = { ...customerInput };
+      if (customerInputCopy.email === "") {
+        customerInputCopy.email = null;
+      }
+      onSubmit(customerInputCopy);
     }
   };
 
