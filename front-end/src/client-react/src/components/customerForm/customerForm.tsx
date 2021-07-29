@@ -2,7 +2,11 @@ import Joi from "joi";
 import React, { useState } from "react";
 import Customer from "../../model/customer";
 import { getPostalCodeEURegexp } from "../../utils/postalCode";
-import { containsKey, validateProperty, ValidKey } from "../../utils/utils";
+import {
+  containsKey,
+  validateProperty,
+  ValidKey,
+} from "../../utils/validation";
 import InputField, { InputType } from "../common/inputFields/inputField";
 import "./customerForm.css";
 

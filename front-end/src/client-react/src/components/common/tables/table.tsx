@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { paginate } from "../../../utils/paginate";
-import { sortColumns } from "../../../utils/sortColumn";
+import { sortColumns } from "../../../utils/sort";
 import { TableBodyResponsive } from "./tableBody/tableBody";
 import {
   Column,

@@ -1,6 +1,5 @@
 import { SortColumn } from "../components/common/tables/tableHeader/tableHeader";
 
-// In Place sort
 export const sortColumns = <T, K extends keyof T>(
   items: T[],
   sortColumn: SortColumn,
