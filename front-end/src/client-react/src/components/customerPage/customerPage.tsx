@@ -44,16 +44,28 @@ export const CustomerPage = () => {
     dispatch(customerAddDialogShowed());
   };
 
+  if (errorMessages && isLoading) {
+    return (
+      <div className="center-block">
+        <Loader text="Loading..." />
+      </div>
+    );
+  }
+
   if (errorMessages) {
     return (
-      <div className="force-center">
+      <div className="center-block">
         <TryAgain onClick={refetch} />
       </div>
     );
   }
 
   if (isLoading) {
-    return <Loader text="Loading..." />;
+    return (
+      <div className="center-block">
+        <Loader text="Loading..." />
+      </div>
+    );
   }
 
   if (!customers) {

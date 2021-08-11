@@ -14,6 +14,13 @@ body {
 .center {
   width: 100%;
 }
+
+.center-block {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media screen and (min-width: 960px) {
   .center {
     margin: 0 auto;
